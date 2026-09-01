@@ -3,12 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>Wave Radiant v0.8</title>
+<title>Wave Radiant v1.1</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#070912;color:#fff;font-family:Arial,sans-serif;touch-action:none}
+body{display:flex;align-items:center;justify-content:center}
+#gameStage{position:relative;width:min(92vw,30.38cm);aspect-ratio:30.38/13.68;height:auto;max-height:92vh;overflow:hidden;border:1px solid #6feaff45;border-radius:16px;box-shadow:0 0 36px #000b;background:#070912}
 canvas{display:block;width:100%;height:100%;background:radial-gradient(circle at 50% 35%,#111a31,#070912 70%)}
-#hud{position:fixed;left:10px;right:10px;top:8px;pointer-events:none;font-weight:700;text-shadow:0 2px 3px #000}
+#hud{position:absolute;left:10px;right:10px;top:8px;pointer-events:none;font-weight:700;text-shadow:0 2px 3px #000;z-index:2}
 .row{display:flex;gap:10px;align-items:center;font-size:13px}
 #hearts{letter-spacing:2px;font-size:18px}
 .bar{height:13px;background:#202536;border:1px solid #65708b;border-radius:8px;overflow:hidden;box-shadow:0 0 8px #000}
@@ -17,20 +19,20 @@ canvas{display:block;width:100%;height:100%;background:radial-gradient(circle at
 #bossBox{display:none;margin-top:5px}
 #bossFill{background:#ff4c78}
 #pauseHint{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);font-size:20px;display:none}
-#joyL,#joyR{position:fixed;bottom:25px;width:132px;height:132px;border-radius:50%;border:2px solid #ffffff30;background:#ffffff0d;box-shadow:inset 0 0 30px #ffffff08;touch-action:none}
-#joyL{left:20px}
-.stick{position:absolute;left:50%;top:50%;width:58px;height:58px;margin:-29px;border-radius:50%;background:#d9f7ff35;border:2px solid #bceeff80}
-#skill{position:fixed;bottom:25px;right:22px;display:flex;gap:8px;flex-direction:column}
+#joyL,#joyR{position:absolute;bottom:14px;width:88px;height:88px;border-radius:50%;border:2px solid #ffffff30;background:#ffffff0d;box-shadow:inset 0 0 30px #ffffff08;touch-action:none}
+#joyL{left:14px}
+.stick{position:absolute;left:50%;top:50%;width:40px;height:40px;margin:-20px;border-radius:50%;background:#d9f7ff35;border:2px solid #bceeff80}
+#skill{position:absolute;bottom:14px;right:14px;z-index:2;display:flex;gap:8px;flex-direction:column}
 button{border:1px solid #ffffff40;background:#10182a;color:#fff;border-radius:12px;padding:10px 13px;font-weight:800;box-shadow:0 4px 14px #0008}
-#skill button{min-width:96px;transition:filter .12s,opacity .12s,background .12s}
+#skill button{min-width:78px;padding:7px 9px;font-size:11px;transition:filter .12s,opacity .12s,background .12s}
 #skill button.cooldown{filter:brightness(.48);opacity:.72}
 #skill button.ready{filter:brightness(1);opacity:1}
-#upgrade{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:#000b;z-index:5}
+#upgrade{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:#000b;z-index:5}
 .panel{width:min(92vw,430px);background:#10172a;border:1px solid #6feaff70;border-radius:18px;padding:18px;box-shadow:0 0 40px #000}
 .panel h2{margin:0 0 5px}.panel p{margin:5px 0 14px;color:#aebbd6}
 .choice{width:100%;margin:7px 0;text-align:left}
-#gameover{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:#03050cee;z-index:6;text-align:center}
-#minigame{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:#02050eee;z-index:7;text-align:center}
+#gameover{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:#03050cee;z-index:6;text-align:center}
+#minigame{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:#02050eee;z-index:7;text-align:center}
 #miniArea{position:relative;width:min(92vw,430px);height:min(70vh,520px);background:#0b1224;border:1px solid #ffffff30;border-radius:18px;overflow:hidden}
 #miniArea .miniStar{position:absolute;font-size:30px;cursor:pointer;user-select:none;touch-action:manipulation}
 .big{font-size:34px;font-weight:900;margin-bottom:10px}
@@ -38,6 +40,7 @@ small{color:#aebbd6}
 </style>
 </head>
 <body>
+<div id="gameStage">
 <canvas id="game"></canvas>
 
 <div id="hud">
@@ -58,12 +61,12 @@ small{color:#aebbd6}
 <div id="mainMenu">
   <div class="menuPanel">
     <div class="title">WAVE RADIANT</div>
-    <div class="sub">AUTO-AIM • ENDLESS</div>
+    <div class="sub">RANGE AUTO-AIM • ENDLESS</div>
     <button id="startBtn" class="menuButton">▶ BẮT ĐẦU</button>
     <button id="helpBtn" class="menuButton">❔ HƯỚNG DẪN</button>
     <div id="helpText">
       🎮 Kéo joystick trái để di chuyển.<br>
-      🎯 Máy bay tự nhắm và bắn quái gần nhất.<br>
+      🎯 Quái trong RANGE: máy bay tự nhắm và bắn.<br>🔄 Không có quái trong RANGE: máy bay quay theo joystick, không bắn.<br>
       ⚡ Lướt theo hướng đang di chuyển.<br>
       💥 Nổ gây sát thương diện rộng, có hồi chiêu.<br>⏱️ Khi skill đang hồi, nút sẽ tối; hồi xong sẽ sáng lại.<br>
       🌊 Wave 5 là Boss.
@@ -80,6 +83,7 @@ small{color:#aebbd6}
   </div>
 </div>
 
+</div>
 <div id="upgrade">
   <div class="panel">
     <h2>LEVEL UP ✨</h2>
@@ -339,12 +343,13 @@ function update(dt){
    if(dist<player.r+d.r+5){gainExp(d.value);addText(d.x,d.y-10,'+'+d.value+' EXP');expDrops.splice(i,1);}
  }
  if(left.active){moveEntity(player,left.x*player.speed*dt,left.y*player.speed*dt,player.r)}
- // AUTO-AIM: always face the nearest enemy
-let nearest=null, nearestD=Infinity;
+ // RANGE AUTO-AIM: only enemies inside player.range can be targeted.
+let nearest=null, nearestD=player.range;
 for(const e of enemies){
   const d=Math.hypot(e.x-player.x,e.y-player.y);
-  if(d<nearestD){nearestD=d;nearest=e}
+  if(d<=nearestD){nearestD=d;nearest=e}
 }
+// No target in range -> plane follows the movement joystick.
 if(nearest){
   player.angle=Math.atan2(nearest.y-player.y,nearest.x-player.x);
 } else if(left.active && Math.hypot(left.x,left.y)>.12){
@@ -510,6 +515,12 @@ function draw(){
    ctx.font='18px Arial';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(q.type==='shield'?'🛡️':'⚡',0,1);ctx.restore();
  }
  if(shieldHP>0){ctx.save();ctx.beginPath();ctx.arc(player.x,player.y,player.r+9,0,7);ctx.strokeStyle='#64cfff';ctx.lineWidth=4;ctx.stroke();ctx.font='bold 12px Arial';ctx.textAlign='center';ctx.fillStyle='#bcefff';ctx.fillText('🛡 '+Math.ceil(shieldHP),player.x,player.y-player.r-16);ctx.restore();}
+ // Player targeting range
+ ctx.save();
+ ctx.beginPath();ctx.arc(player.x,player.y,player.range,0,Math.PI*2);
+ ctx.strokeStyle='#62e7ff55';ctx.lineWidth=3;ctx.setLineDash([14,10]);ctx.stroke();ctx.setLineDash([]);
+ ctx.fillStyle='#aeefff';ctx.font='bold 11px Arial';ctx.textAlign='center';ctx.fillText('RANGE '+Math.round(player.range),player.x,player.y-player.range-8);
+ ctx.restore();
  // bullets
  for(const b of bullets){ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,7);ctx.fillStyle='#dffbff';ctx.shadowBlur=12;ctx.shadowColor='#62e7ff';ctx.fill();ctx.shadowBlur=0}
  for(const b of enemyBullets){ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,7);ctx.fillStyle='#ff6688';ctx.fill()}
@@ -585,8 +596,8 @@ requestAnimationFrame(loop);
 </body>
 </html>
 <style>
-#menuBtn{position:fixed;right:12px;top:48px;width:42px;height:42px;padding:0;font-size:21px;z-index:3}
-#mainMenu,#pauseMenu{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#030611eF;z-index:10}
+#menuBtn{position:absolute;right:12px;top:48px;width:42px;height:42px;padding:0;font-size:21px;z-index:3}
+#mainMenu,#pauseMenu{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#030611eF;z-index:10}
 #pauseMenu{display:none}
 .menuPanel{width:min(90vw,410px);padding:26px 20px;border:1px solid #6feaff70;border-radius:22px;background:#0d1427;box-shadow:0 0 50px #000}
 .title{font-size:38px;font-weight:900;letter-spacing:2px;text-align:center}
