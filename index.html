@@ -198,6 +198,7 @@ function showUpgrade(){
  document.getElementById('upgrade').style.display='flex';
 }
 function spawnEnemy(kind,elite=false,boss=false){
+  if(enemies.length>=MAX_ENEMIES) return;
  const side=Math.floor(Math.random()*4);
  let x=player.x+(Math.random()-.5)*900, y=player.y+(Math.random()-.5)*1100;
  x=Math.max(40,Math.min(world.w-40,x)); y=Math.max(90,Math.min(world.h-40,y));
@@ -302,7 +303,19 @@ function updateSkillUI(){
   blastBtn.textContent=blastCd>0 ? '💥 Nổ '+blastCd.toFixed(1)+'s' : '💥 Nổ';
 }
 
+function clampEnemyToWorld(e){
+  const pad=Math.max(12,e.r||12);
+  e.x=Math.max(pad,Math.min(world.w-pad,e.x));
+  e.y=Math.max(pad,Math.min(world.h-pad,e.y));
+}
+function clampPlayerToWorld(){
+  const pad=Math.max(10,player.r||10);
+  player.x=Math.max(pad,Math.min(world.w-pad,player.x));
+  player.y=Math.max(pad,Math.min(world.h-pad,player.y));
+}
 function update(dt){
+  clampPlayerToWorld();
+
  if(miniActive){
   miniTime-=dt; miniTimer+=dt;
   if(miniType===3){
@@ -357,7 +370,7 @@ if(nearest){
  let target=state.wave===5?1:Math.min(8+state.stage*2,20);
  if(state.spawned<target&&state.waveTimer>.8){state.waveTimer=0;let elite=Math.random()<Math.min(.05+state.stage*.012,.22);spawnEnemy(null,elite,false);state.spawned++}
  if(state.wave===5&&state.spawned===target&&!enemies.some(e=>e.boss)){spawnEnemy(null,false,true)}
- for(let i=bullets.length-1;i>=0;i--){let b=bullets[i];b.x+=b.vx*dt;b.y+=b.vy*dt;b.life-=dt;let hit=false;
+ for(let i=bullets.length-1;i>=0;i--){let b=bullets[i];b.x+=b.vx*dt;b.y+=b.vy*dt; if(b.x<-100||b.x>world.w+100||b.y<-100||b.y>world.h+100) b.life=0;b.life-=dt;let hit=false;
   if(blocked(b.x,b.y,b.r)){bullets.splice(i,1);continue}
   for(let j=enemyBullets.length-1;j>=0;j--){const eb=enemyBullets[j];if(Math.hypot(b.x-eb.x,b.y-eb.y)<b.r+eb.r+2){enemyBullets.splice(j,1);hit=true;break}}
   if(!hit)for(const e of enemies){if(Math.hypot(b.x-e.x,b.y-e.y)<b.r+e.r){e.hp-=b.dmg;e.hit=.08;hit=true;break}}
@@ -365,7 +378,7 @@ if(nearest){
  }
  for(let i=enemyBullets.length-1;i>=0;i--){let b=enemyBullets[i];
   if(b.homing){let a=Math.atan2(player.y-b.y,player.x-b.x);b.vx+=(Math.cos(a)*80)*dt;b.vy+=(Math.sin(a)*80)*dt;let s=Math.hypot(b.vx,b.vy);if(s>360){b.vx=b.vx/s*360;b.vy=b.vy/s*360}}
-  b.x+=b.vx*dt;b.y+=b.vy*dt;b.life-=dt;
+  b.x+=b.vx*dt;b.y+=b.vy*dt; if(b.x<-100||b.x>world.w+100||b.y<-100||b.y>world.h+100) b.life=0;b.life-=dt;
   if(!b.mine && blocked(b.x,b.y,b.r)){enemyBullets.splice(i,1);continue}
   if(!b.mine && Math.hypot(b.x-player.x,b.y-player.y)<b.r+player.r){hurt(b.dmg);enemyBullets.splice(i,1);continue}
   if(b.mine && Math.hypot(b.x-player.x,b.y-player.y)<b.r+player.r+4){hurt(b.dmg);enemyBullets.splice(i,1);continue}
@@ -385,6 +398,7 @@ if(nearest){
     else if(d>e.range){e.x+=dx/d*e.spd*dt;e.y+=dy/d*e.spd*dt}
   }else if(e.n==='Splitter'){
     if(d>e.range){e.x+=dx/d*e.spd*dt;e.y+=dy/d*e.spd*dt}
+    if(!Number.isFinite(e.x)||!Number.isFinite(e.y)){e.x=world.w/2;e.y=world.h/2;} clampEnemyToWorld(e);
     if(e.shot<=0){enemyFire(e);e.shot=2.0}
   }else if(e.n==='Mine Layer'){
     e.special-=dt;
@@ -399,6 +413,7 @@ if(nearest){
     let radial=d-e.orbitR;
     e.x+=(tangX*e.spd - dx/d*radial*.35)*dt;
     e.y+=(tangY*e.spd - dy/d*radial*.35)*dt;
+    if(!Number.isFinite(e.x)||!Number.isFinite(e.y)){e.x=world.w/2;e.y=world.h/2;} clampEnemyToWorld(e);
     if(e.shot<=0){enemyFire(e);e.shot=1.8}
   }else if(e.n==='Healer'){
     if(d<150){moveEntity(e,-dx/d*e.spd*dt,-dy/d*e.spd*dt,e.r)}
@@ -412,6 +427,7 @@ if(nearest){
     }
   }else{
     if(d>e.range){e.x+=dx/d*e.spd*dt;e.y+=dy/d*e.spd*dt}
+    if(!Number.isFinite(e.x)||!Number.isFinite(e.y)){e.x=world.w/2;e.y=world.h/2;} clampEnemyToWorld(e);
     if(e.shot<=0){enemyFire(e);e.shot=e.boss?.95:(e.n==='Ring Shooter'?2.2:e.n==='Sniper'?3.4:e.n==='Turret'?1.8:1.25)}
   }
   if(d<e.r+player.r+(e.n==='Tanker'?8:0)&&!e.boss){hurt(e.dmg);e.x-=dx/d*30;e.y-=dy/d*30}
