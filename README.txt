@@ -1,31 +1,13 @@
-SpaceRadiant v1.4
+SpaceRadiant v1.4.3
 
-Bản này chốt các thay đổi cho TV và map:
+Changes from v1.4.2:
+- Player starts at the center of the 800x1700 map.
+- Enemy spawning is spaced about 2 seconds apart to reduce frame spikes/freezes.
+- Enemy spawn positions are checked against walls so enemies do not spawn inside walls.
+- Splitter shards also use safe spawn positions.
+- EXP drops disappear after 10 seconds if not collected.
+- Safer EXP magnet calculation when the player is exactly on a drop.
+- HUD/skill DOM updates are throttled to reduce mobile/TV browser load.
+- Keeps the previous wall line-of-sight auto-fire behavior and enemy boundary protection.
 
-- World: 1000 x 2750.
-- Bố cục tường được thiết kế lại hoàn toàn để nằm trong map 1000 x 2750.
-- Loại bỏ các tường có tọa độ cũ vượt khỏi map.
-- Giữ hệ thống Range và nâng cấp Range +20% của v1.2/v1.3.
-- Điều khiển TV/bàn phím:
-  8 = lên
-  2 = xuống
-  4 = trái
-  6 = phải
-  Giữ 2 phím hướng cùng lúc = đi chéo.
-  1 = Skill 1 (Dash)
-  3 = Skill 2 (Blast)
-- Giao diện responsive, ưu tiên bố cục ngang khi màn hình rộng/TV.
-- Joystick cảm ứng vẫn được giữ cho điện thoại.
-
-Chạy Termux:
-  cd ~/storage/downloads/SpaceRadiant_v1_4
-  python -m http.server 9999 --bind 127.0.0.1
-
-Mở:
-  http://127.0.0.1:9999/index.html
-
-
-SpaceRadiant v1.4.1: Fixed Orbit enemy leaving the map. Only Orbit boundary handling was changed.
-
-
-SpaceRadiant v1.4.2: map 800x1700; compact TV-aware camera; auto-fire requires clear line of sight (walls block); performance safety caps and loop recovery added to prevent freezes; all enemies are clamped inside the map.
+Run on Termux port 9999 using the server included with your setup.
