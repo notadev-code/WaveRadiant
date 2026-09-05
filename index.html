@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>SpaceRadiant</title>
+<title>SpaceRadiant v1.4.1</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#070912;color:#fff;font-family:Arial,sans-serif;touch-action:none}
@@ -422,6 +422,10 @@ if(nearest){
     let radial=d-e.orbitR;
     e.x+=(tangX*e.spd - dx/d*radial*.35)*dt;
     e.y+=(tangY*e.spd - dy/d*radial*.35)*dt;
+    // Keep Orbit inside the map. Its orbital movement bypasses moveEntity,
+    // so without this clamp it can leave the world and become impossible to kill.
+    e.x=Math.max(e.r,Math.min(world.w-e.r,e.x));
+    e.y=Math.max(e.r,Math.min(world.h-e.r,e.y));
     if(e.shot<=0){enemyFire(e);e.shot=1.8}
   }else if(e.n==='Healer'){
     if(d<150){moveEntity(e,-dx/d*e.spd*dt,-dy/d*e.spd*dt,e.r)}
@@ -438,6 +442,10 @@ if(nearest){
     if(e.shot<=0){enemyFire(e);e.shot=e.boss?.95:(e.n==='Ring Shooter'?2.2:e.n==='Sniper'?3.4:e.n==='Turret'?1.8:1.25)}
   }
   if(d<e.r+player.r+(e.n==='Tanker'?8:0)&&!e.boss){hurt(e.dmg);e.x-=dx/d*30;e.y-=dy/d*30}
+  if(e.n==='Orbit'){
+    e.x=Math.max(e.r,Math.min(world.w-e.r,e.x));
+    e.y=Math.max(e.r,Math.min(world.h-e.r,e.y));
+  }
   if(e.hp<=0){state.killed++;state.score+=e.boss?1500:Math.floor((e.maxhp/10)*(e.elite?3:1));expDrops.push({x:e.x,y:e.y,value:e.boss?45:e.elite?14:5,r:e.boss?11:e.elite?8:6,t:0});burst(e.x,e.y,e.boss?60:e.elite?28:12,e.boss?.9:.45);addText(e.x,e.y,e.elite?'ELITE +'+(e.boss?1500:Math.floor(e.maxhp/10)):'+'+(e.boss?1500:Math.floor(e.maxhp/10)));
    if(e.n==='Splitter' && !e.boss){
      for(let k=0;k<2;k++){
