@@ -1,13 +1,9 @@
-SpaceRadiant v1.4.3
+SpaceRadiant v1.4.4
 
-Changes from v1.4.2:
-- Player starts at the center of the 800x1700 map.
-- Enemy spawning is spaced about 2 seconds apart to reduce frame spikes/freezes.
-- Enemy spawn positions are checked against walls so enemies do not spawn inside walls.
-- Splitter shards also use safe spawn positions.
-- EXP drops disappear after 10 seconds if not collected.
-- Safer EXP magnet calculation when the player is exactly on a drop.
-- HUD/skill DOM updates are throttled to reduce mobile/TV browser load.
-- Keeps the previous wall line-of-sight auto-fire behavior and enemy boundary protection.
+Base: v1.4.3.
+- Giữ nguyên gameplay và cân bằng của v1.4.3.
+- Thiết kế lại silhouette: quái thường và Boss có hình dạng riêng, không còn chỉ tròn/vuông/tam giác.
+- Giữ spawn cách nhau 2 giây, spawn an toàn, EXP biến mất sau 10 giây, auto-fire bị tường chặn, TV 8/2/4/6 + 1/3.
 
-Run on Termux port 9999 using the server included with your setup.
+Termux: cd ~/storage/downloads/SpaceRadiant_v1_4_4 && python -m http.server 9999
+Mở: http://127.0.0.1:9999
