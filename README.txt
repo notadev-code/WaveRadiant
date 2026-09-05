@@ -26,3 +26,6 @@ Mở:
 
 
 SpaceRadiant v1.4.1: Fixed Orbit enemy leaving the map. Only Orbit boundary handling was changed.
+
+
+SpaceRadiant v1.4.2: map 800x1700; compact TV-aware camera; auto-fire requires clear line of sight (walls block); performance safety caps and loop recovery added to prevent freezes; all enemies are clamped inside the map.
