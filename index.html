@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>SpaceRadiant v1.4.7</title>
+<title>SpaceRadiant v1.4.8</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#070912;color:#fff;font-family:Arial,sans-serif;touch-action:none}
@@ -72,7 +72,7 @@ small{color:#aebbd6}
 
 <div id="hud">
   <div id="fxBanner" aria-hidden="true"></div>
-  <div class="row"><span id="hearts">❤️❤️❤️❤️❤️</span><span>Stage <b id="stage">1</b></span><span>Wave <b id="wave">1</b>/5</span><span>Range <b id="rangeStat">650</b></span><span>Score <b id="score">0</b></span></div>
+  <div class="row"><span id="hearts">❤️❤️❤️❤️❤️</span><span>Stage <b id="stage">1</b></span><span>Wave <b id="wave">1</b>/5</span><span>Range <b id="rangeStat">400</b></span><span>Score <b id="score">0</b></span></div>
   <div class="bar"><div id="expFill" class="fill"></div></div>
   <div class="row"><small>EXP <span id="expText">0/20</span> • Lv <span id="level">1</span></small></div>
   <div id="bossBox"><div id="bossName" style="font-size:12px"></div><div class="bar"><div id="bossFill" class="fill"></div></div></div>
@@ -143,14 +143,14 @@ function resetGameState(){
   state.stage=1; state.wave=1; state.score=0; state.level=1; state.exp=5; state.next=20;
   state.spawned=0; state.killed=0; state.waveTimer=0; uiTimer=0;
   enemies.length=0; bullets.length=0; enemyBullets.length=0; particles.length=0; texts.length=0; expDrops.length=0;
-  player.x=world.w/2; player.y=world.h/2; player.r=17; player.hp=5; player.maxhp=5; player.angle=-Math.PI/2;
+  player.x=world.w/2; player.y=world.h/2; player.healFxTimer=0; player.healFxTimer=0; player.r=17; player.hp=5; player.maxhp=5; player.angle=-Math.PI/2;
   player.speed=250; player.damage=18; player.fire=0; player.fireRate=.23; player.bullets=1;
-  player.bulletSpeed=560; player.dash=0; player.blast=0; player.invuln=0; player.crit=.08; player.critMult=1.8; player.armor=0; player.regen=0; player.magnet=0; player.dashMax=.8; player.blastMax=2.5; player.skillDmg=1; player.range=560; miniActive=false; document.getElementById('minigame').style.display='none';
+  player.bulletSpeed=560; player.dash=0; player.blast=0; player.invuln=0; player.crit=.08; player.critMult=1.8; player.armor=0; player.regen=0; player.magnet=0; player.dashMax=.8; player.blastMax=2.5; player.skillDmg=1; player.range=400; miniActive=false; document.getElementById('minigame').style.display='none';
   paused=false; over=false; miniActive=false; miniObjects=[];
   document.getElementById('bossBox').style.display='none'; updateHUD(); supplies.length=0; shieldHP=0; rapidFire=0; supplyTimer=7+Math.random()*9;
 }
 
-const player={x:W/2,y:H/2,r:17,hp:5,maxhp:5,angle:-Math.PI/2,speed:250,damage:18,fire:0,fireRate:.17,bullets:1,bulletSpeed:560,dash:0,blast:0,invuln:0,crit:.08,critMult:1.8,armor:0,regen:0,magnet:0,dashMax:.8,blastMax:2.5,range:560};
+const player={x:W/2,y:H/2,r:17,hp:5,maxhp:5,angle:-Math.PI/2,speed:250,damage:18,fire:0,fireRate:.17,bullets:1,bulletSpeed:560,dash:0,blast:0,invuln:0,crit:.08,critMult:1.8,armor:0,regen:0,magnet:0,dashMax:.8,blastMax:2.5,range:400};
 const enemies=[],bullets=[],enemyBullets=[],particles=[],texts=[],expDrops=[];
 let supplies=[],shieldHP=0,rapidFire=0,supplyTimer=7+Math.random()*9;
 const RAPID_FIRE_RATE=.055;
@@ -304,13 +304,13 @@ function showUpgrade(){
   ['💨 Move speed +10%','speed'],
   ['❤️ +1 Max HP + heal','hp'],
   ['🎯 +1 Projectile','multi'],
-  ['📡 Tầm bắn +20%','range'],
+  ['📡 Tầm bắn +15%','range'],
   ['🛡️ +1 Giáp','armor'],
   ['💚 +15% Hồi phục','regen']
  ];
  opts.sort(()=>Math.random()-.5).slice(0,3).forEach(([name,type])=>{
   const b=document.createElement('button');b.className='choice';b.textContent=name;
-  b.onclick=()=>{if(type==='damage')player.damage*=1.12;if(type==='fire')player.fireRate*=.90;if(type==='speed')player.speed*=1.10;if(type==='hp'){const old=player.hp;player.maxhp++;player.hp=player.maxhp;healFX(player.x,player.y,player.hp-old)}if(type==='multi')player.bullets++;if(type==='range')player.range*=1.20;if(type==='bspeed')player.bulletSpeed*=1.2;if(type==='crit')player.crit=Math.min(.65,player.crit+.08);if(type==='critmult')player.critMult+=.3;if(type==='armor')player.armor++;if(type==='regen')player.regen+=.15;if(type==='magnet')player.magnet+=90;if(type==='dashcd')player.dashMax=Math.max(.25,player.dashMax*.82);if(type==='blastcd')player.blastMax=Math.max(.7,player.blastMax*.84);if(type==='skilldmg')player.skillDmg=(player.skillDmg||1)+.1;
+  b.onclick=()=>{if(type==='damage')player.damage*=1.12;if(type==='fire')player.fireRate*=.90;if(type==='speed')player.speed*=1.10;if(type==='hp'){const old=player.hp;player.maxhp++;player.hp=player.maxhp;healFX(player.x,player.y,player.hp-old)}if(type==='multi')player.bullets++;if(type==='range')player.range*=1.15;if(type==='bspeed')player.bulletSpeed*=1.2;if(type==='crit')player.crit=Math.min(.65,player.crit+.08);if(type==='critmult')player.critMult+=.3;if(type==='armor')player.armor++;if(type==='regen')player.regen+=.15;if(type==='magnet')player.magnet+=90;if(type==='dashcd')player.dashMax=Math.max(.25,player.dashMax*.82);if(type==='blastcd')player.blastMax=Math.max(.7,player.blastMax*.84);if(type==='skilldmg')player.skillDmg=(player.skillDmg||1)+.1;
    document.getElementById('upgrade').style.display='none';paused=false;
   };box.appendChild(b)
  });
@@ -481,7 +481,11 @@ if(nearest){
  player.fire-=dt;player.dash=Math.max(0,player.dash-dt);player.blast=Math.max(0,player.blast-dt);
  if(player.regen>0 && player.hp<player.maxhp){
    const oldHp=player.hp; player.hp=Math.min(player.maxhp,player.hp+player.regen*dt);
-   if(player.hp-oldHp>=.02) addText(player.x,player.y-player.r-8,'💚 +'+(player.hp-oldHp).toFixed(1));
+   player.healFxTimer=(player.healFxTimer||0)-dt;
+   if(player.hp-oldHp>=.02 && player.healFxTimer<=0){
+     addText(player.x,player.y-player.r-8,'💚 +'+(player.hp-oldHp).toFixed(1));
+     player.healFxTimer=.35;
+   }
  }
  uiTimer-=dt;
  if(uiTimer<=0){
@@ -503,11 +507,11 @@ if(nearest){
  if(state.spawned<target&&state.waveTimer>=2.0){state.waveTimer=0;let elite=Math.random()<Math.min(.05+state.stage*.012,.22);spawnEnemy(null,elite,false);state.spawned++}
  if(state.wave===5&&state.spawned===target&&!enemies.some(e=>e.boss)){spawnEnemy(null,false,true)}
  // Safety caps prevent accidental runaway arrays from freezing the browser.
- if(particles.length>450) particles.splice(0,particles.length-450);
- if(texts.length>100) texts.splice(0,texts.length-100);
- if(bullets.length>180) bullets.splice(0,bullets.length-180);
- if(enemyBullets.length>220) enemyBullets.splice(0,enemyBullets.length-220);
- if(expDrops.length>120) expDrops.splice(0,expDrops.length-120);
+ if(particles.length>300) particles.splice(0,particles.length-450);
+ if(texts.length>60) texts.splice(0,texts.length-100);
+ if(bullets.length>140) bullets.splice(0,bullets.length-180);
+ if(enemyBullets.length>160) enemyBullets.splice(0,enemyBullets.length-220);
+ if(expDrops.length>80) expDrops.splice(0,expDrops.length-120);
  for(let i=bullets.length-1;i>=0;i--){let b=bullets[i];b.x+=b.vx*dt;b.y+=b.vy*dt;b.life-=dt;let hit=false;
   if(blocked(b.x,b.y,b.r)){bullets.splice(i,1);continue}
   for(let j=enemyBullets.length-1;j>=0;j--){const eb=enemyBullets[j];if(Math.hypot(b.x-eb.x,b.y-eb.y)<b.r+eb.r+2){enemyBullets.splice(j,1);hit=true;break}}
@@ -840,11 +844,12 @@ function loop(t){
   try{update(dt);}catch(err){
     console.error('SpaceRadiant update recovered:',err);
     paused=false;
-    for(const a of [bullets,enemyBullets,particles,texts,expDrops]) if(a.length>250) a.splice(0,a.length-250);
+    for(const a of [bullets,enemyBullets,particles,texts,expDrops]) if(a.length>180) a.splice(0,a.length-180);
   }
+  // HUD is refreshed outside update() so one gameplay error cannot freeze the top display.
+  try{updateHUD();}catch(err){console.error('HUD recovered:',err);}
   try{draw();}catch(err){
     console.error('SpaceRadiant draw recovered:',err);
-    // Clear safely so a TV browser rendering error cannot leave a frozen frame.
     try{ctx.setTransform(DPR,0,0,DPR,0,0)}catch(e){}
     try{ctx.clearRect(0,0,W,H)}catch(e){}
   }
@@ -878,6 +883,9 @@ document.getElementById('backBtn').onclick=()=>{
 };
 
 updateHUD();
+// Independent HUD watchdog: keeps the top stats synchronized even if the gameplay
+// update returns early (pause/minigame) or recovers from a non-fatal frame error.
+setInterval(()=>{try{updateHUD();}catch(e){}},100);
 requestAnimationFrame(loop);
 </script>
 </body>
