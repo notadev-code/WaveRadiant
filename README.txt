@@ -1,11 +1,9 @@
-SpaceRadiant v1.4.12 - Enemy Names
+SpaceRadiant v1.4.13
 
-Based on SpaceRadiant v1.4.12.
-- Displays each enemy's name above it during gameplay.
-- Bosses and Elite enemies use a more visible label.
-- Gameplay systems are otherwise unchanged.
-
-Run in Termux:
-cd ~/storage/downloads/SpaceRadiant_v1_4_12
-python -m http.server 9999
-Then open http://127.0.0.1:9999
+Changes:
+- Monster names are always displayed above every enemy with a dark label for visibility.
+- Fewer enemies per wave: normal waves use 5 + stage, capped at 12.
+- Enemy spawn interval reduced from 2 seconds to 1 second.
+- Skill 1 Dash cooldown increased to 3 seconds.
+- Skill 2 Blast cooldown increased to 8 seconds, longer than Skill 1.
+- Added stronger one-time death/EXP guards.

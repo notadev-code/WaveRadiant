@@ -145,12 +145,12 @@ function resetGameState(){
   enemies.length=0; bullets.length=0; enemyBullets.length=0; particles.length=0; texts.length=0; expDrops.length=0;
   player.x=world.w/2; player.y=world.h/2; player.healFxTimer=0; player.healFxTimer=0; player.r=17; player.hp=5; player.maxhp=5; player.angle=-Math.PI/2;
   player.speed=250; player.damage=18; player.fire=0; player.fireRate=.23; player.bullets=1;
-  player.bulletSpeed=560; player.dash=0; player.blast=0; player.invuln=0; player.crit=.08; player.critMult=1.8; player.armor=0; player.regen=0; player.magnet=0; player.dashMax=.8; player.blastMax=2.5; player.skillDmg=1; player.range=400; miniActive=false; document.getElementById('minigame').style.display='none';
+  player.bulletSpeed=560; player.dash=0; player.blast=0; player.invuln=0; player.crit=.08; player.critMult=1.8; player.armor=0; player.regen=0; player.magnet=0; player.dashMax=3; player.blastMax=8; player.skillDmg=1; player.range=400; miniActive=false; document.getElementById('minigame').style.display='none';
   paused=false; over=false; miniActive=false; miniObjects=[];
   document.getElementById('bossBox').style.display='none'; updateHUD(); supplies.length=0; shieldHP=0; rapidFire=0; supplyTimer=7+Math.random()*9;
 }
 
-const player={x:W/2,y:H/2,r:17,hp:5,maxhp:5,angle:-Math.PI/2,speed:250,damage:18,fire:0,fireRate:.17,bullets:1,bulletSpeed:560,dash:0,blast:0,invuln:0,crit:.08,critMult:1.8,armor:0,regen:0,magnet:0,dashMax:.8,blastMax:2.5,range:400};
+const player={x:W/2,y:H/2,r:17,hp:5,maxhp:5,angle:-Math.PI/2,speed:250,damage:18,fire:0,fireRate:.17,bullets:1,bulletSpeed:560,dash:0,blast:0,invuln:0,crit:.08,critMult:1.8,armor:0,regen:0,magnet:0,dashMax:3,blastMax:8,range:400};
 const enemies=[],bullets=[],enemyBullets=[],particles=[],texts=[],expDrops=[];
 let supplies=[],shieldHP=0,rapidFire=0,supplyTimer=7+Math.random()*9;
 const RAPID_FIRE_RATE=.055;
@@ -449,7 +449,7 @@ function update(dt){
    if(d.t>=10){expDrops.splice(i,1);continue;}
    const dx=player.x-d.x,dy=player.y-d.y,dist=Math.hypot(dx,dy);
    if(player.magnet>0 && dist>0 && dist<player.magnet){const sp=150+Math.max(0,player.magnet-dist)*3; d.x+=dx/dist*sp*dt; d.y+=dy/dist*sp*dt;}
-   if(!d._collected && dist<player.r+d.r+5){d._collected=true;const val=Math.max(0,Number(d.value)||0);gainExp(val);addText(d.x,d.y-10,'+'+val+' EXP');expDrops.splice(i,1);}
+   if(!d._collected && Number.isFinite(d.value) && dist<player.r+d.r+5){d._collected=true;const val=Math.max(0,Number(d.value)||0);gainExp(val);addText(d.x,d.y-10,'+'+val+' EXP');expDrops.splice(i,1);}
  }
  // TV: each direction is independent. Holding 2 then pressing 4 produces diagonal; releasing 4 returns to 2 only.
  const tvMoving=tvKeys.up||tvKeys.down||tvKeys.left||tvKeys.right;
@@ -503,8 +503,8 @@ if(nearest){
    player.fire=0;
  }
  state.waveTimer+=dt;
- let target=state.wave===5?1:Math.min(8+state.stage*2,20);
- if(state.spawned<target&&state.waveTimer>=2.0){state.waveTimer=0;let elite=Math.random()<Math.min(.05+state.stage*.012,.22);spawnEnemy(null,elite,false);state.spawned++}
+ let target=state.wave===5?1:Math.min(5+state.stage,12);
+ if(state.spawned<target&&state.waveTimer>=1.0){state.waveTimer=0;let elite=Math.random()<Math.min(.05+state.stage*.012,.22);spawnEnemy(null,elite,false);state.spawned++}
  if(state.wave===5&&state.spawned===target&&!enemies.some(e=>e.boss)){spawnEnemy(null,false,true)}
  // Safety caps prevent accidental runaway arrays from freezing the browser.
  if(particles.length>300) particles.splice(0,particles.length-300);
@@ -586,13 +586,13 @@ if(nearest){
     e.x=Math.max(e.r,Math.min(world.w-e.r,e.x));
     e.y=Math.max(e.r,Math.min(world.h-e.r,e.y));
   }
-  if(!Number.isFinite(e.hp) || e.hp<=0){
+  if(!e._deathHandled && (!Number.isFinite(e.hp) || e.hp<=0)){
     e._deathHandled=true;
     state.killed++;
     const reward=e.boss?1500:Math.floor((e.maxhp/10)*(e.elite?3:1));
     const expValue=e.boss?45:e.elite?14:5;
     state.score+=Number.isFinite(reward)?reward:0;
-    expDrops.push({x:e.x,y:e.y,value:expValue,r:e.boss?11:e.elite?8:6,t:0,_collected:false});
+    if(Number.isFinite(expValue) && expValue>0){ expDrops.push({x:e.x,y:e.y,value:expValue,r:e.boss?11:e.elite?8:6,t:0,_collected:false}); }
     burst(e.x,e.y,e.boss?60:e.elite?28:12,e.boss?.9:.45);
     addText(e.x,e.y,e.elite?'ELITE +'+reward:'+'+reward);
     if(e.n==='Splitter' && !e.boss){
@@ -825,18 +825,26 @@ function draw(){
       ctx.beginPath();ctx.arc(0,0,e.r*1.22,0,Math.PI*2);ctx.setLineDash([3,3]);ctx.strokeStyle='#f2dcff';ctx.lineWidth=2;ctx.stroke();ctx.setLineDash([]);
     }
   }
+  // Monster name: draw in world coordinates after the silhouette, with a dark outline and a small plate.
   ctx.restore();
-  // enemy name above the monster
   ctx.save();
-  ctx.font='bold '+(e.boss?'12px':'10px')+' Arial';
+  const labelSize=e.boss?13:(e.elite?12:11);
+  const labelY=e.y-e.r-24;
+  ctx.font='bold '+labelSize+'px Arial';
   ctx.textAlign='center';
-  ctx.textBaseline='bottom';
+  ctx.textBaseline='middle';
+  const labelW=ctx.measureText(String(e.n)).width+10;
+  const labelH=labelSize+6;
+  ctx.fillStyle='rgba(0,0,0,.72)';
+  ctx.fillRect(e.x-labelW/2,labelY-labelH/2,labelW,labelH);
+  ctx.strokeStyle=e.boss?'#ffd86b':(e.elite?'#d9b8ff':'#9ee7ff');
+  ctx.lineWidth=1;
+  ctx.strokeRect(e.x-labelW/2,labelY-labelH/2,labelW,labelH);
+  ctx.fillStyle=e.boss?'#ffd86b':(e.elite?'#eadbff':'#ffffff');
   ctx.lineWidth=3;
   ctx.strokeStyle='#000';
-  ctx.fillStyle=e.boss?'#ffd86b':(e.elite?'#eadbff':'#ffffff');
-  const nameY=e.y-e.r-22;
-  ctx.strokeText(e.n,e.x,nameY);
-  ctx.fillText(e.n,e.x,nameY);
+  ctx.strokeText(String(e.n),e.x,labelY);
+  ctx.fillText(String(e.n),e.x,labelY);
   ctx.restore();
   // hp bar
   const bw=e.boss?0:Math.max(28,e.r*2.4),bh=4,bx=e.x-bw/2,by=e.y-e.r-10;
