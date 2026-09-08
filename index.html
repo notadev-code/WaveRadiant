@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>SpaceRadiant v1.15.2</title>
+<title>SpaceRadiant v1.15.3</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#070912;color:#fff;font-family:Arial,sans-serif;touch-action:none}
@@ -94,7 +94,7 @@ small{color:#aebbd6}
 
 <div id="mainMenu">
   <div class="menuPanel">
-    <div class="title">SPACE RADIANT v1.15.2</div>
+    <div class="title">SPACE RADIANT v1.15.3</div>
     <div class="sub">AUTO-AIM • ENDLESS</div>
     <button id="startBtn" class="menuButton">▶ BẮT ĐẦU</button>
     <button id="helpBtn" class="menuButton">❔ HƯỚNG DẪN</button>
@@ -638,13 +638,19 @@ if(nearest){
   if(e.n==='Melee'||e.n==='Chaser'||e.n==='Tanker'||e.n==='Shard'){
     smartMoveEnemy(e,dx,dy,dt);
   }else if(e.n==='Timedasher'){
-    // Dasher 2.0: warning/clock for 3s, then an extremely fast straight charge.
+    // Dasher 2.0: 1.5s warning. During the whole warning period the aim continuously tracks the player's current position.
     if(e.tdState===0){
-      if(d<=e.range){e.tdState=1;e.tdTimer=3;e.tdLockX=player.x;e.tdLockY=player.y;fxBanner('⏱ TIMEDASHER!');}
-      else smartMoveEnemy(e,dx,dy,dt);
+      if(d<=e.range){
+        e.tdState=1;
+        e.tdTimer=1.5;
+        e.tdLockX=player.x;
+        e.tdLockY=player.y;
+      }else smartMoveEnemy(e,dx,dy,dt);
     }else if(e.tdState===1){
+      // Update every frame: the final charge direction is based on the latest player position.
+      e.tdLockX=player.x;
+      e.tdLockY=player.y;
       e.tdTimer-=dt;
-      if(d<=e.range*.95){e.tdLockX=player.x;e.tdLockY=player.y;}
       if(e.tdTimer<=0){
         const tx=e.tdLockX-e.x,ty=e.tdLockY-e.y,tm=Math.hypot(tx,ty)||1;
         e.tdState=2;e.tdTimer=.72;e.vx=tx/tm*820;e.vy=ty/tm*820;
