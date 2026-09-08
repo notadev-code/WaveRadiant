@@ -1,4 +1,4 @@
-SpaceRadiant v1.15.1 – Smart AI & Timedasher Update
+SpaceRadiant v1.15.2 – Smart AI & Timedasher Update
 ================================================
 
 Bản này phát triển từ SpaceRadiant v1.15 – Boss HUD Decorated.
@@ -64,7 +64,7 @@ CÁCH CHẠY TRÊN TERMUX
 1. Giải nén ZIP.
 2. Mở Termux.
 3. Vào thư mục game, ví dụ:
-   cd ~/storage/downloads/SpaceRadiant_v1_15_1
+   cd ~/storage/downloads/SpaceRadiant_v1_16
 4. Chạy:
    python -m http.server 9999
 5. Mở trên máy chạy game:
