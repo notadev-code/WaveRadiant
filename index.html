@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>SpaceRadiant v1.15</title>
+<title>SpaceRadiant v1.15.1</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#070912;color:#fff;font-family:Arial,sans-serif;touch-action:none}
@@ -94,7 +94,7 @@ small{color:#aebbd6}
 
 <div id="mainMenu">
   <div class="menuPanel">
-    <div class="title">SPACE RADIANT v1.15</div>
+    <div class="title">SPACE RADIANT v1.15.1</div>
     <div class="sub">AUTO-AIM • ENDLESS</div>
     <button id="startBtn" class="menuButton">▶ BẮT ĐẦU</button>
     <button id="helpBtn" class="menuButton">❔ HƯỚNG DẪN</button>
@@ -149,14 +149,14 @@ function resetGameState(){
   state.stage=1; state.wave=1; state.score=0; state.level=1; state.exp=5; state.next=20;
   state.spawned=0; state.killed=0; state.waveTimer=0; uiTimer=0;
   enemies.length=0; bullets.length=0; enemyBullets.length=0; particles.length=0; texts.length=0; expDrops.length=0; chests.length=0;
-  player.x=world.w/2; player.y=world.h/2; player.healFxTimer=0; player.healFxTimer=0; player.r=17; player.hp=5; player.maxhp=5; player.angle=-Math.PI/2;
+  player.x=world.w/2; player.y=world.h/2; player.healFxTimer=0; player.regenTimer=15; player.r=17; player.hp=5; player.maxhp=5; player.angle=-Math.PI/2;
   player.speed=250; player.damage=18; player.fire=0; player.fireRate=.23; player.bullets=1;
   player.bulletSpeed=560; player.dash=0; player.blast=0; player.invuln=0; player.crit=.08; player.critMult=1.8; player.armor=0; player.regen=0; player.magnet=0; player.dashMax=3; player.blastMax=8; player.skillDmg=1; player.range=400; miniActive=false; document.getElementById('minigame').style.display='none';
   paused=false; over=false; miniActive=false; miniObjects=[];
   document.getElementById('bossBox').style.display='none'; document.getElementById('bossBox').innerHTML=''; updateHUD(); supplies.length=0; shieldHits=0; rapidFire=0; supplyTimer=7+Math.random()*9; state.bossesSpawned=0; state.bossesTarget=0;
 }
 
-const player={x:W/2,y:H/2,r:17,hp:5,maxhp:5,angle:-Math.PI/2,speed:250,damage:18,fire:0,fireRate:.17,bullets:1,bulletSpeed:560,dash:0,blast:0,invuln:0,crit:.08,critMult:1.8,armor:0,regen:0,magnet:0,dashMax:3,blastMax:8,range:400};
+const player={x:W/2,y:H/2,r:17,hp:5,maxhp:5,angle:-Math.PI/2,speed:250,damage:18,fire:0,fireRate:.17,bullets:1,bulletSpeed:560,dash:0,blast:0,invuln:0,crit:.08,critMult:1.8,armor:0,regen:0,regenTimer:15,magnet:0,dashMax:3,blastMax:8,range:400};
 const enemies=[],bullets=[],enemyBullets=[],particles=[],texts=[],expDrops=[];
 let supplies=[],shieldHits=0,rapidFire=0,supplyTimer=7+Math.random()*9;
 let chests=[];
@@ -231,18 +231,23 @@ joy(document.getElementById('joyL'),document.getElementById('leftStick'),left);
 const tvKeys={up:false,down:false,left:false,right:false};
 const tvKeyMap={'2':'up','Digit2':'up','Numpad2':'up','8':'down','Digit8':'down','Numpad8':'down','4':'left','Digit4':'left','Numpad4':'left','6':'right','Digit6':'right','Numpad6':'right'};
 function tvActionKey(e){
-  if(tvKeyMap[e.code]) return tvKeyMap[e.code];
-  if(tvKeyMap[e.key]) return tvKeyMap[e.key];
-  return ({50:'up',56:'down',52:'left',54:'right'}[e.keyCode||e.which]||null);
+  const code=String(e.code||''); const key=String(e.key||''); const kc=e.keyCode||e.which;
+  return tvKeyMap[code]||tvKeyMap[key]||({50:'up',56:'down',52:'left',54:'right'}[kc]||null);
+}
+function tvSkillKey(e){
+  const code=String(e.code||''); const key=String(e.key||''); const kc=e.keyCode||e.which;
+  if(key==='1'||code==='Digit1'||code==='Numpad1'||kc===49)return 1;
+  if(key==='3'||code==='Digit3'||code==='Numpad3'||kc===51)return 3;
+  return 0;
 }
 addEventListener('keydown',e=>{
   const k=tvActionKey(e);
-  if(k){tvKeys[k]=true;e.preventDefault();e.stopPropagation();return;}
-  const kc=e.keyCode||e.which;
-  if(e.key==='1'||e.code==='Digit1'||e.code==='Numpad1'||kc===49){skillDash();e.preventDefault();e.stopPropagation();return;}
-  if(e.key==='3'||e.code==='Digit3'||e.code==='Numpad3'||kc===51){skillBlast();e.preventDefault();e.stopPropagation();return;}
+  if(k){tvKeys[k]=true;e.preventDefault();e.stopImmediatePropagation();return;}
+  const sk=tvSkillKey(e);
+  if(sk===1){skillDash();e.preventDefault();e.stopImmediatePropagation();return;}
+  if(sk===3){skillBlast();e.preventDefault();e.stopImmediatePropagation();return;}
 },true);
-addEventListener('keyup',e=>{const k=tvActionKey(e);if(k){tvKeys[k]=false;e.preventDefault();e.stopPropagation();}},true);
+addEventListener('keyup',e=>{const k=tvActionKey(e);if(k){tvKeys[k]=false;e.preventDefault();e.stopImmediatePropagation();}},true);
 addEventListener('blur',()=>{tvKeys.up=tvKeys.down=tvKeys.left=tvKeys.right=false;},true);
 
 function roundRectPath(ctx,x,y,w,h,r){
@@ -300,11 +305,12 @@ function showUpgrade(){
   ['🎯 +1 Projectile','multi'],
   ['📡 Tầm bắn +15%','range'],
   ['🛡️ +1 Giáp','armor'],
-  ['💚 +15% Hồi phục','regen']
+  ['💚 +15% Hồi phục • 15s','regen']
  ];
- opts.sort(()=>Math.random()-.5).slice(0,3).forEach(([name,type])=>{
+ const available=opts.filter(([name,type])=>type!=='regen' || player.regen<=0);
+ available.sort(()=>Math.random()-.5).slice(0,3).forEach(([name,type])=>{
   const b=document.createElement('button');b.className='choice';b.textContent=name;
-  b.onclick=()=>{if(type==='damage')player.damage*=1.12;if(type==='fire')player.fireRate*=.90;if(type==='speed')player.speed*=1.10;if(type==='hp'){const old=player.hp;player.maxhp++;player.hp=player.maxhp;healFX(player.x,player.y,player.hp-old)}if(type==='multi')player.bullets++;if(type==='range')player.range*=1.15;if(type==='bspeed')player.bulletSpeed*=1.2;if(type==='crit')player.crit=Math.min(.65,player.crit+.08);if(type==='critmult')player.critMult+=.3;if(type==='armor')player.armor++;if(type==='regen')player.regen+=.15;if(type==='magnet')player.magnet+=90;if(type==='dashcd')player.dashMax=Math.max(.25,player.dashMax*.82);if(type==='blastcd')player.blastMax=Math.max(.7,player.blastMax*.84);if(type==='skilldmg')player.skillDmg=(player.skillDmg||1)+.1;
+  b.onclick=()=>{if(type==='damage')player.damage*=1.12;if(type==='fire')player.fireRate*=.90;if(type==='speed')player.speed*=1.10;if(type==='hp'){const old=player.hp;player.maxhp++;player.hp=player.maxhp;healFX(player.x,player.y,player.hp-old)}if(type==='multi')player.bullets++;if(type==='range')player.range*=1.15;if(type==='bspeed')player.bulletSpeed*=1.2;if(type==='crit')player.crit=Math.min(.65,player.crit+.08);if(type==='critmult')player.critMult+=.3;if(type==='armor')player.armor++;if(type==='regen'){player.regen=.15;player.regenTimer=15;}if(type==='magnet')player.magnet+=90;if(type==='dashcd')player.dashMax=Math.max(.25,player.dashMax*.82);if(type==='blastcd')player.blastMax=Math.max(.7,player.blastMax*.84);if(type==='skilldmg')player.skillDmg=(player.skillDmg||1)+.1;
    document.getElementById('upgrade').style.display='none';paused=false;
   };box.appendChild(b)
  });
@@ -327,6 +333,40 @@ function findSafeSpawn(r=18){
   return {x:Math.max(r,Math.min(world.w-r,world.w/2)),y:Math.max(r,Math.min(world.h-r,world.h/2-260))};
 }
 
+function bulletThreat(e){
+  for(const b of enemyBullets){
+    if(!b||b.mine)continue;
+    const dx=e.x-b.x,dy=e.y-b.y,d=Math.hypot(dx,dy)||1;
+    if(d>155)continue;
+    const toward=(b.vx*dx+b.vy*dy)/d;
+    if(toward>55)return {dx,dy,d};
+  }
+  return null;
+}
+function smartMoveEnemy(e,dx,dy,dt){
+  const desired=Math.atan2(dy,dx);
+  const threat=bulletThreat(e);
+  let base=desired;
+  if(threat){
+    const away=Math.atan2(threat.dy,threat.dx);
+    const side=away+(Math.random()<.5?Math.PI/2:-Math.PI/2);
+    base=side*.72+away*.28;
+  }
+  const angles=[0,.38,-.38,.78,-.78,1.18,-1.18,Math.PI];
+  let best=null,bestScore=-Infinity;
+  for(const off of angles){
+    const a=base+off,step=e.spd*dt;
+    const nx=e.x+Math.cos(a)*step*1.6,ny=e.y+Math.sin(a)*step*1.6;
+    if(blocked(nx,e.y,e.r)||blocked(e.x,ny,e.r)||blocked(nx,ny,e.r))continue;
+    const before=Math.hypot(player.x-e.x,player.y-e.y),after=Math.hypot(player.x-nx,player.y-ny);
+    let score=before-after;
+    if(threat){const td=Math.hypot(nx-(e.x+threat.dx),ny-(e.y+threat.dy));score+=(td<120? -20:20);}
+    if(score>bestScore){bestScore=score;best={x:nx,y:ny,a};}
+  }
+  if(best){moveEntity(e,Math.cos(best.a)*e.spd*dt,Math.sin(best.a)*e.spd*dt,e.r);}
+  else moveEntity(e,Math.cos(desired)*e.spd*dt,Math.sin(desired)*e.spd*dt,e.r);
+}
+
 function spawnEnemy(kind,elite=false,boss=false){
  const safe=findSafeSpawn(boss?52:(elite?22:18));
  let x=safe.x, y=safe.y;
@@ -340,6 +380,7 @@ function spawnEnemy(kind,elite=false,boss=false){
   {n:'Tanker',r:23,hp:180,dmg:2,spd:38,range:40,color:5},
   {n:'Sniper',r:14,hp:58,dmg:2,spd:28,range:470,color:7},
   {n:'Dasher',r:15,hp:72,dmg:2,spd:70,range:115,color:8},
+  {n:'Timedasher',r:14,hp:88,dmg:3,spd:82,range:320,color:20},
   {n:'Splitter',r:17,hp:92,dmg:1,spd:62,range:170,color:9},
   {n:'Mine Layer',r:16,hp:78,dmg:2,spd:48,range:190,color:10},
   {n:'Orbit',r:18,hp:105,dmg:1,spd:88,range:210,color:11},
@@ -355,8 +396,9 @@ function spawnEnemy(kind,elite=false,boss=false){
   {n:'PHANTOM BOSS',r:50,hp:1300,dmg:2,spd:62,range:300,color:19,bossStyle:'orbit'}
  ];
  let t=boss?bossTypes[Math.floor(Math.random()*bossTypes.length)]:types[Math.floor(Math.random()*types.length)];
+ if(!boss && !elite && Math.random()<.08)t=types.find(q=>q.n==='Timedasher')||t;
  let e={x,y,...t,maxhp:t.hp*scale,hp:t.hp*scale,elite,boss,shot:Math.random()*2,hit:0,phase:Math.random()*6,
-  special:1.5+Math.random()*2.5, dash:0, vx:0, vy:0, mines:0, orbitR:70+Math.random()*45,phase2:false,phasePulse:0};
+  special:1.5+Math.random()*2.5, dash:0, vx:0, vy:0, mines:0, orbitR:70+Math.random()*45,phase2:false,phasePulse:0,tdState:0,tdTimer:0,tdLockX:0,tdLockY:0};
  if(elite&&!boss){e.maxhp*=2.5;e.hp=e.maxhp;e.r*=1.22;e.dmg=2;e.spd*=1.05}
  if(boss){e.maxhp=t.hp+state.stage*500;e.hp=e.maxhp}
  enemies.push(e);
@@ -386,7 +428,7 @@ function updateBossHUD(){
 }
 function triggerBossPhase(e){
  if(!e||!e.boss||e.phase2||e.hp>e.maxhp*.5)return;
- e.phase2=true; e.phasePulse=1.2; e.spd*=1.25; e.dmg+=1; e.shot=Math.min(e.shot,.35);
+ e.phase2=true; e.phasePulse=1.2; e.spd*=1.25; e.dmg+=1; e.shot=Math.min(e.shot,.22); e.phase2Move=true;
  addText(e.x,e.y-e.r-30,'⚠ PHASE 2!'); fxBanner('⚠ BOSS PHASE 2'); burst(e.x,e.y,35,.7); shakeIt(9);
 }
 function spawnChest(){
@@ -413,13 +455,15 @@ function firePlayer(){
 }
 function enemyFire(e){
   let a=Math.atan2(player.y-e.y,player.x-e.x);
+  const bm=e.boss&&e.phase2?1.45:1;
+  const bs=v=>v*bm;
   if(e.boss){
-    if(e.bossStyle==='sniper'){enemyBullets.push({x:e.x,y:e.y,vx:Math.cos(a)*255,vy:Math.sin(a)*255,r:7,dmg:2,life:5,sniper:true});}
-    else if(e.bossStyle==='dash'){for(let k=-1;k<=1;k++){let aa=a+k*.25;enemyBullets.push({x:e.x,y:e.y,vx:Math.cos(aa)*210,vy:Math.sin(aa)*210,r:5,dmg:2,life:4})}}
-    else if(e.bossStyle==='swarm'){for(let i=0;i<6;i++){let aa=a+(Math.random()-.5)*1.8;enemyBullets.push({x:e.x,y:e.y,vx:Math.cos(aa)*140,vy:Math.sin(aa)*140,r:4,dmg:1,life:5})}}
-    else if(e.bossStyle==='turret'){for(let k=-3;k<=3;k++){let aa=a+k*.13;enemyBullets.push({x:e.x,y:e.y,vx:Math.cos(aa)*175,vy:Math.sin(aa)*175,r:5,dmg:1,life:5})}}
-    else if(e.bossStyle==='orbit'){for(let i=0;i<4;i++){let aa=a+i*Math.PI/2+e.phase;enemyBullets.push({x:e.x,y:e.y,vx:Math.cos(aa)*125,vy:Math.sin(aa)*125,r:5,dmg:1,life:5})}}
-    else {for(let i=0;i<10;i++){let aa=i*Math.PI*2/10+e.phase;enemyBullets.push({x:e.x,y:e.y,vx:Math.cos(aa)*105,vy:Math.sin(aa)*105,r:5,dmg:1,life:5})}}
+    if(e.bossStyle==='sniper'){enemyBullets.push({x:e.x,y:e.y,vx:Math.cos(a)*bs(255),vy:Math.sin(a)*bs(255),r:7,dmg:2,life:5,sniper:true});}
+    else if(e.bossStyle==='dash'){for(let k=-1;k<=1;k++){let aa=a+k*.25;enemyBullets.push({x:e.x,y:e.y,vx:Math.cos(aa)*bs(210),vy:Math.sin(aa)*bs(210),r:5,dmg:2,life:4})}}
+    else if(e.bossStyle==='swarm'){for(let i=0;i<6;i++){let aa=a+(Math.random()-.5)*1.8;enemyBullets.push({x:e.x,y:e.y,vx:Math.cos(aa)*bs(140),vy:Math.sin(aa)*bs(140),r:4,dmg:1,life:5})}}
+    else if(e.bossStyle==='turret'){for(let k=-3;k<=3;k++){let aa=a+k*.13;enemyBullets.push({x:e.x,y:e.y,vx:Math.cos(aa)*bs(175),vy:Math.sin(aa)*bs(175),r:5,dmg:1,life:5})}}
+    else if(e.bossStyle==='orbit'){for(let i=0;i<4;i++){let aa=a+i*Math.PI/2+e.phase;enemyBullets.push({x:e.x,y:e.y,vx:Math.cos(aa)*bs(125),vy:Math.sin(aa)*bs(125),r:5,dmg:1,life:5})}}
+    else {for(let i=0;i<10;i++){let aa=i*Math.PI*2/10+e.phase;enemyBullets.push({x:e.x,y:e.y,vx:Math.cos(aa)*bs(105),vy:Math.sin(aa)*bs(105),r:5,dmg:1,life:5})}}
   }else if(e.n==='Ring Shooter'){
     for(let i=0;i<8;i++){let aa=i*Math.PI/4+e.phase;
       enemyBullets.push({x:e.x,y:e.y,vx:Math.cos(aa)*115,vy:Math.sin(aa)*115,r:4,dmg:1,life:4})}
@@ -536,14 +580,16 @@ if(nearest){
  player.x=Math.max(22,Math.min(world.w-22,player.x));player.y=Math.max(85,Math.min(world.h-22,player.y));
  player.invuln=Math.max(0,player.invuln-dt);
  player.fire-=dt;player.dash=Math.max(0,player.dash-dt);player.blast=Math.max(0,player.blast-dt);
- if(player.regen>0 && player.hp<player.maxhp){
-   const oldHp=player.hp; player.hp=Math.min(player.maxhp,player.hp+player.regen*dt);
-   player.healFxTimer=(player.healFxTimer||0)-dt;
-   if(player.hp-oldHp>=.02 && player.healFxTimer<=0){
-     addText(player.x,player.y-player.r-8,'💚 +'+(player.hp-oldHp).toFixed(1));
-     player.healFxTimer=.35;
+ if(player.regen>0){
+   player.regenTimer=(player.regenTimer||15)-dt;
+   if(player.regenTimer<=0){
+     if(player.hp<player.maxhp && Math.random()<player.regen){
+       const oldHp=player.hp; player.hp=Math.min(player.maxhp,player.hp+1);
+       if(player.hp>oldHp)healFX(player.x,player.y,player.hp-oldHp);
+     }
+     player.regenTimer=15;
    }
- }
+ } else player.regenTimer=15;
  uiTimer-=dt;
  if(uiTimer<=0){
    uiTimer=.10;
@@ -585,8 +631,28 @@ if(nearest){
  }
  for(let i=enemies.length-1;i>=0;i--){let e=enemies[i];if(!e||e._deathHandled){enemies.splice(i,1);continue;}e.hit=Math.max(0,e.hit-dt);e.shot-=dt;e.phase+=dt;
   let dx=player.x-e.x,dy=player.y-e.y,d=Math.hypot(dx,dy)||1;
+  if(e.boss&&e.phase2){
+    // Phase 2 makes every boss mobile, including the normally stationary sniper/turret types.
+    smartMoveEnemy(e,dx,dy,dt);
+  }
   if(e.n==='Melee'||e.n==='Chaser'||e.n==='Tanker'||e.n==='Shard'){
-    moveEntity(e,dx/d*e.spd*dt,dy/d*e.spd*dt,e.r);
+    smartMoveEnemy(e,dx,dy,dt);
+  }else if(e.n==='Timedasher'){
+    // Dasher 2.0: warning/clock for 3s, then an extremely fast straight charge.
+    if(e.tdState===0){
+      if(d<=e.range){e.tdState=1;e.tdTimer=3;e.tdLockX=player.x;e.tdLockY=player.y;fxBanner('⏱ TIMEDASHER!');}
+      else smartMoveEnemy(e,dx,dy,dt);
+    }else if(e.tdState===1){
+      e.tdTimer-=dt;
+      if(d<=e.range*.95){e.tdLockX=player.x;e.tdLockY=player.y;}
+      if(e.tdTimer<=0){
+        const tx=e.tdLockX-e.x,ty=e.tdLockY-e.y,tm=Math.hypot(tx,ty)||1;
+        e.tdState=2;e.tdTimer=.72;e.vx=tx/tm*820;e.vy=ty/tm*820;
+      }
+    }else if(e.tdState===2){
+      e.tdTimer-=dt;e.x+=e.vx*dt;e.y+=e.vy*dt;
+      if(e.tdTimer<=0)e.tdState=0;
+    }
   }else if(e.n==='Dasher'){
     e.special-=dt;
     if(e.special<=0 && d>90){
@@ -594,31 +660,38 @@ if(nearest){
       e.vx=dx/d*430;e.vy=dy/d*430;
     }
     if(e.dash>0){e.dash-=dt;e.x+=e.vx*dt;e.y+=e.vy*dt}
-    else if(d>e.range){e.x+=dx/d*e.spd*dt;e.y+=dy/d*e.spd*dt}
+    else if(d>e.range)smartMoveEnemy(e,dx,dy,dt)
   }else if(e.n==='Splitter'){
-    if(d>e.range){e.x+=dx/d*e.spd*dt;e.y+=dy/d*e.spd*dt}
+    if(d>e.range)smartMoveEnemy(e,dx,dy,dt)
     if(e.shot<=0){enemyFire(e);e.shot=2.0}
   }else if(e.n==='Mine Layer'){
     e.special-=dt;
     if(d<130){moveEntity(e,-dx/d*e.spd*dt,-dy/d*e.spd*dt,e.r)}
-    else if(d>e.range){e.x+=dx/d*e.spd*dt;e.y+=dy/d*e.spd*dt}
+    else if(d>e.range)smartMoveEnemy(e,dx,dy,dt)
     if(e.special<=0 && e.mines<4){
       enemyBullets.push({x:e.x,y:e.y,vx:0,vy:0,r:11,dmg:2,life:8,mine:true});
       e.mines++;e.special=3.0;
     }
   }else if(e.n==='Orbit'){
-    let tangX=-dy/d,tangY=dx/d;
-    let radial=d-e.orbitR;
-    e.x+=(tangX*e.spd - dx/d*radial*.35)*dt;
-    e.y+=(tangY*e.spd - dy/d*radial*.35)*dt;
-    // Keep Orbit inside the map. Its orbital movement bypasses moveEntity,
-    // so without this clamp it can leave the world and become impossible to kill.
+    // Free orbital motion: continuously circles the player instead of getting stuck at a corner.
+    const orbitD=Math.hypot(e.x-player.x,e.y-player.y)||1;
+    const tx=-dy/orbitD,ty=dx/orbitD;
+    const radial=orbitD-e.orbitR;
+    const threat=bulletThreat(e);
+    let ox=tx*e.spd - dx/orbitD*radial*.9;
+    let oy=ty*e.spd - dy/orbitD*radial*.9;
+    if(threat){const aa=Math.atan2(threat.dy,threat.dx);ox+=Math.cos(aa+Math.PI/2)*45;oy+=Math.sin(aa+Math.PI/2)*45;}
+    const oldX=e.x,oldY=e.y;
+    moveEntity(e,ox*dt,oy*dt,e.r);
+    if(Math.hypot(e.x-oldX,e.y-oldY)<.2){
+      const escape=smartMoveEnemy; escape(e,dx,dy,dt);
+    }
     e.x=Math.max(e.r,Math.min(world.w-e.r,e.x));
     e.y=Math.max(e.r,Math.min(world.h-e.r,e.y));
     if(e.shot<=0){enemyFire(e);e.shot=1.8}
   }else if(e.n==='Healer'){
     if(d<150){moveEntity(e,-dx/d*e.spd*dt,-dy/d*e.spd*dt,e.r)}
-    else if(d>e.range){e.x+=dx/d*e.spd*dt;e.y+=dy/d*e.spd*dt}
+    else if(d>e.range)smartMoveEnemy(e,dx,dy,dt)
     e.special-=dt;
     if(e.special<=0){
       let ally=null,bestRatio=Infinity;
@@ -634,8 +707,8 @@ if(nearest){
     }
   }else{
     if(e.boss)triggerBossPhase(e);
-    if(d>e.range){e.x+=dx/d*e.spd*dt;e.y+=dy/d*e.spd*dt}
-    if(e.shot<=0){enemyFire(e);e.shot=e.boss?.95:(e.n==='Ring Shooter'?2.2:e.n==='Sniper'?3.4:e.n==='Turret'?1.8:1.25)}
+    if(d>e.range)smartMoveEnemy(e,dx,dy,dt)
+    if(e.shot<=0){enemyFire(e);const baseCd=e.n==='Ring Shooter'?2.2:e.n==='Sniper'?3.4:e.n==='Turret'?1.8:1.25;e.shot=e.boss?(e.phase2?baseCd*.48:baseCd*.95):baseCd}
   }
   // Every enemy is kept inside the map, including direct-movement enemies.
   e.x=Math.max(e.r,Math.min(world.w-e.r,e.x));
@@ -845,6 +918,22 @@ function draw(){
       ctx.lineTo(-e.r*.15,e.r*.32);ctx.lineTo(-e.r*.48,e.r*.7);ctx.lineTo(-e.r*.78,e.r*.7);ctx.lineTo(-e.r*.52,e.r*.12);ctx.closePath();
       ctx.fillStyle='#2c3c55';ctx.fill();ctx.strokeStyle='#9ec7ff';ctx.stroke();
       ctx.beginPath();ctx.arc(e.r*.15,0,e.r*.2,0,Math.PI*2);ctx.stroke();
+    }else if(e.n==='Timedasher'){
+      // Viên đạn / Dasher 2.0. Nhấp nháy đỏ trong lúc đếm ngược.
+      const blink=e.tdState===1 ? (Math.floor(e.tdTimer*8)%2===0) : false;
+      ctx.save();
+      ctx.rotate(Math.atan2(e.vy||player.y-e.y,e.vx||player.x-e.x));
+      ctx.beginPath();ctx.moveTo(e.r*1.45,0);ctx.lineTo(-e.r*.7,-e.r*.55);ctx.lineTo(-e.r*.35,0);ctx.lineTo(-e.r*.7,e.r*.55);ctx.closePath();
+      ctx.fillStyle=blink?'#ff2f3f':'#5b2530';ctx.fill();ctx.strokeStyle=blink?'#fff':'#ff7180';ctx.lineWidth=2.5;ctx.stroke();
+      ctx.beginPath();ctx.arc(-e.r*.25,0,e.r*.22,0,Math.PI*2);ctx.fillStyle=blink?'#fff':'#ff5368';ctx.fill();
+      ctx.restore();
+      if(e.tdState===1){
+        ctx.save();ctx.font='bold 18px Arial';ctx.textAlign='center';ctx.textBaseline='middle';
+        ctx.fillStyle='#ff3048';ctx.strokeStyle='#17060a';ctx.lineWidth=4;
+        ctx.strokeText(String(Math.max(1,Math.ceil(e.tdTimer))),e.x,e.y-e.r-18);ctx.fillText(String(Math.max(1,Math.ceil(e.tdTimer))),e.x,e.y-e.r-18);
+        ctx.font='bold 9px Arial';ctx.fillStyle='#ffd9df';ctx.strokeStyle='#000';ctx.lineWidth=3;ctx.strokeText('TIMEDASHER',e.x,e.y-e.r-34);ctx.fillText('TIMEDASHER',e.x,e.y-e.r-34);
+        ctx.restore();
+      }
     }else if(e.n==='Dasher'){
       // Phi tiêu 2 cánh
       ctx.beginPath();ctx.moveTo(e.r*1.05,0);ctx.lineTo(-e.r*.2,-e.r*.9);ctx.lineTo(-e.r*.08,-e.r*.18);ctx.lineTo(-e.r*.8,-e.r*.42);
