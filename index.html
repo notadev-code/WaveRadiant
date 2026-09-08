@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>SpaceRadiant v1.15.3</title>
+<title>SpaceRadiant v1.15.5</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#070912;color:#fff;font-family:Arial,sans-serif;touch-action:none}
@@ -94,7 +94,7 @@ small{color:#aebbd6}
 
 <div id="mainMenu">
   <div class="menuPanel">
-    <div class="title">SPACE RADIANT v1.15.3</div>
+    <div class="title">SPACE RADIANT v1.15.5</div>
     <div class="sub">AUTO-AIM • ENDLESS</div>
     <button id="startBtn" class="menuButton">▶ BẮT ĐẦU</button>
     <button id="helpBtn" class="menuButton">❔ HƯỚNG DẪN</button>
@@ -458,7 +458,7 @@ function enemyFire(e){
   const bm=e.boss&&e.phase2?1.45:1;
   const bs=v=>v*bm;
   if(e.boss){
-    if(e.bossStyle==='sniper'){enemyBullets.push({x:e.x,y:e.y,vx:Math.cos(a)*bs(255),vy:Math.sin(a)*bs(255),r:7,dmg:2,life:5,sniper:true});}
+    if(e.bossStyle==='sniper'){for(let k=0;k<3;k++)enemyBullets.push({x:e.x,y:e.y,vx:Math.cos(a)*bs(255),vy:Math.sin(a)*bs(255),r:8,dmg:2,life:5,sniper:true,blockHits:2});}
     else if(e.bossStyle==='dash'){for(let k=-1;k<=1;k++){let aa=a+k*.25;enemyBullets.push({x:e.x,y:e.y,vx:Math.cos(aa)*bs(210),vy:Math.sin(aa)*bs(210),r:5,dmg:2,life:4})}}
     else if(e.bossStyle==='swarm'){for(let i=0;i<6;i++){let aa=a+(Math.random()-.5)*1.8;enemyBullets.push({x:e.x,y:e.y,vx:Math.cos(aa)*bs(140),vy:Math.sin(aa)*bs(140),r:4,dmg:1,life:5})}}
     else if(e.bossStyle==='turret'){for(let k=-3;k<=3;k++){let aa=a+k*.13;enemyBullets.push({x:e.x,y:e.y,vx:Math.cos(aa)*bs(175),vy:Math.sin(aa)*bs(175),r:5,dmg:1,life:5})}}
@@ -617,7 +617,7 @@ if(nearest){
  if(expDrops.length>80) expDrops.splice(0,expDrops.length-80);
  for(let i=bullets.length-1;i>=0;i--){let b=bullets[i];b.x+=b.vx*dt;b.y+=b.vy*dt;b.life-=dt;let hit=false;
   if(blocked(b.x,b.y,b.r)){bullets.splice(i,1);continue}
-  for(let j=enemyBullets.length-1;j>=0;j--){const eb=enemyBullets[j];if(Math.hypot(b.x-eb.x,b.y-eb.y)<b.r+eb.r+2){enemyBullets.splice(j,1);hit=true;break}}
+  for(let j=enemyBullets.length-1;j>=0;j--){const eb=enemyBullets[j];if(Math.hypot(b.x-eb.x,b.y-eb.y)<b.r+eb.r+2){eb.blockHits=Math.max(0,(eb.blockHits||1)-1);if(eb.blockHits<=0)enemyBullets.splice(j,1);hit=true;break}}
   if(!hit)for(const e of enemies){if(Math.hypot(b.x-e.x,b.y-e.y)<b.r+e.r){e.hp-=b.dmg;e.hit=.08;hit=true;break}}
   if(hit||b.life<=0||b.x<-30||b.x>world.w+30||b.y<-30||b.y>world.h+30)bullets.splice(i,1)
  }
@@ -638,21 +638,18 @@ if(nearest){
   if(e.n==='Melee'||e.n==='Chaser'||e.n==='Tanker'||e.n==='Shard'){
     smartMoveEnemy(e,dx,dy,dt);
   }else if(e.n==='Timedasher'){
-    // Dasher 2.0: 1.5s warning. During the whole warning period the aim continuously tracks the player's current position.
+    // Timedasher: no global warning. It aims continuously during the 1.5s charge-up,
+    // then captures the player's direction at the exact moment the dash begins.
     if(e.tdState===0){
-      if(d<=e.range){
-        e.tdState=1;
-        e.tdTimer=1.5;
-        e.tdLockX=player.x;
-        e.tdLockY=player.y;
-      }else smartMoveEnemy(e,dx,dy,dt);
+      if(d<=e.range){e.tdState=1;e.tdTimer=1.5;e.tdAimX=player.x-e.x;e.tdAimY=player.y-e.y;e.tdLockX=player.x;e.tdLockY=player.y;}
+      else smartMoveEnemy(e,dx,dy,dt);
     }else if(e.tdState===1){
-      // Update every frame: the final charge direction is based on the latest player position.
-      e.tdLockX=player.x;
-      e.tdLockY=player.y;
+      const ax=player.x-e.x,ay=player.y-e.y,am=Math.hypot(ax,ay)||1;
+      e.tdAimX=ax/am;e.tdAimY=ay/am;
+      e.tdLockX=player.x;e.tdLockY=player.y;
       e.tdTimer-=dt;
       if(e.tdTimer<=0){
-        const tx=e.tdLockX-e.x,ty=e.tdLockY-e.y,tm=Math.hypot(tx,ty)||1;
+        const tx=player.x-e.x,ty=player.y-e.y,tm=Math.hypot(tx,ty)||1;
         e.tdState=2;e.tdTimer=.72;e.vx=tx/tm*820;e.vy=ty/tm*820;
       }
     }else if(e.tdState===2){

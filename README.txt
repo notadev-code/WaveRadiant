@@ -1,13 +1,22 @@
-SpaceRadiant v1.15.3 – Smart AI & Timedasher Update
+SpaceRadiant v1.15.5 – Full Build
 
-Điều khiển TV: 2 = lên, 8 = xuống, 4 = trái, 6 = phải; 1 = Dash, 3 = Blast. Có hỗ trợ joystick cảm ứng.
+Bản này dùng SpaceRadiant v1.15 Boss HUD Decorated làm nền và tích hợp các cập nhật Smart AI/Timedasher/Regen.
 
-Timedasher – Dasher 2.0:
-- Là quái thường, xuất hiện ngẫu nhiên trong các wave thường.
-- Tầm phát hiện vừa đủ để người chơi nhìn thấy và phản ứng.
-- Khi phát hiện player, Timedasher nhấp nháy đỏ và hiện đồng hồ 3 → 2 → 1.
-- Thời gian cảnh báo là 1,5 giây. Trong toàn bộ 1,5 giây này, hướng lao luôn cập nhật theo vị trí hiện tại của player.
-- Hết 1,5 giây, Timedasher khóa hướng mới nhất và lao thẳng với tốc độ rất cao.
-- Không hiện banner/cảnh báo đặc biệt trên HUD; Timedasher vẫn được tính là quái thường.
+Các điểm chính:
+- Boss HUD riêng, có theme cho từng boss và Phase 2.
+- Phase 2: boss di chuyển thông minh hơn, nhanh hơn và bắn nhanh hơn.
+- Smart AI cho nhiều loại quái, có né đạn và tránh vật cản.
+- Timedasher vẫn là quái thường, không hiện cảnh báo toàn màn hình; thời gian chuẩn bị lướt 1,5 giây. Hướng lướt được lấy theo vị trí người chơi ngay tại thời điểm bắt đầu lướt, tránh lỗi khóa hướng quá sớm.
+- Void Boss bắn 3 viên cùng một hướng về phía người chơi, không tỏa ra.
+- Đạn Void Boss loại lớn cần 2 viên đạn của người chơi mới bị chặn.
+- Hồi phục +15%: chỉ nhận được 1 lần, có 15 giây giữa các lần kiểm tra hồi 1 HP.
+- Mini-game sau mỗi Stage và rương thưởng sau mini-game.
+- Khiên 2 đòn, Rapid Fire 8 giây, tăng EXP, tăng tầm bắn và các phần thưởng khác.
+- Có giới hạn an toàn cho mảng hiệu ứng/đạn/EXP để giảm nguy cơ lag.
+- Điều khiển TV: 2/8/4/6 di chuyển, 1 Dash, 3 Blast.
 
-Các tính năng khác của v1.15.2 được giữ nguyên: Smart AI né tường, né đạn chậm, Orbit di chuyển quanh player, Boss Phase 2, Boss HUD trang trí, mini-game, rương thưởng, khiên 2 đòn và nâng cấp hồi phục +15% chỉ được chọn một lần.
+Chạy bằng Termux:
+cd ~/storage/downloads/SpaceRadiant_v1_15_5
+python server.py
+
+Phiên bản: v1.15.5
