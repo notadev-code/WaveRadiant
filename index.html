@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>SpaceRadiant v1.16</title>
+<title>SpaceRadiant v1.15.7</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#070912;color:#fff;font-family:Arial,sans-serif;touch-action:none}
@@ -130,13 +130,20 @@ const state={stage:1,wave:1,score:0,level:1,exp:5,next:20,spawned:0,killed:0,wav
 let uiTimer=0;
 let miniActive=false,miniCount=0,miniTime=0,miniTimer=0;
 let gold=Number(localStorage.getItem('sr_gold')||0),ruby=Number(localStorage.getItem('sr_ruby')||0),equippedPlane=localStorage.getItem('sr_plane')||'radiant';
-const planes={radiant:{name:'Radiant',icon:'✦',stars:3,hp:5,atk:18,fire:.23,s1:'⚡ Lướt',s2:'💥 Nổ',price:0},comet:{name:'Comet',icon:'☄️',stars:3,hp:4,atk:24,fire:.20,s1:'🔥 Overdrive',s2:'💥 Nova',price:30},guardian:{name:'Guardian',icon:'🛡️',stars:4,hp:8,atk:14,fire:.27,s1:'🛡️ Guard Dash',s2:'🌊 Shockwave',price:55},phantom:{name:'Phantom',icon:'👻',stars:4,hp:4,atk:20,fire:.16,s1:'👻 Blink',s2:'🌑 Void Burst',price:80},striker:{name:'Striker',icon:'⚔️',stars:5,hp:5,atk:30,fire:.19,s1:'⚡ Thunder Dash',s2:'☄️ Meteor',price:120},titan:{name:'Titan',icon:'🚀',stars:5,hp:11,atk:22,fire:.31,s1:'💢 Ram',s2:'🌀 Titan Blast',price:180}};
+const planes={
+ radiant:{name:'Radiant',icon:'✦',shape:'arrow',color:'#e9fbff',accent:'#62e7ff',stars:3,hp:5,atk:18,fire:.23,s1:'⚡ Photon Dash',s2:'💥 Radiant Nova',price:0},
+ comet:{name:'Comet',icon:'☄️',shape:'comet',color:'#fff0c2',accent:'#ff9d4d',stars:3,hp:4,atk:24,fire:.20,s1:'🔥 Overdrive',s2:'💥 Comet Nova',price:30},
+ guardian:{name:'Guardian',icon:'🛡️',shape:'shield',color:'#d8f7ff',accent:'#54cfff',stars:4,hp:8,atk:14,fire:.27,s1:'🛡️ Guard Dash',s2:'🌊 Shockwave',price:55},
+ phantom:{name:'Phantom',icon:'👻',shape:'wing',color:'#eee0ff',accent:'#c17cff',stars:4,hp:4,atk:20,fire:.16,s1:'👻 Blink',s2:'🌑 Void Burst',price:80},
+ striker:{name:'Striker',icon:'⚔️',shape:'blade',color:'#ffe0e8',accent:'#ff526f',stars:5,hp:5,atk:30,fire:.19,s1:'⚡ Thunder Dash',s2:'☄️ Meteor',price:120},
+ titan:{name:'Titan',icon:'🚀',shape:'heavy',color:'#e1e8f2',accent:'#9aaeff',stars:5,hp:11,atk:22,fire:.31,s1:'💢 Ram',s2:'🌀 Titan Blast',price:180}
+};
 let ownedPlanes=JSON.parse(localStorage.getItem('sr_owned_planes')||'["radiant"]');
 let planeUpgrades=JSON.parse(localStorage.getItem('sr_plane_upgrades')||'{}'); for(const id of Object.keys(planes))if(!planeUpgrades[id])planeUpgrades[id]={hp:0,atk:0,fire:0};
 const missions=JSON.parse(localStorage.getItem('sr_missions')||'null')||{day:'',week:'',daily:[],weekly:[]};
 function saveMeta(){localStorage.setItem('sr_gold',gold);localStorage.setItem('sr_ruby',ruby);localStorage.setItem('sr_plane',equippedPlane);localStorage.setItem('sr_owned_planes',JSON.stringify(ownedPlanes));localStorage.setItem('sr_plane_upgrades',JSON.stringify(planeUpgrades));localStorage.setItem('sr_missions',JSON.stringify(missions));updateCurrencyUI()}
 function dayKey(){return new Date().toISOString().slice(0,10)} function weekKey(){const d=new Date(),one=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));let day=one.getUTCDay()||7;one.setUTCDate(one.getUTCDate()+4-day);const first=new Date(Date.UTC(one.getUTCFullYear(),0,1));return one.getUTCFullYear()+'-W'+Math.ceil((((one-first)/86400000)+1)/7)}
-function resetMissions(){const dk=dayKey(),wk=weekKey();if(missions.day!==dk){missions.day=dk;missions.daily=[{id:'d1',text:'Hoàn thành 2 màn Stage',need:2,prog:0,reward:800,done:false},{id:'d2',text:'Tiêu diệt 30 quái',need:30,prog:0,reward:600,done:false},{id:'d3',text:'Kiếm 1.500 vàng',need:1500,prog:0,reward:500,done:false}]}if(missions.week!==wk){missions.week=wk;missions.weekly=[{id:'w1',text:'Hoàn thành 10 màn Stage',need:10,prog:0,reward:8,done:false},{id:'w2',text:'Đánh bại 5 Boss',need:5,prog:0,reward:12,done:false},{id:'w3',text:'Kiếm 8.000 vàng',need:8000,prog:8000,done:false}]}saveMeta()}
+function resetMissions(){const dk=dayKey(),wk=weekKey();if(missions.day!==dk){missions.day=dk;missions.daily=[{id:'d1',text:'Hoàn thành 2 màn Stage',need:2,prog:0,reward:800,done:false},{id:'d2',text:'Tiêu diệt 30 quái',need:30,prog:0,reward:600,done:false},{id:'d3',text:'Kiếm 1.500 vàng',need:1500,prog:0,reward:500,done:false}]}if(missions.week!==wk){missions.week=wk;missions.weekly=[{id:'w1',text:'Hoàn thành 10 màn Stage',need:10,prog:0,reward:8,done:false},{id:'w2',text:'Đánh bại 5 Boss',need:5,prog:0,reward:12,done:false},{id:'w3',text:'Kiếm 8.000 vàng',need:8000,prog:0,done:false}]}saveMeta()}
 function missionProgress(id,n=1){for(const arr of [missions.daily,missions.weekly]){const q=arr.find(x=>x.id===id);if(q&&!q.done){q.prog=Math.min(q.need,q.prog+n);if(q.prog>=q.need){q.done=true;if(arr===missions.daily)gold+=q.reward;else ruby+=q.reward;}}}saveMeta()}
 function updateCurrencyUI(){for(const id of ['menuGold','goldHud']){const e=document.getElementById(id);if(e)e.textContent=Math.floor(gold)}for(const id of ['menuRuby','rubyHud']){const e=document.getElementById(id);if(e)e.textContent=Math.floor(ruby)}} resetMissions();
 function resetGameState(mode=state.mode||'endless'){
@@ -173,7 +180,19 @@ function collectSupply(i){
 
 const world={w:800,h:1700};
 let walls=[];
-const stageWallLayouts=Array.from({length:100},(_,i)=>{if(i===99)return [];const sets=[[[90,300,230,34],[480,300,230,34],[130,720,34,250],[636,720,34,250],[250,1280,300,34]],[[70,420,280,34],[450,420,280,34],[180,760,34,320],[586,760,34,320],[80,1380,640,34]],[[100,260,600,34],[100,260,34,260],[666,260,34,260],[200,980,400,34],[380,1200,34,300]],[[80,500,240,34],[480,500,240,34],[80,1050,240,34],[480,1050,240,34],[380,620,34,260]],[[160,300,480,34],[160,1360,480,34],[100,700,34,300],[666,700,34,300],[300,850,200,34]],[[70,350,180,34],[550,350,180,34],[260,600,280,34],[120,1100,200,34],[480,1100,200,34]],[[110,250,34,400],[656,250,34,400],[220,850,360,34],[110,1250,220,34],[470,1250,220,34]],[[90,450,620,34],[90,1000,620,34],[180,600,34,250],[586,600,34,250]],[[140,300,200,34],[460,300,200,34],[300,550,200,34],[140,1000,200,34],[460,1000,200,34]],[[90,300,260,34],[450,300,260,34],[90,1200,260,34],[450,1200,260,34],[383,650,34,400]]];return sets[i%10].map(a=>({x:a[0],y:a[1],w:a[2],h:a[3]}))});
+const stageWallLayouts=Array.from({length:100},(_,i)=>{
+ if(i===99)return [];
+ let seed=(i+1)*7919;const rnd=()=>{seed=(seed*1664525+1013904223)>>>0;return seed/4294967296};
+ const out=[];const count=5+(i%3);
+ for(let k=0;k<count;k++){
+  const horiz=rnd()<.55,len=horiz?(150+rnd()*360):(120+rnd()*260),thick=32;
+  let x=60+rnd()*(world.w-(horiz?len:60)-120),y=180+rnd()*(world.h-(horiz?60:len)-260);
+  if(Math.abs(x+(horiz?len:0)/2-world.w/2)<150&&Math.abs(y+(horiz?0:len)/2-world.h/2)<190){x+=(x<world.w/2?-180:180);y+=(y<world.h/2?-160:160);}
+  x=Math.max(40,Math.min(world.w-(horiz?len:thick)-40,x));y=Math.max(120,Math.min(world.h-(horiz?thick:len)-50,y));
+  out.push({x:Math.round(x),y:Math.round(y),w:Math.round(horiz?len:thick),h:Math.round(horiz?thick:len)});
+ }
+ return out;
+});
 function setStageWalls(){walls=state.mode==='stage'?(stageWallLayouts[Math.max(0,Math.min(99,state.stage-1))]||[]):[];}
 // True line-of-sight test: a wall between player and target blocks auto-fire.
 function segmentIntersectsRect(x1,y1,x2,y2,r){
@@ -476,19 +495,24 @@ function hurt(v){
 }
 function skillDash(){
  if(paused||over||player.dash>0)return;
- let a=player.angle;
- if(left.active && Math.hypot(left.x,left.y)>.12)a=Math.atan2(left.y,left.x);
- player.x+=Math.cos(a)*190;player.y+=Math.sin(a)*190;
- player.x=Math.max(22,Math.min(world.w-22,player.x));
- player.y=Math.max(85,Math.min(world.h-22,player.y));
- player.dash=player.dashMax;shakeIt(13);burst(player.x,player.y,20,.5);
+ const pid=equippedPlane, a0=(left.active&&Math.hypot(left.x,left.y)>.12)?Math.atan2(left.y,left.x):player.angle;
+ if(pid==='guardian'){player.invuln=Math.max(player.invuln,1.15);player.x+=Math.cos(a0)*145;player.y+=Math.sin(a0)*145;}
+ else if(pid==='phantom'){player.invuln=Math.max(player.invuln,1.0);player.x+=Math.cos(a0)*245;player.y+=Math.sin(a0)*245;burst(player.x,player.y,30,.6);}
+ else if(pid==='titan'){player.invuln=Math.max(player.invuln,.75);player.x+=Math.cos(a0)*165;player.y+=Math.sin(a0)*165;for(const e of enemies)if(Math.hypot(e.x-player.x,e.y-player.y)<85)e.hp-=85;}
+ else {const dist=pid==='striker'?220:(pid==='comet'?205:190);player.x+=Math.cos(a0)*dist;player.y+=Math.sin(a0)*dist;}
+ player.x=Math.max(22,Math.min(world.w-22,player.x));player.y=Math.max(85,Math.min(world.h-22,player.y));
+ player.dash=player.dashMax;shakeIt(pid==='titan'?16:13);burst(player.x,player.y,pid==='guardian'?30:22,.5);
 }
 function skillBlast(){
  if(paused||over||player.blast>0)return;
- player.blast=player.blastMax;shakeIt(18);burst(player.x,player.y,55,.7);
- for(const e of enemies){
-   if(Math.hypot(e.x-player.x,e.y-player.y)<170){e.hp-=(90+state.level*18)*(player.skillDmg||1);e.hit=.12}
- }
+ const pid=equippedPlane;player.blast=player.blastMax;shakeIt(18);burst(player.x,player.y,pid==='titan'?75:55,.7);
+ let radius=170,dmg=90+state.level*18;
+ if(pid==='comet'){radius=230;dmg*=1.15;rapidFire=Math.max(rapidFire,5);}
+ if(pid==='guardian'){radius=155;dmg*=.8;player.invuln=Math.max(player.invuln,1.5);shieldHits=Math.max(shieldHits,1);}
+ if(pid==='phantom'){radius=205;dmg*=1.2;player.x=Math.max(22,Math.min(world.w-22,player.x+Math.cos(player.angle)*45));}
+ if(pid==='striker'){radius=190;dmg*=1.35;for(const e of enemies)if(Math.hypot(e.x-player.x,e.y-player.y)<radius)e.hp-=dmg*.25;}
+ if(pid==='titan'){radius=260;dmg*=1.35;}
+ for(const e of enemies)if(Math.hypot(e.x-player.x,e.y-player.y)<radius){e.hp-=dmg*(player.skillDmg||1);e.hit=.12}
 }
 const dashBtn=document.getElementById('dash'), blastBtn=document.getElementById('blast');
 function bindSkill(btn,fn){
@@ -503,8 +527,9 @@ function updateSkillUI(){
   dashBtn.classList.toggle('ready',dashCd<=0);
   blastBtn.classList.toggle('cooldown',blastCd>0);
   blastBtn.classList.toggle('ready',blastCd<=0);
-  dashBtn.textContent=dashCd>0 ? '⚡ Lướt '+dashCd.toFixed(1)+'s' : '⚡ Lướt';
-  blastBtn.textContent=blastCd>0 ? '💥 Nổ '+blastCd.toFixed(1)+'s' : '💥 Nổ';
+  const pp=planes[equippedPlane]||planes.radiant;
+  dashBtn.textContent=dashCd>0 ? pp.s1+' '+dashCd.toFixed(1)+'s' : pp.s1;
+  blastBtn.textContent=blastCd>0 ? pp.s2+' '+blastCd.toFixed(1)+'s' : pp.s2;
 }
 
 function update(dt){
@@ -968,9 +993,17 @@ function draw(){
  // player firing range
  ctx.save();ctx.beginPath();ctx.arc(player.x,player.y,player.range,0,Math.PI*2);ctx.strokeStyle='#62e7ff22';ctx.lineWidth=2;ctx.setLineDash([10,12]);ctx.stroke();ctx.restore();
  // player mouse-plane
- ctx.save();if(player.invuln>0 && Math.floor(player.invuln*10)%2===0)ctx.globalAlpha=.22;ctx.translate(player.x,player.y);ctx.rotate(player.angle);
- ctx.shadowBlur=18;ctx.shadowColor='#62e7ff';ctx.fillStyle='#e9fbff';ctx.beginPath();ctx.moveTo(22,0);ctx.lineTo(5,-9);ctx.lineTo(-15,-15);ctx.lineTo(-10,-3);ctx.lineTo(-19,0);ctx.lineTo(-10,3);ctx.lineTo(-15,15);ctx.lineTo(5,9);ctx.closePath();ctx.fill();ctx.shadowBlur=0;
- ctx.fillStyle='#263a55';ctx.fillRect(-7,-7,10,14);ctx.restore();
+ ctx.save();if(player.invuln>0 && Math.floor(player.invuln*10)%2===0)ctx.globalAlpha=.22;
+ const pp=planes[equippedPlane]||planes.radiant;ctx.translate(player.x,player.y);ctx.rotate(player.angle);
+ ctx.shadowBlur=18;ctx.shadowColor=pp.accent;ctx.fillStyle=pp.color;ctx.strokeStyle=pp.accent;ctx.lineWidth=2.5;ctx.beginPath();
+ if(pp.shape==='comet'){ctx.moveTo(24,0);ctx.lineTo(7,-7);ctx.lineTo(-8,-14);ctx.lineTo(-18,-7);ctx.lineTo(-11,0);ctx.lineTo(-18,7);ctx.lineTo(-8,14);ctx.lineTo(7,7);ctx.closePath();}
+ else if(pp.shape==='shield'){ctx.moveTo(24,0);ctx.lineTo(5,-13);ctx.lineTo(-14,-12);ctx.lineTo(-20,0);ctx.lineTo(-14,12);ctx.lineTo(5,13);ctx.closePath();}
+ else if(pp.shape==='wing'){ctx.moveTo(24,0);ctx.lineTo(3,-5);ctx.lineTo(-17,-18);ctx.lineTo(-10,-3);ctx.lineTo(-21,0);ctx.lineTo(-10,3);ctx.lineTo(-17,18);ctx.lineTo(3,5);ctx.closePath();}
+ else if(pp.shape==='blade'){ctx.moveTo(26,0);ctx.lineTo(-8,-9);ctx.lineTo(-19,-4);ctx.lineTo(-7,0);ctx.lineTo(-19,4);ctx.closePath();}
+ else if(pp.shape==='heavy'){ctx.moveTo(21,0);ctx.lineTo(8,-13);ctx.lineTo(-13,-13);ctx.lineTo(-19,-6);ctx.lineTo(-19,6);ctx.lineTo(-13,13);ctx.lineTo(8,13);ctx.closePath();}
+ else {ctx.moveTo(24,0);ctx.lineTo(5,-9);ctx.lineTo(-15,-15);ctx.lineTo(-10,-3);ctx.lineTo(-19,0);ctx.lineTo(-10,3);ctx.lineTo(-15,15);ctx.lineTo(5,9);ctx.closePath();}
+ ctx.fill();ctx.stroke();ctx.shadowBlur=0;ctx.fillStyle=pp.accent;ctx.fillRect(-7,-5,10,10);
+ if(pp.shape==='comet'){ctx.strokeStyle=pp.accent;ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(-15,-10);ctx.lineTo(-28,-15);ctx.moveTo(-16,10);ctx.lineTo(-28,15);ctx.stroke();}ctx.restore();
  for(const p of particles){ctx.globalAlpha=Math.max(0,p.t/p.m);ctx.fillStyle='#bff7ff';ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,7);ctx.fill()}ctx.globalAlpha=1;
  for(const t of texts){ctx.globalAlpha=t.t;ctx.font='bold 13px Arial';ctx.textAlign='center';ctx.fillStyle='#fff';ctx.fillText(t.s,t.x,t.y)}ctx.globalAlpha=1;
  ctx.restore();
