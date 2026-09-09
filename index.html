@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>SpaceRadiant v1.15.5</title>
+<title>SpaceRadiant v1.15.6</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#070912;color:#fff;font-family:Arial,sans-serif;touch-action:none}
@@ -94,7 +94,7 @@ small{color:#aebbd6}
 
 <div id="mainMenu">
   <div class="menuPanel">
-    <div class="title">SPACE RADIANT v1.15.5</div>
+    <div class="title">SPACE RADIANT v1.15.6</div>
     <div class="sub">AUTO-AIM • ENDLESS</div>
     <button id="startBtn" class="menuButton">▶ BẮT ĐẦU</button>
     <button id="helpBtn" class="menuButton">❔ HƯỚNG DẪN</button>
@@ -747,45 +747,26 @@ if(nearest){
 }
 let miniType=0,miniObjects=[],miniScore=0;
 function startMiniGame(){
-  miniActive=true; paused=true; miniCount=0; miniTime=12; miniTimer=0; miniType=Math.floor(Math.random()*6);
-  const titles=['⚡ THU THẬP NĂNG LƯỢNG','🎯 BẮT MỤC TIÊU','💎 HỨNG TINH THỂ','🌀 SỐNG SÓT','🟢 NHỊP ĐỘ','🚫 TRÁNH BẪY'];
-  const goals=['Bắt 10 tia ⚡ trước khi hết giờ.','Chạm 12 mục tiêu 🎯 trước khi hết giờ.','Thu thập 8 tinh thể 💎 trước khi hết giờ.','Né các quả cầu 🔴 và sống sót 10 giây.','Bắt 15 vòng 🟢 đang đổi vị trí.','Chạm 10 mục tiêu 🟢 nhưng tránh 🔴.'];
-  const panel=document.querySelector('#minigame .panel'); panel.querySelector('h2').textContent=titles[miniType]; panel.querySelector('p').textContent=goals[miniType];
-  const area=document.getElementById('miniArea'); area.innerHTML=''; miniObjects=[];
-  document.getElementById('minigame').style.display='flex';
-  document.getElementById('miniIntro').style.display='block'; document.getElementById('miniPlay').style.display='none';
-  updateMiniInfo();
+  miniActive=true;paused=true;miniCount=0;miniTime=20;miniTimer=0;miniType=Math.random()<.5?0:2;
+  const titles=['⚡ THU THẬP NĂNG LƯỢNG','💎 HỨNG TINH THỂ'];
+  const goals=['Bắt 10 tia ⚡ trước khi hết giờ.','Thu thập 8 tinh thể 💎 trước khi hết giờ.'];
+  const idx=miniType===0?0:1;
+  const panel=document.querySelector('#minigame .panel');panel.querySelector('h2').textContent=titles[idx];panel.querySelector('p').textContent=goals[idx];
+  const area=document.getElementById('miniArea');area.innerHTML='';miniObjects=[];
+  document.getElementById('minigame').style.display='flex';document.getElementById('miniIntro').style.display='block';document.getElementById('miniPlay').style.display='none';updateMiniInfo();
 }
 function spawnMiniObject(){
-  const area=document.getElementById('miniArea'); const star=document.createElement('div'); star.className='miniStar';
-  star.textContent=miniType===0?'⚡':miniType===1?'🎯':miniType===2?'💎':miniType===4?'🟢':'🟢';
-  const x=8+Math.random()*84,y=16+Math.random()*70; star.style.left=x+'%';star.style.top=y+'%'; if(miniType===5 && Math.random()<.28){star.textContent='🔴';}
-  star.onpointerdown=e=>{e.preventDefault();miniCount++;star.remove();if(miniType===5 && Math.random()<.22){endMiniGame(false);return;}if((miniType===0&&miniCount>=10)||(miniType===1&&miniCount>=12)||(miniType===2&&miniCount>=8)||(miniType===4&&miniCount>=15)||(miniType===5&&miniCount>=10))endMiniGame(true);else spawnMiniObject();updateMiniInfo()};
-  area.appendChild(star); miniObjects.push(star);
+ const area=document.getElementById('miniArea');const star=document.createElement('div');star.className='miniStar';star.textContent=miniType===0?'⚡':'💎';
+ star.style.left=(8+Math.random()*84)+'%';star.style.top=(16+Math.random()*70)+'%';
+ star.onpointerdown=e=>{e.preventDefault();miniCount++;star.remove();if((miniType===0&&miniCount>=10)||(miniType===2&&miniCount>=8))endMiniGame(true);else spawnMiniObject();updateMiniInfo()};
+ area.appendChild(star);miniObjects.push(star);
 }
-function spawnMiniHazard(){
-  const area=document.getElementById('miniArea'); const h=document.createElement('div'); h.className='miniStar'; h.textContent='🔴';
-  h.style.left=(5+Math.random()*88)+'%';h.style.top=(15+Math.random()*72)+'%';
-  h.dataset.vx=(Math.random()-.5)*1.2; h.dataset.vy=(Math.random()-.5)*1.2; area.appendChild(h); miniObjects.push(h);
-}
-function updateMiniInfo(){
-  const target=miniType===0?10:miniType===1?12:miniType===2?8:miniType===4?15:miniType===5?10:10;
-  document.getElementById('miniInfo').textContent=miniType===3 ? 'Sống sót • '+Math.max(0,miniTime).toFixed(1)+'s' : miniCount+'/'+target+' • '+Math.max(0,miniTime).toFixed(1)+'s';
-  if(miniType===3){for(const h of miniObjects){let x=parseFloat(h.style.left)||0,y=parseFloat(h.style.top)||0;x+=(parseFloat(h.dataset.vx)||0)*.35;y+=(parseFloat(h.dataset.vy)||0)*.35;if(x<2||x>94)h.dataset.vx=-(parseFloat(h.dataset.vx)||0);if(y<10||y>88)h.dataset.vy=-(parseFloat(h.dataset.vy)||0);h.style.left=x+'%';h.style.top=y+'%';}}
-}
-document.getElementById('miniStart').onclick=()=>{
-  document.getElementById('miniIntro').style.display='none'; document.getElementById('miniPlay').style.display='flex';
-  miniTime=miniType===3?10:12; miniCount=0; miniObjects=[]; const area=document.getElementById('miniArea'); area.innerHTML='';
-  if(miniType===3){for(let i=0;i<7;i++)spawnMiniHazard();}
-  else spawnMiniObject(); updateMiniInfo();
-};
+document.getElementById('miniStart').onclick=()=>{document.getElementById('miniIntro').style.display='none';document.getElementById('miniPlay').style.display='flex';miniTime=20;miniCount=0;miniObjects=[];document.getElementById('miniArea').innerHTML='';spawnMiniObject();updateMiniInfo()};
+function updateMiniInfo(){const target=miniType===0?10:8;document.getElementById('miniInfo').textContent=miniCount+'/'+target+' • '+Math.max(0,miniTime).toFixed(1)+'s';}
 function endMiniGame(win){
-  miniActive=false;document.getElementById('minigame').style.display='none';document.getElementById('miniArea').innerHTML='';miniObjects=[];
-  if(win){state.score+=700;gainExp(25);player.hp=Math.min(player.maxhp,player.hp+2);addText(player.x,player.y-35,'MINI WIN +700');}
-  else addText(player.x,player.y-35,'HẾT GIỜ');
-  // Mỗi Stage hoàn thành sẽ để lại 1 rương thưởng sau mini-game.
-  spawnChest();
-  paused=false; updateHUD();
+ miniActive=false;document.getElementById('minigame').style.display='none';document.getElementById('miniArea').innerHTML='';miniObjects=[];
+ if(win){state.score+=700;gainExp(25);player.hp=Math.min(player.maxhp,player.hp+2);addText(player.x,player.y-35,'MINI WIN +700')}else addText(player.x,player.y-35,'HẾT GIỜ');
+ spawnChest();paused=false;updateHUD();
 }
 function nextWave(){state.wave++;state.spawned=0;state.waveTimer=-1.2;if(state.wave>5){state.wave=1;state.stage++;state.spawned=0;const oldHp=player.hp; player.hp=Math.min(player.maxhp,player.hp+1); if(player.hp>oldHp) healFX(player.x,player.y,player.hp-oldHp); waveFX(); startMiniGame();}}
 
