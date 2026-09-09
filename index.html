@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>SpaceRadiant v1.15.6</title>
+<title>SpaceRadiant v1.16</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#070912;color:#fff;font-family:Arial,sans-serif;touch-action:none}
@@ -78,7 +78,7 @@ small{color:#aebbd6}
 
 <div id="hud">
   <div id="fxBanner" aria-hidden="true"></div>
-  <div class="row"><span id="hearts">❤️❤️❤️❤️❤️</span><span>Stage <b id="stage">1</b></span><span>Wave <b id="wave">1</b>/5</span><span>Range <b id="rangeStat">400</b></span><span>Score <b id="score">0</b></span></div>
+  <div class="row"><span id="hearts">❤️❤️❤️❤️❤️</span><span>Stage <b id="stage">1</b></span><span>Wave <b id="wave">1</b>/<b id="waveMax">5</b></span><span>Range <b id="rangeStat">400</b></span><span>Score <b id="score">0</b></span><span>🪙 <b id="goldHud">0</b></span><span>♦️ <b id="rubyHud">0</b></span></div>
   <div class="bar"><div id="expFill" class="fill"></div></div>
   <div class="row"><small>EXP <span id="expText">0/20</span> • Lv <span id="level">1</span></small></div>
   <div id="bossBox"></div>
@@ -92,22 +92,8 @@ small{color:#aebbd6}
 </div>
 <button id="menuBtn">☰</button>
 
-<div id="mainMenu">
-  <div class="menuPanel">
-    <div class="title">SPACE RADIANT v1.15.6</div>
-    <div class="sub">AUTO-AIM • ENDLESS</div>
-    <button id="startBtn" class="menuButton">▶ BẮT ĐẦU</button>
-    <button id="helpBtn" class="menuButton">❔ HƯỚNG DẪN</button>
-    <div id="helpText">
-      🎮 Kéo joystick trái để di chuyển.<br>
-      🎯 Máy bay tự nhắm và bắn quái gần nhất.<br>
-      ⚡ Lướt theo hướng đang di chuyển.<br>
-      💥 Nổ gây sát thương diện rộng, có hồi chiêu.<br>⏱️ Khi skill đang hồi, nút sẽ tối; hồi xong sẽ sáng lại.<br>
-      🌊 Wave 5 là Boss.
-    </div>
-  </div>
-</div>
-
+<div id="mainMenu"><div class="menuPanel megaMenu"><div class="title">SPACE RADIANT v1.16</div><div class="sub">CHỌN CHẾ ĐỘ</div><div class="currencyLine">🪙 <b id="menuGold">0</b> &nbsp;&nbsp; ♦️ <b id="menuRuby">0</b></div><div class="modeGrid"><button id="endlessBtn" class="menuButton">♾️ ENDLESS<br><small>Chế độ cũ • không tường</small></button><button id="stageBtn" class="menuButton">🚀 STAGE<br><small>100 màn vượt ải</small></button></div><div class="menuGrid2"><button id="upgradeMenuBtn" class="menuButton">⬆️ NÂNG CẤP</button><button id="hangarBtn" class="menuButton">✈️ KHO MÁY BAY</button><button id="missionsBtn" class="menuButton">📋 NHIỆM VỤ</button><button id="helpBtn" class="menuButton">❔ HƯỚNG DẪN</button></div><div id="helpText">🎮 Joystick trái để di chuyển.<br>🎯 Máy bay tự nhắm và bắn quái gần nhất.<br>⚡/💥 dùng skill 1/3 kể cả khi đang giữ hướng trên TV.<br>🚀 Stage: 100 màn. Màn 5,10,...,95 là màn boss đặc biệt; màn 100 có cả 6 boss.</div></div></div>
+<div id="collectionPanel" class="collectionPanel"><div class="menuPanel"><button class="closePanel" onclick="closeCollection()">✕</button><div id="collectionContent"></div></div></div>
 <div id="pauseMenu">
   <div class="menuPanel">
     <div class="title" style="font-size:28px">TẠM DỪNG</div>
@@ -125,8 +111,6 @@ small{color:#aebbd6}
   </div>
 </div>
 
-<div id="minigame"><div class="panel" id="miniIntro" style="position:absolute;z-index:3;width:min(92vw,430px)"><h2 id="miniTitle">🎮 MINI GAME!</h2><p id="miniRules">Cách chơi</p><button id="miniStart" class="choice">▶ BẮT ĐẦU</button></div><div id="miniPlay" style="display:none;position:absolute;inset:0;align-items:center;justify-content:center"><div class="panel" style="position:absolute;top:10px;z-index:2;width:min(92vw,430px)"><h2 id="miniTitlePlay">🎮 MINI GAME!</h2><p id="miniRulesPlay">Cách chơi</p><b id="miniInfo">0/10 • 12.0s</b></div><div id="miniArea"></div></div></div>
-
 <div id="gameover">
   <div>
     <div class="big">GAME OVER</div>
@@ -142,16 +126,26 @@ let W,H,DPR,shake=0,paused=false,over=false,last=performance.now();
 function resize(){DPR=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;c.width=W*DPR;c.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0)}
 addEventListener('resize',resize);resize();
 
-const state={stage:1,wave:1,score:0,level:1,exp:5,next:20,spawned:0,killed:0,waveTimer:0,bossesSpawned:0,bossesTarget:0};
+const state={stage:1,wave:1,score:0,level:1,exp:5,next:20,spawned:0,killed:0,waveTimer:0,bossesSpawned:0,bossesTarget:0,mode:'endless',waveMax:5,stageComplete:false};
 let uiTimer=0;
 let miniActive=false,miniCount=0,miniTime=0,miniTimer=0;
-function resetGameState(){
-  state.stage=1; state.wave=1; state.score=0; state.level=1; state.exp=5; state.next=20;
+let gold=Number(localStorage.getItem('sr_gold')||0),ruby=Number(localStorage.getItem('sr_ruby')||0),equippedPlane=localStorage.getItem('sr_plane')||'radiant';
+const planes={radiant:{name:'Radiant',icon:'✦',stars:3,hp:5,atk:18,fire:.23,s1:'⚡ Lướt',s2:'💥 Nổ',price:0},comet:{name:'Comet',icon:'☄️',stars:3,hp:4,atk:24,fire:.20,s1:'🔥 Overdrive',s2:'💥 Nova',price:30},guardian:{name:'Guardian',icon:'🛡️',stars:4,hp:8,atk:14,fire:.27,s1:'🛡️ Guard Dash',s2:'🌊 Shockwave',price:55},phantom:{name:'Phantom',icon:'👻',stars:4,hp:4,atk:20,fire:.16,s1:'👻 Blink',s2:'🌑 Void Burst',price:80},striker:{name:'Striker',icon:'⚔️',stars:5,hp:5,atk:30,fire:.19,s1:'⚡ Thunder Dash',s2:'☄️ Meteor',price:120},titan:{name:'Titan',icon:'🚀',stars:5,hp:11,atk:22,fire:.31,s1:'💢 Ram',s2:'🌀 Titan Blast',price:180}};
+let ownedPlanes=JSON.parse(localStorage.getItem('sr_owned_planes')||'["radiant"]');
+let planeUpgrades=JSON.parse(localStorage.getItem('sr_plane_upgrades')||'{}'); for(const id of Object.keys(planes))if(!planeUpgrades[id])planeUpgrades[id]={hp:0,atk:0,fire:0};
+const missions=JSON.parse(localStorage.getItem('sr_missions')||'null')||{day:'',week:'',daily:[],weekly:[]};
+function saveMeta(){localStorage.setItem('sr_gold',gold);localStorage.setItem('sr_ruby',ruby);localStorage.setItem('sr_plane',equippedPlane);localStorage.setItem('sr_owned_planes',JSON.stringify(ownedPlanes));localStorage.setItem('sr_plane_upgrades',JSON.stringify(planeUpgrades));localStorage.setItem('sr_missions',JSON.stringify(missions));updateCurrencyUI()}
+function dayKey(){return new Date().toISOString().slice(0,10)} function weekKey(){const d=new Date(),one=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));let day=one.getUTCDay()||7;one.setUTCDate(one.getUTCDate()+4-day);const first=new Date(Date.UTC(one.getUTCFullYear(),0,1));return one.getUTCFullYear()+'-W'+Math.ceil((((one-first)/86400000)+1)/7)}
+function resetMissions(){const dk=dayKey(),wk=weekKey();if(missions.day!==dk){missions.day=dk;missions.daily=[{id:'d1',text:'Hoàn thành 2 màn Stage',need:2,prog:0,reward:800,done:false},{id:'d2',text:'Tiêu diệt 30 quái',need:30,prog:0,reward:600,done:false},{id:'d3',text:'Kiếm 1.500 vàng',need:1500,prog:0,reward:500,done:false}]}if(missions.week!==wk){missions.week=wk;missions.weekly=[{id:'w1',text:'Hoàn thành 10 màn Stage',need:10,prog:0,reward:8,done:false},{id:'w2',text:'Đánh bại 5 Boss',need:5,prog:0,reward:12,done:false},{id:'w3',text:'Kiếm 8.000 vàng',need:8000,prog:8000,done:false}]}saveMeta()}
+function missionProgress(id,n=1){for(const arr of [missions.daily,missions.weekly]){const q=arr.find(x=>x.id===id);if(q&&!q.done){q.prog=Math.min(q.need,q.prog+n);if(q.prog>=q.need){q.done=true;if(arr===missions.daily)gold+=q.reward;else ruby+=q.reward;}}}saveMeta()}
+function updateCurrencyUI(){for(const id of ['menuGold','goldHud']){const e=document.getElementById(id);if(e)e.textContent=Math.floor(gold)}for(const id of ['menuRuby','rubyHud']){const e=document.getElementById(id);if(e)e.textContent=Math.floor(ruby)}} resetMissions();
+function resetGameState(mode=state.mode||'endless'){
+  state.mode=mode; state.stage=1; state.wave=1; state.score=0; state.level=1; state.exp=5; state.next=20;
   state.spawned=0; state.killed=0; state.waveTimer=0; uiTimer=0;
   enemies.length=0; bullets.length=0; enemyBullets.length=0; particles.length=0; texts.length=0; expDrops.length=0; chests.length=0;
   player.x=world.w/2; player.y=world.h/2; player.healFxTimer=0; player.regenTimer=15; player.r=17; player.hp=5; player.maxhp=5; player.angle=-Math.PI/2;
-  player.speed=250; player.damage=18; player.fire=0; player.fireRate=.23; player.bullets=1;
-  player.bulletSpeed=560; player.dash=0; player.blast=0; player.invuln=0; player.crit=.08; player.critMult=1.8; player.armor=0; player.regen=0; player.magnet=0; player.dashMax=3; player.blastMax=8; player.skillDmg=1; player.range=400; miniActive=false; document.getElementById('minigame').style.display='none';
+  const pp=planes[equippedPlane]||planes.radiant,pu=planeUpgrades[equippedPlane]||{hp:0,atk:0,fire:0}; player.speed=250; player.damage=pp.atk*(1+pu.atk*.08); player.fire=0; player.fireRate=Math.max(.07,pp.fire*(1-pu.fire*.06)); player.bullets=1;
+  player.bulletSpeed=560; player.maxhp=pp.hp+pu.hp; player.hp=player.maxhp; player.dash=0; player.blast=0; player.invuln=0; player.crit=.08; player.critMult=1.8; player.armor=0; player.regen=0; player.magnet=0; player.dashMax=3; player.blastMax=8; player.skillDmg=1; player.range=400; miniActive=false; 
   paused=false; over=false; miniActive=false; miniObjects=[];
   document.getElementById('bossBox').style.display='none'; document.getElementById('bossBox').innerHTML=''; updateHUD(); supplies.length=0; shieldHits=0; rapidFire=0; supplyTimer=7+Math.random()*9; state.bossesSpawned=0; state.bossesTarget=0;
 }
@@ -178,15 +172,9 @@ function collectSupply(i){
 }
 
 const world={w:800,h:1700};
-// Compact wall layout, fully inside the new 800x1700 map.
-const walls=[
- {x:70,y:300,w:250,h:34},{x:480,y:300,w:250,h:34},
- {x:140,y:620,w:34,h:260},{x:626,y:620,w:34,h:260},
- {x:70,y:1030,w:250,h:34},{x:480,y:1030,w:250,h:34},
- {x:180,y:1350,w:34,h:230},{x:586,y:1350,w:34,h:230},
- {x:250,y:1540,w:300,h:34}
-];
-
+let walls=[];
+const stageWallLayouts=Array.from({length:100},(_,i)=>{if(i===99)return [];const sets=[[[90,300,230,34],[480,300,230,34],[130,720,34,250],[636,720,34,250],[250,1280,300,34]],[[70,420,280,34],[450,420,280,34],[180,760,34,320],[586,760,34,320],[80,1380,640,34]],[[100,260,600,34],[100,260,34,260],[666,260,34,260],[200,980,400,34],[380,1200,34,300]],[[80,500,240,34],[480,500,240,34],[80,1050,240,34],[480,1050,240,34],[380,620,34,260]],[[160,300,480,34],[160,1360,480,34],[100,700,34,300],[666,700,34,300],[300,850,200,34]],[[70,350,180,34],[550,350,180,34],[260,600,280,34],[120,1100,200,34],[480,1100,200,34]],[[110,250,34,400],[656,250,34,400],[220,850,360,34],[110,1250,220,34],[470,1250,220,34]],[[90,450,620,34],[90,1000,620,34],[180,600,34,250],[586,600,34,250]],[[140,300,200,34],[460,300,200,34],[300,550,200,34],[140,1000,200,34],[460,1000,200,34]],[[90,300,260,34],[450,300,260,34],[90,1200,260,34],[450,1200,260,34],[383,650,34,400]]];return sets[i%10].map(a=>({x:a[0],y:a[1],w:a[2],h:a[3]}))});
+function setStageWalls(){walls=state.mode==='stage'?(stageWallLayouts[Math.max(0,Math.min(99,state.stage-1))]||[]):[];}
 // True line-of-sight test: a wall between player and target blocks auto-fire.
 function segmentIntersectsRect(x1,y1,x2,y2,r){
   const minX=Math.min(x1,x2)-r,maxX=Math.max(x1,x2)+r;
@@ -606,9 +594,11 @@ if(nearest){
    player.fire=0;
  }
  state.waveTimer+=dt;
- let target=state.wave===5?1:Math.min(5+state.stage,12);
- if(state.spawned<target&&state.waveTimer>=1.0){state.waveTimer=0;let elite=Math.random()<Math.min(.05+state.stage*.012,.22);spawnEnemy(null,elite,false);state.spawned++}
- if(state.wave===5&&state.spawned===target&&!state.bossesTarget){ state.bossesTarget=Math.random()<0.10?2:1; state.bossesSpawned=0; for(let b=0;b<state.bossesTarget;b++){spawnEnemy(null,false,true);state.bossesSpawned++;} }
+ let specialBossStage=state.mode==='stage'&&(state.stage%5===0||state.stage===100);
+ let bossWave=state.mode==='stage'?specialBossStage:state.wave===5;
+ if(state.mode==='stage'&&state.stage===100){if(state.wave===1&&!state.bossesTarget){state.bossesTarget=6;state.bossesSpawned=0;for(let b=0;b<6;b++){spawnEnemy(null,false,true);state.bossesSpawned++;}}}
+ else if(bossWave&&!state.bossesTarget){state.bossesTarget=1;state.bossesSpawned=0;spawnEnemy(null,false,true);state.bossesSpawned=1;}
+ else if(!bossWave){let target=state.mode==='stage'?Math.min(5+state.stage,14):Math.min(5+state.stage,12);if(state.spawned<target&&state.waveTimer>=1){state.waveTimer=0;spawnEnemy(null,Math.random()<Math.min(.05+state.stage*.012,.22),false);state.spawned++;}}
  // Safety caps prevent accidental runaway arrays from freezing the browser.
  if(particles.length>300) particles.splice(0,particles.length-300);
  if(texts.length>60) texts.splice(0,texts.length-60);
@@ -746,29 +736,12 @@ if(nearest){
  updateBossHUD();
 }
 let miniType=0,miniObjects=[],miniScore=0;
-function startMiniGame(){
-  miniActive=true;paused=true;miniCount=0;miniTime=20;miniTimer=0;miniType=Math.random()<.5?0:2;
-  const titles=['⚡ THU THẬP NĂNG LƯỢNG','💎 HỨNG TINH THỂ'];
-  const goals=['Bắt 10 tia ⚡ trước khi hết giờ.','Thu thập 8 tinh thể 💎 trước khi hết giờ.'];
-  const idx=miniType===0?0:1;
-  const panel=document.querySelector('#minigame .panel');panel.querySelector('h2').textContent=titles[idx];panel.querySelector('p').textContent=goals[idx];
-  const area=document.getElementById('miniArea');area.innerHTML='';miniObjects=[];
-  document.getElementById('minigame').style.display='flex';document.getElementById('miniIntro').style.display='block';document.getElementById('miniPlay').style.display='none';updateMiniInfo();
-}
-function spawnMiniObject(){
- const area=document.getElementById('miniArea');const star=document.createElement('div');star.className='miniStar';star.textContent=miniType===0?'⚡':'💎';
- star.style.left=(8+Math.random()*84)+'%';star.style.top=(16+Math.random()*70)+'%';
- star.onpointerdown=e=>{e.preventDefault();miniCount++;star.remove();if((miniType===0&&miniCount>=10)||(miniType===2&&miniCount>=8))endMiniGame(true);else spawnMiniObject();updateMiniInfo()};
- area.appendChild(star);miniObjects.push(star);
-}
-document.getElementById('miniStart').onclick=()=>{document.getElementById('miniIntro').style.display='none';document.getElementById('miniPlay').style.display='flex';miniTime=20;miniCount=0;miniObjects=[];document.getElementById('miniArea').innerHTML='';spawnMiniObject();updateMiniInfo()};
-function updateMiniInfo(){const target=miniType===0?10:8;document.getElementById('miniInfo').textContent=miniCount+'/'+target+' • '+Math.max(0,miniTime).toFixed(1)+'s';}
-function endMiniGame(win){
- miniActive=false;document.getElementById('minigame').style.display='none';document.getElementById('miniArea').innerHTML='';miniObjects=[];
- if(win){state.score+=700;gainExp(25);player.hp=Math.min(player.maxhp,player.hp+2);addText(player.x,player.y-35,'MINI WIN +700')}else addText(player.x,player.y-35,'HẾT GIỜ');
- spawnChest();paused=false;updateHUD();
-}
-function nextWave(){state.wave++;state.spawned=0;state.waveTimer=-1.2;if(state.wave>5){state.wave=1;state.stage++;state.spawned=0;const oldHp=player.hp; player.hp=Math.min(player.maxhp,player.hp+1); if(player.hp>oldHp) healFX(player.x,player.y,player.hp-oldHp); waveFX(); startMiniGame();}}
+function startMiniGame(){}
+function spawnMiniObject(){}
+function updateMiniInfo(){}
+function endMiniGame(){}
+function completeStage(){if(state.mode!=='stage'||state.stageComplete)return;state.stageComplete=true;const bossStage=state.stage%5===0||state.stage===100,g=500+state.stage*80+(bossStage?700:0);gold+=g;missionProgress('d1');missionProgress('d3',g);if(bossStage){ruby+=state.stage===100?20:5;missionProgress('w2');}missionProgress('w1');saveMeta();if(state.stage>=100){over=true;document.getElementById('finalScore').textContent=Math.floor(state.score);document.getElementById('finalStage').textContent='100';document.querySelector('#gameover .big').textContent='🏆 HOÀN THÀNH 100 MÀN!';document.getElementById('gameover').style.display='flex';return}addText(player.x,player.y-50,'MÀN '+state.stage+' HOÀN THÀNH +'+g+' 🪙');state.stage++;state.wave=1;state.spawned=0;state.killed=0;state.waveTimer=-1.2;state.bossesTarget=0;state.bossesSpawned=0;state.stageComplete=false;setStageWalls();waveFX()}
+function nextWave(){if(state.mode==='stage'){if(state.stage===100){completeStage();return}if(state.wave>=5){completeStage();return}state.wave++;state.spawned=0;state.killed=0;state.waveTimer=-1.2;state.bossesTarget=0;state.bossesSpawned=0;waveFX();return}state.wave++;state.spawned=0;state.waveTimer=-1.2;if(state.wave>5){gold+=120+state.stage*20;saveMeta();state.wave=1;state.stage++;state.spawned=0;waveFX()}}
 
 function draw(){
  ctx.save();if(shake>0){ctx.translate((Math.random()-.5)*shake,(Math.random()-.5)*shake);shake*=.86;if(shake<.3)shake=0}
@@ -1021,15 +994,16 @@ function loop(t){
   requestAnimationFrame(loop);
 }
 
+function openCollection(kind){resetMissions();const box=document.getElementById('collectionPanel'),c=document.getElementById('collectionContent');box.style.display='flex';if(kind==='upgrade'){const p=planes[equippedPlane],u=planeUpgrades[equippedPlane];c.innerHTML=`<h2 class="sectionTitle">⬆️ NÂNG CẤP • ${p.name}</h2><p style="text-align:center">🪙 ${gold}</p><div class="twoCol"><div class="upgradeCard">❤️ Máu<br>Lv ${u.hp}<div class="cost">🪙 ${500*(u.hp+1)}</div><button onclick="buyPlaneUpgrade('hp')">NÂNG CẤP</button></div><div class="upgradeCard">⚔️ Tấn công<br>Lv ${u.atk}<div class="cost">🪙 ${600*(u.atk+1)}</div><button onclick="buyPlaneUpgrade('atk')">NÂNG CẤP</button></div><div class="upgradeCard">⚡ Tốc đánh<br>Lv ${u.fire}<div class="cost">🪙 ${700*(u.fire+1)}</div><button onclick="buyPlaneUpgrade('fire')">NÂNG CẤP</button></div></div>`}else if(kind==='hangar'){c.innerHTML=`<h2 class="sectionTitle">✈️ KHO MÁY BAY</h2><p style="text-align:center">♦️ ${ruby}</p><div class="cardGrid">${Object.entries(planes).map(([id,p])=>{let own=ownedPlanes.includes(id),eq=equippedPlane===id,u=planeUpgrades[id];return `<div class="planeCard ${eq?'equipped':''}"><div class="planeIcon">${p.icon}</div><b>${p.name}</b><div class="stars">${'★'.repeat(p.stars)}${'☆'.repeat(5-p.stars)}</div><div class="statLine">❤️<div class="statBar"><i style="width:${Math.min(100,(p.hp+u.hp)*8)}%"></i></div>${p.hp+u.hp}</div><div class="statLine">⚔️<div class="statBar"><i style="width:${Math.min(100,p.atk*(1+u.atk*.08)/40*100)}%"></i></div>${Math.round(p.atk*(1+u.atk*.08))}</div><div class="statLine">⚡<div class="statBar"><i style="width:${Math.min(100,.35/Math.max(.07,p.fire*(1-u.fire*.06))*100)}%"></i></div>${p.fire.toFixed(2)}s</div><small>${p.s1} • ${p.s2}</small><div class="cost">${own?'ĐÃ MUA':'♦️ '+p.price}</div><button onclick="planeAction('${id}')">${eq?'ĐANG TRANG BỊ':own?'TRANG BỊ':'MUA'}</button></div>`}).join('')}</div>`}else{const R=a=>a.map(q=>`<div class="missionCard ${q.done?'missionDone':''}"><b>${q.text}</b><p>${q.prog}/${q.need}</p><div class="cost">Thưởng: ${a===missions.daily?'🪙 '+q.reward:'♦️ '+q.reward}</div>${q.done?'✅ ĐÃ HOÀN THÀNH':'🔄 ĐANG THỰC HIỆN'}</div>`).join('');c.innerHTML=`<h2 class="sectionTitle">📋 NHIỆM VỤ</h2><h3>🌞 Hằng ngày</h3><div class="cardGrid">${R(missions.daily)}</div><h3>📅 Hằng tuần</h3><div class="cardGrid">${R(missions.weekly)}</div>`}}
+function closeCollection(){document.getElementById('collectionPanel').style.display='none'}
+function planeAction(id){const p=planes[id];if(!ownedPlanes.includes(id)){if(ruby<p.price)return;ruby-=p.price;ownedPlanes.push(id)}equippedPlane=id;saveMeta();openCollection('hangar')}
+function buyPlaneUpgrade(t){const u=planeUpgrades[equippedPlane],cost={hp:500*(u.hp+1),atk:600*(u.atk+1),fire:700*(u.fire+1)}[t];if(gold<cost)return;gold-=cost;u[t]++;saveMeta();openCollection('upgrade')}
+
 // MAIN / PAUSE MENU
 const mainMenu=document.getElementById('mainMenu');
 const pauseMenu=document.getElementById('pauseMenu');
-document.getElementById('startBtn').onclick=()=>{
-  resetGameState();
-  gameStarted=true;paused=false;mainMenu.style.display='none';
-  updateSkillUI();
-};
-document.getElementById('helpBtn').onclick=()=>{
+function startMode(m){resetGameState(m);gameStarted=true;paused=false;mainMenu.style.display='none';closeCollection();updateSkillUI();updateCurrencyUI()}
+document.getElementById('endlessBtn').onclick=()=>startMode('endless');document.getElementById('stageBtn').onclick=()=>startMode('stage');document.getElementById('upgradeMenuBtn').onclick=()=>openCollection('upgrade');document.getElementById('hangarBtn').onclick=()=>openCollection('hangar');document.getElementById('missionsBtn').onclick=()=>openCollection('missions');document.getElementById('helpBtn').onclick=()=>{
   const h=document.getElementById('helpText');
   h.style.display=h.style.display==='block'?'none':'block';
 };
@@ -1041,19 +1015,19 @@ document.getElementById('resumeBtn').onclick=()=>{
   paused=false;pauseMenu.style.display='none';
 };
 document.getElementById('restartBtn').onclick=()=>{
-  resetGameState(); gameStarted=true; paused=false; pauseMenu.style.display='none'; mainMenu.style.display='none'; updateSkillUI();
+  resetGameState(state.mode); gameStarted=true; paused=false; pauseMenu.style.display='none'; mainMenu.style.display='none'; updateSkillUI();
 };
 document.getElementById('backBtn').onclick=()=>{
   resetGameState(); gameStarted=false; paused=false; pauseMenu.style.display='none'; mainMenu.style.display='flex'; updateSkillUI();
 };
 
-updateHUD();
+updateHUD();updateCurrencyUI();setStageWalls();
 // Independent HUD watchdog: keeps the top stats synchronized even if the gameplay
 // update returns early (pause/minigame) or recovers from a non-fatal frame error.
 setInterval(()=>{try{updateHUD();}catch(e){}},100);
 requestAnimationFrame(loop);
 </script>
-</body>
+<style>.currencyLine{display:flex;justify-content:center;gap:18px;font-size:18px;margin:4px 0 12px}.modeGrid,.menuGrid2,.twoCol{display:grid;grid-template-columns:1fr 1fr;gap:9px}.collectionPanel{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:#030611f2;z-index:30}.collectionPanel .menuPanel{max-height:90vh;overflow:auto;position:relative}.closePanel{position:absolute;right:10px;top:8px;background:#18223a;color:#fff;border:1px solid #6feaff55;border-radius:9px;padding:6px 10px}.cardGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.planeCard,.missionCard,.upgradeCard{background:#101a30;border:1px solid #ffffff22;border-radius:13px;padding:10px;text-align:center}.planeIcon{font-size:44px;height:56px}.stars{color:#ffd85c;letter-spacing:2px}.statLine{display:flex;align-items:center;gap:4px;font-size:10px;margin:4px 0}.statBar{height:7px;flex:1;background:#242d42;border-radius:8px;overflow:hidden}.statBar i{display:block;height:100%;background:#6feaff}.planeCard button,.upgradeCard button{width:100%;margin-top:6px;padding:7px}.equipped{box-shadow:0 0 16px #6feaff55;border-color:#6feaffaa}.missionDone{border-color:#76ff9b88}.sectionTitle{text-align:center}.cost{font-size:11px;color:#ffd86b}@media(max-width:430px){.menuGrid2{grid-template-columns:1fr}.cardGrid{grid-template-columns:1fr 1fr}}</style></body>
 </html>
 <style>
 #menuBtn{position:fixed;right:12px;top:48px;width:42px;height:42px;padding:0;font-size:21px;z-index:3}
