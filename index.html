@@ -124,6 +124,25 @@ small{color:#aebbd6}
   </div>
 </div>
 
+<div id="victoryPanel" class="victoryOverlay" style="display:none">
+  <div class="victoryCard">
+    <div class="victoryTitle">🏆 VICTORY!</div>
+    <div class="victoryStage">MÀN <b id="victoryStage">1</b> ĐÃ VƯỢT</div>
+    <div class="rewardBox">
+      <div id="firstClearRewardRow">🎁 Thưởng lần đầu: <b id="firstClearReward">+0 🪙</b></div>
+      <div>🏆 Thưởng vượt màn: <b id="stageClearReward">+0 🪙</b></div>
+      <div class="rewardTotal">Tổng nhận: <b id="victoryTotalReward">+0 🪙</b></div>
+    </div>
+    <div id="nextStageNotice" class="nextStageNotice">🔓 Màn <b id="nextStageNumber">2</b> đã mở!</div>
+    <div id="allStagesNotice" class="nextStageNotice" style="display:none">🎉 Bạn đã hoàn thành toàn bộ 100 màn!</div>
+    <div class="victoryButtons">
+      <button id="victoryMenuBtn" class="menuButton">⌂ VỀ MENU</button>
+      <button id="victoryReplayBtn" class="menuButton">🔄 CHƠI LẠI</button>
+      <button id="victoryNextBtn" class="menuButton">▶ QUA MÀN</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const c=document.getElementById('game'),ctx=c.getContext('2d');
 let W,H,DPR,shake=0,paused=false,over=false,last=performance.now(),gameStarted=false,currentStageChoice=1;
@@ -145,13 +164,13 @@ const planes={
  titan:{name:'Titan',icon:'🚀',shape:'heavy',color:'#e1e8f2',accent:'#9aaeff',stars:5,hp:11,atk:22,fire:.31,s1:'💢 Ram',s2:'🌀 Titan Blast',price:180}
 };
 for(const id of Object.keys(planes))planeUpgrades[id]={hp:0,atk:0,fire:0};
-let missions={day:'',week:'',daily:[],weekly:[]};let redeemedCodes=[];
+let missions={day:'',week:'',daily:[],weekly:[]};let redeemedCodes=[];let firstClearRewards=[];
 let unlockedStage=1;
 const REDEEM_CODES={"12345678":{"gold":1000,"ruby":5,"once":true},"87654321":{"gold":2500,"ruby":10,"once":true}};
 
-function accountTemplate(){return {gold:0,ruby:0,infiniteResources:false,equippedPlane:'radiant',ownedPlanes:['radiant'],planeUpgrades:Object.fromEntries(Object.keys(planes).map(id=>[id,{hp:0,atk:0,fire:0}])),unlockedStage:1,missions:{day:'',week:'',daily:[],weekly:[]},attendance:'',redeemedCodes:[]}}
-function loadAccount(){const a=accounts[currentUser]||accountTemplate();const inf=!!a.infiniteResources;gold=inf?Infinity:Number(a.gold||0);ruby=inf?Infinity:Number(a.ruby||0);equippedPlane=a.equippedPlane||'radiant';ownedPlanes=Array.isArray(a.ownedPlanes)?a.ownedPlanes:['radiant'];planeUpgrades=a.planeUpgrades||{};for(const id of Object.keys(planes))if(!planeUpgrades[id])planeUpgrades[id]={hp:0,atk:0,fire:0};unlockedStage=Math.max(1,Math.min(100,Number(a.unlockedStage||1)));missions=a.missions||{day:'',week:'',daily:[],weekly:[]};redeemedCodes=Array.isArray(a.redeemedCodes)?a.redeemedCodes:[];resetMissions();updateCurrencyUI()}
-function saveMeta(){if(!currentUser)return;const old=accounts[currentUser]||accountTemplate();accounts[currentUser]={...old,gold:infiniteResources?0:gold,ruby:infiniteResources?0:ruby,infiniteResources,equippedPlane,ownedPlanes,planeUpgrades,unlockedStage,missions,attendance:old.attendance||'',redeemedCodes};localStorage.setItem('sr_accounts',JSON.stringify(accounts));localStorage.setItem('sr_current_user',currentUser);updateCurrencyUI()}
+function accountTemplate(){return {gold:0,ruby:0,infiniteResources:false,equippedPlane:'radiant',ownedPlanes:['radiant'],planeUpgrades:Object.fromEntries(Object.keys(planes).map(id=>[id,{hp:0,atk:0,fire:0}])),unlockedStage:1,missions:{day:'',week:'',daily:[],weekly:[]},attendance:'',redeemedCodes:[],firstClearRewards:[]}}
+function loadAccount(){const a=accounts[currentUser]||accountTemplate();const inf=!!a.infiniteResources;gold=inf?Infinity:Number(a.gold||0);ruby=inf?Infinity:Number(a.ruby||0);equippedPlane=a.equippedPlane||'radiant';ownedPlanes=Array.isArray(a.ownedPlanes)?a.ownedPlanes:['radiant'];planeUpgrades=a.planeUpgrades||{};for(const id of Object.keys(planes))if(!planeUpgrades[id])planeUpgrades[id]={hp:0,atk:0,fire:0};unlockedStage=Math.max(1,Math.min(100,Number(a.unlockedStage||1)));missions=a.missions||{day:'',week:'',daily:[],weekly:[]};redeemedCodes=Array.isArray(a.redeemedCodes)?a.redeemedCodes:[];firstClearRewards=Array.isArray(a.firstClearRewards)?a.firstClearRewards:[];resetMissions();updateCurrencyUI()}
+function saveMeta(){if(!currentUser)return;const old=accounts[currentUser]||accountTemplate();accounts[currentUser]={...old,gold:infiniteResources?0:gold,ruby:infiniteResources?0:ruby,infiniteResources,equippedPlane,ownedPlanes,planeUpgrades,unlockedStage,missions,attendance:old.attendance||'',redeemedCodes,firstClearRewards};localStorage.setItem('sr_accounts',JSON.stringify(accounts));localStorage.setItem('sr_current_user',currentUser);updateCurrencyUI()}
 function dayKey(){return new Date().toLocaleDateString('sv-SE')} function weekKey(){const d=new Date(),x=new Date(d);x.setDate(d.getDate()-((d.getDay()+6)%7));return x.toLocaleDateString('sv-SE')}
 function resetMissions(){const dk=dayKey(),wk=weekKey();if(missions.day!==dk){missions.day=dk;missions.daily=[{id:'d1',text:'Hoàn thành 2 màn Stage',need:2,prog:0,reward:500,done:false},{id:'d2',text:'Tiêu diệt 25 quái',need:25,prog:0,reward:400,done:false},{id:'d3',text:'Tiêu diệt 2 Boss',need:2,prog:0,reward:600,done:false},{id:'d4',text:'Kiếm 1.500 vàng',need:1500,prog:0,reward:500,done:false},{id:'d5',text:'Dùng skill 5 lần',need:5,prog:0,reward:450,done:false}]}if(missions.week!==wk){missions.week=wk;missions.weekly=[{id:'w1',text:'Hoàn thành 10 màn Stage',need:10,prog:0,reward:8,done:false},{id:'w2',text:'Đánh bại 10 Boss',need:10,prog:0,done:false},{id:'w3',text:'Kiếm 10.000 vàng',need:10000,prog:0,reward:15,done:false},{id:'w4',text:'Hoàn thành 30 wave',need:30,prog:0,reward:12,done:false},{id:'w5',text:'Mua 1 máy bay',need:1,prog:0,reward:10,done:false}]}saveMeta()}
 function missionProgress(id,n=1){for(const arr of [missions.daily,missions.weekly]){const q=arr.find(x=>x.id===id);if(q&&!q.done){q.prog=Math.min(q.need,q.prog+n);if(q.prog>=q.need){q.done=true;if(arr===missions.daily)gold+=q.reward;else ruby+=q.reward;addText(player.x,player.y-40,'🎁 NHIỆM VỤ +'+(arr===missions.daily?q.reward+' 🪙':q.reward+' ♦️'));}}}saveMeta()}
@@ -832,7 +851,86 @@ function startMiniGame(){}
 function spawnMiniObject(){}
 function updateMiniInfo(){}
 function endMiniGame(){}
-function completeStage(){if(state.mode!=='stage'||state.stageComplete)return;state.stageComplete=true;const bossStage=state.stage%5===0||state.stage===100,g=500+state.stage*80+(bossStage?700:0);gold+=g;missionProgress('d1');missionProgress('d4',g);if(bossStage){ruby+=state.stage===100?20:5;}missionProgress('w1');saveMeta();if(state.stage>=100){unlockedStage=100;saveMeta();over=true;document.getElementById('finalScore').textContent=Math.floor(state.score);document.getElementById('finalStage').textContent='100';document.querySelector('#gameover .big').textContent='🏆 HOÀN THÀNH 100 MÀN!';document.getElementById('gameover').style.display='flex';return}addText(player.x,player.y-50,'MÀN '+state.stage+' HOÀN THÀNH +'+g+' 🪙');unlockedStage=Math.max(unlockedStage,Math.min(100,state.stage+1));saveMeta();state.stage++;state.wave=1;state.spawned=0;state.killed=0;state.waveTimer=-1.2;state.bossesTarget=0;state.bossesSpawned=0;state.stageComplete=false;setStageWalls();waveFX()}
+function completeStage(){
+  if(state.mode!=='stage'||state.stageComplete)return;
+  state.stageComplete=true;
+  over=true;
+  paused=true;
+
+  const completedStage=state.stage;
+  const bossStage=completedStage%5===0||completedStage===100;
+  const stageReward=500+completedStage*80+(bossStage?700:0);
+  const firstReward=firstClearRewards.includes(completedStage)?0:500;
+  if(firstReward>0)firstClearRewards.push(completedStage);
+  const totalReward=stageReward+firstReward;
+  gold+=totalReward;
+
+  missionProgress('d1');
+  missionProgress('d4',totalReward);
+  if(bossStage){ruby+=completedStage===100?20:5;}
+  missionProgress('w1');
+
+  if(completedStage<100){
+    unlockedStage=Math.max(unlockedStage,completedStage+1);
+  }else{
+    unlockedStage=100;
+  }
+  saveMeta();
+  updateCurrencyUI();
+
+  document.getElementById('victoryStage').textContent=completedStage;
+  document.getElementById('firstClearReward').textContent=firstReward>0?'+'+firstReward+' 🪙':'Đã nhận';
+  document.getElementById('stageClearReward').textContent='+'+stageReward+' 🪙';
+  document.getElementById('victoryTotalReward').textContent='+'+totalReward+' 🪙';
+  document.getElementById('nextStageNumber').textContent=Math.min(100,completedStage+1);
+  const firstRow=document.getElementById('firstClearRewardRow');
+  firstRow.style.opacity=firstReward>0?'1':'.55';
+  const hasNext=completedStage<100;
+  document.getElementById('nextStageNotice').style.display=hasNext?'block':'none';
+  document.getElementById('allStagesNotice').style.display=hasNext?'none':'block';
+  const nextBtn=document.getElementById('victoryNextBtn');
+  nextBtn.style.display=hasNext?'block':'none';
+  document.getElementById('victoryPanel').style.display='flex';
+}
+
+function closeVictory(){
+  document.getElementById('victoryPanel').style.display='none';
+}
+function victoryToMenu(){
+  closeVictory();
+  resetGameState();
+  gameStarted=false;
+  over=false;
+  paused=false;
+  setGameplayVisible(false);
+  mainMenu.style.display='flex';
+  renderStageSelect();
+}
+function victoryReplay(){
+  const stage=state.stage;
+  closeVictory();
+  over=false;
+  resetGameState('stage',stage);
+  gameStarted=true;
+  paused=false;
+  mainMenu.style.display='none';
+  setGameplayVisible(true);
+  updateSkillUI();
+  updateCurrencyUI();
+}
+function victoryNext(){
+  if(state.stage>=100)return;
+  const next=Math.min(100,state.stage+1);
+  closeVictory();
+  over=false;
+  resetGameState('stage',next);
+  gameStarted=true;
+  paused=false;
+  mainMenu.style.display='none';
+  setGameplayVisible(true);
+  updateSkillUI();
+  updateCurrencyUI();
+}
 function nextWave(){if(state.mode==='stage'){missionProgress('w4');if(state.stage===100){completeStage();return}if(state.wave>=5){completeStage();return}state.wave++;state.spawned=0;state.killed=0;state.waveTimer=-1.2;state.bossesTarget=0;state.bossesSpawned=0;waveFX();return}missionProgress('w4');state.wave++;state.spawned=0;state.waveTimer=-1.2;if(state.wave>5){gold+=120+state.stage*20;saveMeta();missionProgress('w4');state.wave=1;state.stage++;state.spawned=0;waveFX()}}
 
 function draw(){
@@ -1112,7 +1210,7 @@ function redeemCode(){
   if(!currentUser)return;
   const input=document.getElementById('codeInput'),msg=document.getElementById('codeMsg');
   const code=(input.value||'').trim();
-  if(!/^\\d{8}$/.test(code)){msg.textContent='❌ Code phải gồm đúng 8 số.';return}
+  if(!/^\d{8}$/.test(code)){msg.textContent='❌ Code phải gồm đúng 8 số.';return}
   const reward=REDEEM_CODES[code];
   if(!reward){msg.textContent='❌ Code không hợp lệ.';return}
   if(reward.once&&redeemedCodes.includes(code)){msg.textContent='⚠️ Code này đã được dùng.';return}
@@ -1139,7 +1237,7 @@ const mainMenu=document.getElementById('mainMenu');
 const pauseMenu=document.getElementById('pauseMenu');
 function setGameplayVisible(v){const d=v?'':'none';for(const id of ['hud','joyL','skill','menuBtn']){const e=document.getElementById(id);if(e)e.style.display=d;}c.style.display=d}
 function startMode(m,chosenStage=1){if(!currentUser)return showAuth('Bạn phải đăng nhập để chơi.');resetGameState(m,chosenStage);gameStarted=true;paused=false;setGameplayVisible(true);mainMenu.style.display='none';closeCollection();closeStageSelect();updateSkillUI();updateCurrencyUI()}
-document.getElementById('endlessBtn').onclick=()=>startMode('endless');document.getElementById('stageBtn').onclick=()=>openStageSelect();document.getElementById('upgradeMenuBtn').onclick=()=>openCollection('upgrade');document.getElementById('hangarBtn').onclick=()=>openCollection('hangar');document.getElementById('missionsBtn').onclick=()=>{paused=true;openCollection('missions')};document.getElementById('attendanceBtn').onclick=()=>claimAttendance(false);document.getElementById('settingsBtn').onclick=()=>openSettings();document.getElementById('redeemCodeBtn').onclick=redeemCode;document.getElementById('helpBtn').onclick=()=>{
+document.getElementById('endlessBtn').onclick=()=>startMode('endless');document.getElementById('stageBtn').onclick=()=>openStageSelect();document.getElementById('upgradeMenuBtn').onclick=()=>openCollection('upgrade');document.getElementById('hangarBtn').onclick=()=>openCollection('hangar');document.getElementById('missionsBtn').onclick=()=>{paused=true;openCollection('missions')};document.getElementById('attendanceBtn').onclick=()=>claimAttendance(false);document.getElementById('settingsBtn').onclick=()=>openSettings();document.getElementById('redeemCodeBtn').onclick=redeemCode;document.getElementById('logoutBtn').onclick=logout;document.getElementById('logoutBtn').ontouchend=e=>{e.preventDefault();logout()};document.getElementById('helpBtn').onclick=()=>{
   const h=document.getElementById('helpText');
   h.style.display=h.style.display==='block'?'none':'block';
 };
@@ -1156,6 +1254,10 @@ document.getElementById('restartBtn').onclick=()=>{
 document.getElementById('backBtn').onclick=()=>{
   resetGameState(); gameStarted=false; paused=false; setGameplayVisible(false); pauseMenu.style.display='none'; mainMenu.style.display='flex'; updateSkillUI();
 };
+
+document.getElementById('victoryMenuBtn').onclick=victoryToMenu;
+document.getElementById('victoryReplayBtn').onclick=victoryReplay;
+document.getElementById('victoryNextBtn').onclick=victoryNext;
 
 if(currentUser && accounts[currentUser]){loadAccount();setGameplayVisible(false);document.getElementById('authMenu').style.display='none';document.getElementById('mainMenu').style.display='flex';}else{showAuth();}
 updateHUD();updateCurrencyUI();setStageWalls();
@@ -1177,4 +1279,17 @@ requestAnimationFrame(loop);
 .sub{text-align:center;color:#76dff5;font-size:12px;margin:5px 0 25px}
 .menuButton{display:block;width:100%;margin:10px 0;padding:14px;font-size:16px}
 #authLocation{text-align:center;margin:-8px 0 10px;color:#76dff5;font-weight:900;font-size:14px;padding:8px;border:1px solid #6feaff35;border-radius:10px;background:#080e1e}#authForm button{touch-action:manipulation;cursor:pointer}#authMsg{min-height:22px;text-align:center;margin-top:8px;color:#ffd86b}#helpText{display:none;margin-top:15px;line-height:1.8;color:#c6d4ee;text-align:left;background:#080d1b;padding:14px;border-radius:12px}
+</style>
+
+<style>
+.victoryOverlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:#030611ee;z-index:50;text-align:center;padding:18px}
+.victoryCard{width:min(92vw,430px);padding:24px 18px;border:1px solid #ffd85c88;border-radius:22px;background:#0d1427;box-shadow:0 0 45px #000}
+.victoryTitle{font-size:38px;font-weight:900;letter-spacing:1px;margin-bottom:8px}
+.victoryStage{color:#76dff5;font-weight:900;margin-bottom:16px}
+.rewardBox{background:#101a30;border:1px solid #ffffff20;border-radius:14px;padding:13px;line-height:2;font-size:15px}
+.rewardTotal{margin-top:5px;padding-top:7px;border-top:1px solid #ffffff20;font-size:18px}
+.nextStageNotice{margin:15px 0;padding:10px;border-radius:12px;background:#10271e;border:1px solid #76ff9b66;color:#a9ffbf;font-weight:900}
+.victoryButtons{display:grid;grid-template-columns:1fr;gap:7px;margin-top:10px}
+#settingsPanel,#settingsPanel *{pointer-events:auto}
+#logoutBtn{touch-action:manipulation;cursor:pointer;position:relative;z-index:2}
 </style>

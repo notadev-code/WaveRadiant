@@ -1,23 +1,13 @@
-SpaceRadiant v1.16.3
+SpaceRadiant v1.16.3 – fixed
 
-ĐÃ SỬA
-- Nút ĐĂNG NHẬP và ĐĂNG KÝ hoạt động bằng click/touch.
-- Có nhấn Enter trong ô mật khẩu để đăng nhập.
-- Khi bấm ĐĂNG NHẬP sẽ hiện "📍 Khu đăng nhập" phía trên ô tên.
-- Khi bấm ĐĂNG KÝ sẽ hiện "📍 Khu đăng ký" phía trên ô tên.
-- Tool có mục 5 để tạo code tài nguyên VÔ HẠN.
-- Code vô hạn kích hoạt ∞ vàng và ∞ ruby. Trạng thái được lưu khi reload game.
-- Code thường vẫn hoạt động như cũ.
+Các cập nhật:
+- Stage: khi hoàn thành màn sẽ dừng game và hiện Victory.
+- Victory hiển thị thưởng lần đầu theo từng màn (500 Gold, chỉ nhận 1 lần), thưởng vượt màn, tổng thưởng và thông báo mở màn tiếp theo.
+- Victory có 3 nút: Về menu, Chơi lại, Qua màn. Màn 100 sẽ báo hoàn thành toàn bộ và ẩn nút Qua màn.
+- Chơi lại không nhận lại thưởng lần đầu; thưởng vượt màn vẫn được nhận khi hoàn thành lại.
+- Tool tạo code đã sửa lỗi code tạo ra nhưng game không nhận: regex nhập code 8 số và cơ chế đồng bộ REDEEM_CODES đã được sửa.
+- Có sẵn codes.json để code_tool.py chạy ngay và không làm mất 2 code mặc định.
+- Nút Đăng xuất trong Cài đặt đã được gắn sự kiện click/touch.
 
-CHẠY TOOL TRÊN TERMUX
-1. Đặt index.html và code_tool.py cùng thư mục.
-2. Chạy:
-   python code_tool.py
-3. Chọn:
-   1 = Tạo code thường
-   2 = Xem danh sách
-   3 = Xóa code
-   4 = Đồng bộ
-   5 = Tạo code tài nguyên VÔ HẠN
-
-Sau khi tool sửa index.html, reload trang game để trình duyệt tải bản mới.
+Chạy game: mở index.html.
+Chạy tool: python3 code_tool.py
