@@ -166,7 +166,7 @@ const planes={
 for(const id of Object.keys(planes))planeUpgrades[id]={hp:0,atk:0,fire:0};
 let missions={day:'',week:'',daily:[],weekly:[]};let redeemedCodes=[];let firstClearRewards=[];
 let unlockedStage=1;
-const REDEEM_CODES={"12345678":{"gold":1000,"ruby":5,"once":true},"87654321":{"gold":2500,"ruby":10,"once":true}};
+const REDEEM_CODES={"12345678":{"gold":1000,"ruby":5,"once":true},"87654321":{"gold":2500,"ruby":10,"once":true},"19646159":{"gold":7777,"ruby":8,"once":true}};
 
 function accountTemplate(){return {gold:0,ruby:0,infiniteResources:false,equippedPlane:'radiant',ownedPlanes:['radiant'],planeUpgrades:Object.fromEntries(Object.keys(planes).map(id=>[id,{hp:0,atk:0,fire:0}])),unlockedStage:1,missions:{day:'',week:'',daily:[],weekly:[]},attendance:'',redeemedCodes:[],firstClearRewards:[]}}
 function loadAccount(){const a=accounts[currentUser]||accountTemplate();const inf=!!a.infiniteResources;gold=inf?Infinity:Number(a.gold||0);ruby=inf?Infinity:Number(a.ruby||0);equippedPlane=a.equippedPlane||'radiant';ownedPlanes=Array.isArray(a.ownedPlanes)?a.ownedPlanes:['radiant'];planeUpgrades=a.planeUpgrades||{};for(const id of Object.keys(planes))if(!planeUpgrades[id])planeUpgrades[id]={hp:0,atk:0,fire:0};unlockedStage=Math.max(1,Math.min(100,Number(a.unlockedStage||1)));missions=a.missions||{day:'',week:'',daily:[],weekly:[]};redeemedCodes=Array.isArray(a.redeemedCodes)?a.redeemedCodes:[];firstClearRewards=Array.isArray(a.firstClearRewards)?a.firstClearRewards:[];resetMissions();updateCurrencyUI()}
@@ -706,8 +706,9 @@ if(nearest){
  state.waveTimer+=dt;
  let target=state.mode==='stage'?Math.min(5+state.stage,14):Math.min(5+state.stage,12);
  let specialBossStage=state.mode==='stage'&&(state.stage%5===0||state.stage===100);
- let bossWave=state.mode==='stage'?specialBossStage:state.wave===5;
- if(state.mode==='stage'&&state.stage===100){if(state.wave===1&&!state.bossesTarget){state.bossesTarget=6;state.bossesSpawned=0;for(let b=0;b<6;b++){spawnEnemy(null,false,true);state.bossesSpawned++;}}}
+ // Stage mode always lasts exactly 5 waves. Boss stages put the boss on wave 5 so the stage can finish after the boss dies.
+ let bossWave=state.mode==='stage'?(state.wave===5):state.wave===5;
+ if(state.mode==='stage'&&state.stage===100){if(state.wave===5&&!state.bossesTarget){state.bossesTarget=6;state.bossesSpawned=0;for(let b=0;b<6;b++){spawnEnemy(null,false,true);state.bossesSpawned++;}}}
  else if(bossWave&&!state.bossesTarget){state.bossesTarget=1;state.bossesSpawned=0;spawnEnemy(null,false,true);state.bossesSpawned=1;}
  else if(!bossWave){if(state.spawned<target&&state.waveTimer>=1){state.waveTimer=0;spawnEnemy(null,Math.random()<Math.min(.05+state.stage*.012,.22),false);state.spawned++;}}
  // Safety caps prevent accidental runaway arrays from freezing the browser.
@@ -843,7 +844,7 @@ if(nearest){
  }
  for(let i=particles.length-1;i>=0;i--){let p=particles[i];p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.96;p.vy*=.96;p.t-=dt;if(p.t<=0)particles.splice(i,1)}
  for(let i=texts.length-1;i>=0;i--){texts[i].y-=25*dt;texts[i].t-=dt;if(texts[i].t<=0)texts.splice(i,1)}
- if(state.wave<5&&state.spawned>=target&&enemies.length===0)nextWave();
+ if(state.wave<=5&&state.spawned>=target&&enemies.length===0)nextWave();
  updateBossHUD();
 }
 let miniType=0,miniObjects=[],miniScore=0;
