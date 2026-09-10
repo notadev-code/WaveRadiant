@@ -92,7 +92,7 @@ small{color:#aebbd6}
 </div>
 <button id="menuBtn">☰</button>
 
-<div id="authMenu" class="overlayMenu"><div class="menuPanel"><div class="title">SPACE RADIANT</div><div class="sub">TÀI KHOẢN</div><div id="authForm"><input id="authName" placeholder="Tên tài khoản" maxlength="20"><input id="authPass" type="password" placeholder="Mật khẩu" maxlength="30"><button id="loginBtn" class="menuButton">🔐 ĐĂNG NHẬP</button><button id="registerBtn" class="menuButton">📝 ĐĂNG KÝ</button><div id="authMsg"></div></div></div></div>
+<div id="authMenu" class="overlayMenu"><div class="menuPanel"><div class="title">SPACE RADIANT</div><div class="sub">TÀI KHOẢN</div><div id="authForm"><div id="authLocation" class="authLocation">📍 Khu đăng nhập</div><input id="authName" placeholder="Tên tài khoản" maxlength="20" autocomplete="username"><input id="authPass" type="password" placeholder="Mật khẩu" maxlength="30" autocomplete="current-password"><button id="loginBtn" type="button" class="menuButton">🔐 ĐĂNG NHẬP</button><button id="registerBtn" type="button" class="menuButton">📝 ĐĂNG KÝ</button><div id="authMsg"></div></div></div></div>
 <div id="mainMenu"><div class="menuPanel megaMenu"><div class="title">SPACE RADIANT v1.16.1</div><div class="sub">CHỌN CHẾ ĐỘ</div><div class="currencyLine">🪙 <b id="menuGold">0</b> &nbsp;&nbsp; ♦️ <b id="menuRuby">0</b></div><div class="modeGrid"><button id="endlessBtn" class="menuButton">♾️ ENDLESS<br><small>Chế độ cũ • không tường</small></button><button id="stageBtn" class="menuButton">🚀 STAGE<br><small>Chọn màn 1–100</small></button></div><div class="menuGrid2"><button id="upgradeMenuBtn" class="menuButton">⬆️ NÂNG CẤP</button><button id="hangarBtn" class="menuButton">✈️ KHO MÁY BAY</button><button id="missionsBtn" class="menuButton">📋 NHIỆM VỤ</button><button id="attendanceBtn" class="menuButton">🎁 QUÀ HẰNG NGÀY</button><button id="settingsBtn" class="menuButton">⚙️ CÀI ĐẶT</button><button id="helpBtn" class="menuButton">❔ HƯỚNG DẪN</button></div><div id="helpText">🎮 Joystick trái để di chuyển.<br>🎯 Máy bay tự nhắm và bắn quái gần nhất.<br>⚡/💥 dùng skill 1/3 kể cả khi đang giữ hướng trên TV.<br>🚀 Stage: 100 màn. Màn 5,10,...,95 là màn boss đặc biệt; màn 100 có cả 6 boss.</div></div></div>
 <div id="stageSelect" class="overlayMenu" style="display:none"><div class="menuPanel stagePanel"><button class="closePanel" onclick="closeStageSelect()">✕</button><h2 class="sectionTitle">🚀 CHỌN MÀN</h2><p style="text-align:center">Vượt màn trước để mở màn sau</p><div id="stageGrid" class="stageGrid"></div></div></div>
 <div id="settingsPanel" class="overlayMenu" style="display:none"><div class="menuPanel"><h2 class="sectionTitle">⚙️ CÀI ĐẶT</h2><p id="accountLabel" style="text-align:center"></p><div style="margin:12px 0"><input id="codeInput" maxlength="8" inputmode="numeric" placeholder="Nhập code 8 số" style="width:100%;box-sizing:border-box;padding:12px;border-radius:10px;border:1px solid #567;background:#101827;color:#fff;font-size:16px;text-align:center"><button id="redeemCodeBtn" class="menuButton">🎁 NHẬP CODE</button><div id="codeMsg" style="text-align:center;min-height:22px"></div></div><button id="logoutBtn" class="menuButton">🚪 ĐĂNG XUẤT</button><button class="menuButton" onclick="closeSettings()">ĐÓNG</button></div></div>
@@ -135,7 +135,7 @@ let uiTimer=0;
 let miniActive=false,miniCount=0,miniTime=0,miniTimer=0;
 let accounts=JSON.parse(localStorage.getItem('sr_accounts')||'{}');
 let currentUser=localStorage.getItem('sr_current_user')||'';
-let gold=0,ruby=0,equippedPlane='radiant',ownedPlanes=['radiant'],planeUpgrades={};
+let gold=0,ruby=0,infiniteResources=false,equippedPlane='radiant',ownedPlanes=['radiant'],planeUpgrades={};
 const planes={
  radiant:{name:'Radiant',icon:'✦',shape:'arrow',color:'#e9fbff',accent:'#62e7ff',stars:3,hp:5,atk:18,fire:.23,s1:'⚡ Photon Dash',s2:'💥 Radiant Nova',price:0},
  comet:{name:'Comet',icon:'☄️',shape:'comet',color:'#fff0c2',accent:'#ff9d4d',stars:3,hp:4,atk:24,fire:.20,s1:'🔥 Overdrive',s2:'💥 Comet Nova',price:30},
@@ -149,13 +149,13 @@ let missions={day:'',week:'',daily:[],weekly:[]};let redeemedCodes=[];
 let unlockedStage=1;
 const REDEEM_CODES={"12345678":{"gold":1000,"ruby":5,"once":true},"87654321":{"gold":2500,"ruby":10,"once":true}};
 
-function accountTemplate(){return {gold:0,ruby:0,equippedPlane:'radiant',ownedPlanes:['radiant'],planeUpgrades:Object.fromEntries(Object.keys(planes).map(id=>[id,{hp:0,atk:0,fire:0}])),unlockedStage:1,missions:{day:'',week:'',daily:[],weekly:[]},attendance:'',redeemedCodes:[]}}
-function loadAccount(){const a=accounts[currentUser]||accountTemplate();gold=Number(a.gold||0);ruby=Number(a.ruby||0);equippedPlane=a.equippedPlane||'radiant';ownedPlanes=Array.isArray(a.ownedPlanes)?a.ownedPlanes:['radiant'];planeUpgrades=a.planeUpgrades||{};for(const id of Object.keys(planes))if(!planeUpgrades[id])planeUpgrades[id]={hp:0,atk:0,fire:0};unlockedStage=Math.max(1,Math.min(100,Number(a.unlockedStage||1)));missions=a.missions||{day:'',week:'',daily:[],weekly:[]};redeemedCodes=Array.isArray(a.redeemedCodes)?a.redeemedCodes:[];resetMissions();updateCurrencyUI()}
-function saveMeta(){if(!currentUser)return;accounts[currentUser]={...(accounts[currentUser]||accountTemplate()),gold,ruby,equippedPlane,ownedPlanes,planeUpgrades,unlockedStage,missions,attendance:accounts[currentUser]?.attendance||'',redeemedCodes};localStorage.setItem('sr_accounts',JSON.stringify(accounts));localStorage.setItem('sr_current_user',currentUser);updateCurrencyUI()}
+function accountTemplate(){return {gold:0,ruby:0,infiniteResources:false,equippedPlane:'radiant',ownedPlanes:['radiant'],planeUpgrades:Object.fromEntries(Object.keys(planes).map(id=>[id,{hp:0,atk:0,fire:0}])),unlockedStage:1,missions:{day:'',week:'',daily:[],weekly:[]},attendance:'',redeemedCodes:[]}}
+function loadAccount(){const a=accounts[currentUser]||accountTemplate();const inf=!!a.infiniteResources;gold=inf?Infinity:Number(a.gold||0);ruby=inf?Infinity:Number(a.ruby||0);equippedPlane=a.equippedPlane||'radiant';ownedPlanes=Array.isArray(a.ownedPlanes)?a.ownedPlanes:['radiant'];planeUpgrades=a.planeUpgrades||{};for(const id of Object.keys(planes))if(!planeUpgrades[id])planeUpgrades[id]={hp:0,atk:0,fire:0};unlockedStage=Math.max(1,Math.min(100,Number(a.unlockedStage||1)));missions=a.missions||{day:'',week:'',daily:[],weekly:[]};redeemedCodes=Array.isArray(a.redeemedCodes)?a.redeemedCodes:[];resetMissions();updateCurrencyUI()}
+function saveMeta(){if(!currentUser)return;const old=accounts[currentUser]||accountTemplate();accounts[currentUser]={...old,gold:infiniteResources?0:gold,ruby:infiniteResources?0:ruby,infiniteResources,equippedPlane,ownedPlanes,planeUpgrades,unlockedStage,missions,attendance:old.attendance||'',redeemedCodes};localStorage.setItem('sr_accounts',JSON.stringify(accounts));localStorage.setItem('sr_current_user',currentUser);updateCurrencyUI()}
 function dayKey(){return new Date().toLocaleDateString('sv-SE')} function weekKey(){const d=new Date(),x=new Date(d);x.setDate(d.getDate()-((d.getDay()+6)%7));return x.toLocaleDateString('sv-SE')}
 function resetMissions(){const dk=dayKey(),wk=weekKey();if(missions.day!==dk){missions.day=dk;missions.daily=[{id:'d1',text:'Hoàn thành 2 màn Stage',need:2,prog:0,reward:500,done:false},{id:'d2',text:'Tiêu diệt 25 quái',need:25,prog:0,reward:400,done:false},{id:'d3',text:'Tiêu diệt 2 Boss',need:2,prog:0,reward:600,done:false},{id:'d4',text:'Kiếm 1.500 vàng',need:1500,prog:0,reward:500,done:false},{id:'d5',text:'Dùng skill 5 lần',need:5,prog:0,reward:450,done:false}]}if(missions.week!==wk){missions.week=wk;missions.weekly=[{id:'w1',text:'Hoàn thành 10 màn Stage',need:10,prog:0,reward:8,done:false},{id:'w2',text:'Đánh bại 10 Boss',need:10,prog:0,done:false},{id:'w3',text:'Kiếm 10.000 vàng',need:10000,prog:0,reward:15,done:false},{id:'w4',text:'Hoàn thành 30 wave',need:30,prog:0,reward:12,done:false},{id:'w5',text:'Mua 1 máy bay',need:1,prog:0,reward:10,done:false}]}saveMeta()}
 function missionProgress(id,n=1){for(const arr of [missions.daily,missions.weekly]){const q=arr.find(x=>x.id===id);if(q&&!q.done){q.prog=Math.min(q.need,q.prog+n);if(q.prog>=q.need){q.done=true;if(arr===missions.daily)gold+=q.reward;else ruby+=q.reward;addText(player.x,player.y-40,'🎁 NHIỆM VỤ +'+(arr===missions.daily?q.reward+' 🪙':q.reward+' ♦️'));}}}saveMeta()}
-function updateCurrencyUI(){for(const id of ['menuGold','goldHud']){const e=document.getElementById(id);if(e)e.textContent=Math.floor(gold)}for(const id of ['menuRuby','rubyHud']){const e=document.getElementById(id);if(e)e.textContent=Math.floor(ruby)}}
+function updateCurrencyUI(){for(const id of ['menuGold','goldHud']){const e=document.getElementById(id);if(e)e.textContent=Number.isFinite(gold)?Math.floor(gold):'∞'}for(const id of ['menuRuby','rubyHud']){const e=document.getElementById(id);if(e)e.textContent=Number.isFinite(ruby)?Math.floor(ruby):'∞'}}
 
 function resetGameState(mode=state.mode||'endless',chosenStage=1){
   state.mode=mode; state.stage=mode==='stage'?Math.max(1,Math.min(unlockedStage,chosenStage)):1; state.wave=1; state.score=0; state.level=1; state.exp=5; state.next=20;
@@ -1100,7 +1100,9 @@ function planeAction(id){const p=planes[id];if(!ownedPlanes.includes(id)){if(rub
 function buyPlaneUpgrade(t){const u=planeUpgrades[equippedPlane],cost={hp:500*(u.hp+1),atk:600*(u.atk+1),fire:700*(u.fire+1)}[t];if(gold<cost)return;gold-=cost;u[t]++;saveMeta();openCollection('upgrade')}
 
 // ACCOUNT / STAGE SELECT
-function showAuth(msg=''){setGameplayVisible(false);document.getElementById('authMenu').style.display='flex';document.getElementById('mainMenu').style.display='none';document.getElementById('authMsg').textContent=msg;gameStarted=false;paused=true}
+function setAuthLocation(mode){const e=document.getElementById('authLocation');if(e)e.textContent=mode==='register'?'📍 Khu đăng ký':'📍 Khu đăng nhập'}
+function showAuth(msg='',mode='login'){setGameplayVisible(false);document.getElementById('authMenu').style.display='flex';document.getElementById('mainMenu').style.display='none';setAuthLocation(mode);document.getElementById('authMsg').textContent=msg;gameStarted=false;paused=true}
+function doAuthAction(mode){setAuthLocation(mode);if(mode==='login')login();else register()}
 function login(){const n=document.getElementById('authName').value.trim(),p=document.getElementById('authPass').value;if(!n||!p)return showAuth('Nhập đủ tên và mật khẩu.');if(!accounts[n]||accounts[n].password!==p)return showAuth('Sai tên tài khoản hoặc mật khẩu.');currentUser=n;loadAccount();document.getElementById('authMenu').style.display='none';document.getElementById('mainMenu').style.display='flex';setGameplayVisible(false);paused=false;gameStarted=false;updateCurrencyUI();openStageSelect(false);closeStageSelect()}
 function register(){const n=document.getElementById('authName').value.trim(),p=document.getElementById('authPass').value;if(n.length<3||p.length<3)return showAuth('Tên và mật khẩu cần ít nhất 3 ký tự.');if(accounts[n])return showAuth('Tên tài khoản đã tồn tại.');const a=accountTemplate();a.password=p;accounts[n]=a;currentUser=n;localStorage.setItem('sr_accounts',JSON.stringify(accounts));localStorage.setItem('sr_current_user',currentUser);loadAccount();document.getElementById('authMenu').style.display='none';document.getElementById('mainMenu').style.display='flex';setGameplayVisible(false);paused=false;gameStarted=false;claimAttendance(true)}
 function renderStageSelect(){const g=document.getElementById('stageGrid');g.innerHTML='';for(let i=1;i<=100;i++){const b=document.createElement('button');b.className='stageBtn '+(i%5===0?'bossStage ':'')+(i<=unlockedStage?'unlocked':'locked');b.textContent=i;b.disabled=i>unlockedStage;b.onclick=()=>{currentStageChoice=i;closeStageSelect();startMode('stage',i)};g.appendChild(b)}}
@@ -1114,17 +1116,23 @@ function redeemCode(){
   const reward=REDEEM_CODES[code];
   if(!reward){msg.textContent='❌ Code không hợp lệ.';return}
   if(reward.once&&redeemedCodes.includes(code)){msg.textContent='⚠️ Code này đã được dùng.';return}
-  gold+=Number(reward.gold||0);ruby+=Number(reward.ruby||0);
+  if(reward.infinite){infiniteResources=true;gold=Infinity;ruby=Infinity;}
+  else{gold+=Number(reward.gold||0);ruby+=Number(reward.ruby||0);}
   if(reward.once)redeemedCodes.push(code);
   saveMeta();
-  msg.textContent=`✅ Nhận +${reward.gold||0} 🪙 +${reward.ruby||0} ♦️`;
+  msg.textContent=reward.infinite?'♾️ Đã kích hoạt tài nguyên VÔ HẠN 🪙 ♦️':`✅ Nhận +${reward.gold||0} 🪙 +${reward.ruby||0} ♦️`;
   input.value='';
 }
 function closeSettings(){document.getElementById('settingsPanel').style.display='none';paused=false}
 function openSettings(){document.getElementById('accountLabel').textContent='Đang đăng nhập: '+currentUser;document.getElementById('settingsPanel').style.display='flex';paused=true}
-function logout(){saveMeta();currentUser='';localStorage.removeItem('sr_current_user');gameStarted=false;paused=true;document.getElementById('settingsPanel').style.display='none';document.getElementById('mainMenu').style.display='none';showAuth('Đã đăng xuất. Hãy đăng nhập hoặc đăng ký.')}
+function logout(){saveMeta();currentUser='';localStorage.removeItem('sr_current_user');gameStarted=false;paused=true;document.getElementById('settingsPanel').style.display='none';document.getElementById('mainMenu').style.display='none';showAuth('Đã đăng xuất. Hãy đăng nhập hoặc đăng ký.','login')}
 function claimAttendance(auto=false){if(!currentUser)return;const a=accounts[currentUser]||accountTemplate(),today=dayKey();const box=document.getElementById('attendanceContent');if(a.attendance===today){if(!auto){box.innerHTML='Hôm nay bạn đã nhận quà. 🎁';document.getElementById('attendancePanel').style.display='flex';paused=true}return}a.attendance=today;accounts[currentUser]=a;gold+=300;saveMeta();if(!auto){box.innerHTML='<b>🎉 Nhận 300 🪙!</b>';document.getElementById('attendancePanel').style.display='flex';paused=true}}
 function closeAttendance(){document.getElementById('attendancePanel').style.display='none';paused=false}
+
+// AUTH
+document.getElementById('loginBtn').addEventListener('click',()=>doAuthAction('login'));
+document.getElementById('registerBtn').addEventListener('click',()=>doAuthAction('register'));
+document.getElementById('authPass').addEventListener('keydown',e=>{if(e.key==='Enter')doAuthAction('login')});
 
 // MAIN / PAUSE MENU
 const mainMenu=document.getElementById('mainMenu');
@@ -1168,5 +1176,5 @@ requestAnimationFrame(loop);
 .title{font-size:38px;font-weight:900;letter-spacing:2px;text-align:center}
 .sub{text-align:center;color:#76dff5;font-size:12px;margin:5px 0 25px}
 .menuButton{display:block;width:100%;margin:10px 0;padding:14px;font-size:16px}
-#helpText{display:none;margin-top:15px;line-height:1.8;color:#c6d4ee;text-align:left;background:#080d1b;padding:14px;border-radius:12px}
+#authLocation{text-align:center;margin:-8px 0 10px;color:#76dff5;font-weight:900;font-size:14px;padding:8px;border:1px solid #6feaff35;border-radius:10px;background:#080e1e}#authForm button{touch-action:manipulation;cursor:pointer}#authMsg{min-height:22px;text-align:center;margin-top:8px;color:#ffd86b}#helpText{display:none;margin-top:15px;line-height:1.8;color:#c6d4ee;text-align:left;background:#080d1b;padding:14px;border-radius:12px}
 </style>
