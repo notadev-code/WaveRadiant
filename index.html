@@ -92,10 +92,10 @@ small{color:#aebbd6}
 </div>
 <button id="menuBtn">☰</button>
 
-<div id="authMenu" class="overlayMenu"><div class="menuPanel"><div class="title">SPACE RADIANT</div><div class="sub">TÀI KHOẢN</div><div id="authForm"><div id="authLocation" class="authLocation">📍 Khu đăng nhập</div><input id="authName" type="text" inputmode="text" placeholder="Tên tài khoản" maxlength="20" autocomplete="username" enterkeyhint="next"><input id="authPass" type="password" inputmode="text" placeholder="Mật khẩu" maxlength="30" autocomplete="current-password" enterkeyhint="go"><button id="loginBtn" type="button" class="menuButton">🔐 ĐĂNG NHẬP</button><button id="registerBtn" type="button" class="menuButton">📝 ĐĂNG KÝ</button><div id="authMsg"></div></div></div></div>
-<div id="mainMenu"><div class="menuPanel megaMenu"><div class="title">SPACE RADIANT v1.16.4</div><div class="sub">CHỌN CHẾ ĐỘ</div><div class="currencyLine">🪙 <b id="menuGold">0</b> &nbsp;&nbsp; ♦️ <b id="menuRuby">0</b></div><div class="modeGrid"><button id="endlessBtn" class="menuButton">♾️ ENDLESS<br><small>Chế độ cũ • không tường</small></button><button id="stageBtn" class="menuButton">🚀 STAGE<br><small>Chọn màn 1–100</small></button></div><div class="menuGrid2"><button id="upgradeMenuBtn" class="menuButton">⬆️ NÂNG CẤP</button><button id="hangarBtn" class="menuButton">✈️ KHO MÁY BAY</button><button id="missionsBtn" class="menuButton">📋 NHIỆM VỤ</button><button id="attendanceBtn" class="menuButton">🎁 QUÀ HẰNG NGÀY</button><button id="settingsBtn" class="menuButton">⚙️ CÀI ĐẶT</button><button id="helpBtn" class="menuButton">❔ HƯỚNG DẪN</button></div><div id="helpText">🎮 Joystick trái để di chuyển.<br>🎯 Máy bay tự nhắm và bắn quái gần nhất.<br>⚡/💥 dùng skill 1/3 kể cả khi đang giữ hướng trên TV.<br>🚀 Stage: 100 màn. Màn 5,10,...,95 là màn boss đặc biệt; màn 100 có cả 6 boss.</div></div></div>
+<div id="authMenu" class="overlayMenu"><div class="menuPanel"><div class="title">SPACE RADIANT</div><div class="sub">TÀI KHOẢN</div><div id="authForm"><div id="authLocation" class="authLocation">📍 Khu đăng nhập</div><input id="authName" placeholder="Tên tài khoản" maxlength="20" autocomplete="username"><input id="authPass" type="password" placeholder="Mật khẩu" maxlength="30" autocomplete="current-password"><button id="loginBtn" type="button" class="menuButton">🔐 ĐĂNG NHẬP</button><button id="registerBtn" type="button" class="menuButton">📝 ĐĂNG KÝ</button><div id="authMsg"></div></div></div></div>
+<div id="mainMenu"><div class="menuPanel megaMenu"><div class="title">SPACE RADIANT v1.16.1</div><div class="sub">CHỌN CHẾ ĐỘ</div><div class="currencyLine">🪙 <b id="menuGold">0</b> &nbsp;&nbsp; ♦️ <b id="menuRuby">0</b></div><div class="modeGrid"><button id="endlessBtn" class="menuButton">♾️ ENDLESS<br><small>Chế độ cũ • không tường</small></button><button id="stageBtn" class="menuButton">🚀 STAGE<br><small>Chọn màn 1–100</small></button></div><div class="menuGrid2"><button id="upgradeMenuBtn" class="menuButton">⬆️ NÂNG CẤP</button><button id="hangarBtn" class="menuButton">✈️ KHO MÁY BAY</button><button id="missionsBtn" class="menuButton">📋 NHIỆM VỤ</button><button id="attendanceBtn" class="menuButton">🎁 QUÀ HẰNG NGÀY</button><button id="settingsBtn" class="menuButton">⚙️ CÀI ĐẶT</button><button id="helpBtn" class="menuButton">❔ HƯỚNG DẪN</button></div><div id="helpText">🎮 Joystick trái để di chuyển.<br>🎯 Máy bay tự nhắm và bắn quái gần nhất.<br>⚡/💥 dùng skill 1/3 kể cả khi đang giữ hướng trên TV.<br>🚀 Stage: 100 màn. Màn 5,10,...,95 là màn boss đặc biệt; màn 100 có cả 6 boss.</div></div></div>
 <div id="stageSelect" class="overlayMenu" style="display:none"><div class="menuPanel stagePanel"><button class="closePanel" onclick="closeStageSelect()">✕</button><h2 class="sectionTitle">🚀 CHỌN MÀN</h2><p style="text-align:center">Vượt màn trước để mở màn sau</p><div id="stageGrid" class="stageGrid"></div></div></div>
-<div id="settingsPanel" class="overlayMenu" style="display:none"><div class="menuPanel"><h2 class="sectionTitle">⚙️ CÀI ĐẶT</h2><p id="accountLabel" style="text-align:center"></p><div style="margin:12px 0"><input id="codeInput" type="text" maxlength="8" inputmode="numeric" pattern="[0-9]*" autocomplete="off" placeholder="Nhập code 8 số" style="width:100%;box-sizing:border-box;padding:12px;border-radius:10px;border:1px solid #567;background:#101827;color:#fff;font-size:16px;text-align:center"><button id="redeemCodeBtn" class="menuButton">🎁 NHẬP CODE</button><div id="codeMsg" style="text-align:center;min-height:22px"></div><div style="font-size:10px;opacity:.45;text-align:center">Code DB: v3 • 8 số</div></div><button id="logoutBtn" class="menuButton">🚪 ĐĂNG XUẤT</button><button class="menuButton" onclick="closeSettings()">ĐÓNG</button></div></div>
+<div id="settingsPanel" class="overlayMenu" style="display:none"><div class="menuPanel"><h2 class="sectionTitle">⚙️ CÀI ĐẶT</h2><p id="accountLabel" style="text-align:center"></p><div style="margin:12px 0"><input id="codeInput" maxlength="8" inputmode="numeric" placeholder="Nhập code 8 số" style="width:100%;box-sizing:border-box;padding:12px;border-radius:10px;border:1px solid #567;background:#101827;color:#fff;font-size:16px;text-align:center"><button id="redeemCodeBtn" class="menuButton">🎁 NHẬP CODE</button><div id="codeMsg" style="text-align:center;min-height:22px"></div><div style="font-size:10px;opacity:.45;text-align:center">Code DB: v3 • 8 số</div></div><button id="logoutBtn" class="menuButton">🚪 ĐĂNG XUẤT</button><button class="menuButton" onclick="closeSettings()">ĐÓNG</button></div></div>
 <div id="attendancePanel" class="overlayMenu" style="display:none"><div class="menuPanel"><h2 class="sectionTitle">🎁 QUÀ HẰNG NGÀY</h2><div id="attendanceContent" style="text-align:center"></div><button class="menuButton" onclick="closeAttendance()">ĐÓNG</button></div></div>
 <div id="collectionPanel" class="collectionPanel"><div class="menuPanel"><button class="closePanel" onclick="closeCollection()">✕</button><div id="collectionContent"></div></div></div>
 <div id="pauseMenu">
@@ -166,7 +166,9 @@ const planes={
 for(const id of Object.keys(planes))planeUpgrades[id]={hp:0,atk:0,fire:0};
 let missions={day:'',week:'',daily:[],weekly:[]};let redeemedCodes=[];let firstClearRewards=[];
 let unlockedStage=1;
+// === SPACERADIANT_CODES_BEGIN ===
 const REDEEM_CODES={"12345678":{"gold":1000,"ruby":5,"once":true},"87654321":{"gold":2500,"ruby":10,"once":true},"19646159":{"gold":7777,"ruby":8,"once":true}};
+// === SPACERADIANT_CODES_END ===
 
 function accountTemplate(){return {gold:0,ruby:0,infiniteResources:false,equippedPlane:'radiant',ownedPlanes:['radiant'],planeUpgrades:Object.fromEntries(Object.keys(planes).map(id=>[id,{hp:0,atk:0,fire:0}])),unlockedStage:1,missions:{day:'',week:'',daily:[],weekly:[]},attendance:'',redeemedCodes:[],firstClearRewards:[]}}
 function loadAccount(){const a=accounts[currentUser]||accountTemplate();const inf=!!a.infiniteResources;gold=inf?Infinity:Number(a.gold||0);ruby=inf?Infinity:Number(a.ruby||0);equippedPlane=a.equippedPlane||'radiant';ownedPlanes=Array.isArray(a.ownedPlanes)?a.ownedPlanes:['radiant'];planeUpgrades=a.planeUpgrades||{};for(const id of Object.keys(planes))if(!planeUpgrades[id])planeUpgrades[id]={hp:0,atk:0,fire:0};unlockedStage=Math.max(1,Math.min(100,Number(a.unlockedStage||1)));missions=a.missions||{day:'',week:'',daily:[],weekly:[]};redeemedCodes=Array.isArray(a.redeemedCodes)?a.redeemedCodes:[];firstClearRewards=Array.isArray(a.firstClearRewards)?a.firstClearRewards:[];resetMissions();updateCurrencyUI()}
@@ -293,10 +295,6 @@ function tvOpposite(a,b){
          (a==='left'&&b==='right')||(a==='right'&&b==='left');
 }
 addEventListener('keydown',e=>{
-  // Never steal keyboard input from text/password/code fields.
-  const t=e.target;
-  const editing=t && (t.tagName==='INPUT'||t.tagName==='TEXTAREA'||t.tagName==='SELECT'||t.isContentEditable);
-  if(editing)return;
   // IMPORTANT: process skill before D-pad so 1/3 works while moving.
   if(fireTVSkill(e))return;
   const k=tvActionKey(e);
@@ -312,10 +310,9 @@ addEventListener('keydown',e=>{
   e.preventDefault(); e.stopImmediatePropagation();
 },true);
 
-addEventListener('keypress',e=>{const t=e.target; if(t&&(t.tagName==='INPUT'||t.tagName==='TEXTAREA'||t.tagName==='SELECT'||t.isContentEditable))return; fireTVSkill(e)},true);
+addEventListener('keypress',e=>{fireTVSkill(e)},true);
 
 addEventListener('keyup',e=>{
-  const t=e.target; if(t&&(t.tagName==='INPUT'||t.tagName==='TEXTAREA'||t.tagName==='SELECT'||t.isContentEditable))return;
   const k=tvActionKey(e);
   if(!k)return;
   tvKeys[k]=false;

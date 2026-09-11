@@ -1,14 +1,10 @@
-SpaceRadiant v1.16.4
-- BrowseHere/Android TV: bàn phím số trong ô tên/mật khẩu/code không còn bị game chặn.
-- Ô code nhận đúng 8 chữ số.
-- Skill 1/3 vẫn ưu tiên khi không ở trong ô nhập.
-- Code Tool chạy bằng menu và tự cập nhật index.html cùng thư mục.
-- Có tùy chọn tạo code tài nguyên VÔ HẠN.
-- Code được lưu trong codes.json.
-
-Termux:
-cd ~/storage/downloads/SpaceRadiant_v1_16_4
+SpaceRadiant v1.16.5
+CODE TOOL FIX:
+- Tool hỏi trực tiếp thư mục game, tránh tạo code ở nhầm bản index.html.
+- Code được ghi trực tiếp vào index.html bằng marker an toàn.
+- Code tạo ra dùng được ngay trong Cài đặt -> Nhập code sau khi reload.
+- Có code tài nguyên vô hạn.
+- Code 8 chữ số.
+Chạy:
 python code_tool.py
-
-QUAN TRỌNG: phải chạy code_tool.py trong cùng thư mục với index.html mà bạn đang dùng để chơi.
-Sau khi tạo code: reload trang game/server.
+Nếu game ở thư mục khác, nhập đường dẫn thư mục đó khi tool hỏi.
