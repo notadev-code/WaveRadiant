@@ -93,9 +93,9 @@ small{color:#aebbd6}
 <button id="menuBtn">☰</button>
 
 <div id="authMenu" class="overlayMenu"><div class="menuPanel"><div class="title">SPACE RADIANT</div><div class="sub">TÀI KHOẢN</div><div id="authForm"><div id="authLocation" class="authLocation">📍 Khu đăng nhập</div><input id="authName" placeholder="Tên tài khoản" maxlength="20" autocomplete="username"><input id="authPass" type="password" placeholder="Mật khẩu" maxlength="30" autocomplete="current-password"><button id="loginBtn" type="button" class="menuButton">🔐 ĐĂNG NHẬP</button><button id="registerBtn" type="button" class="menuButton">📝 ĐĂNG KÝ</button><div id="authMsg"></div></div></div></div>
-<div id="mainMenu"><div class="menuPanel megaMenu"><div class="title">SPACE RADIANT v1.16.1</div><div class="sub">CHỌN CHẾ ĐỘ</div><div class="currencyLine">🪙 <b id="menuGold">0</b> &nbsp;&nbsp; ♦️ <b id="menuRuby">0</b></div><div class="modeGrid"><button id="endlessBtn" class="menuButton">♾️ ENDLESS<br><small>Chế độ cũ • không tường</small></button><button id="stageBtn" class="menuButton">🚀 STAGE<br><small>Chọn màn 1–100</small></button></div><div class="menuGrid2"><button id="upgradeMenuBtn" class="menuButton">⬆️ NÂNG CẤP</button><button id="hangarBtn" class="menuButton">✈️ KHO MÁY BAY</button><button id="missionsBtn" class="menuButton">📋 NHIỆM VỤ</button><button id="attendanceBtn" class="menuButton">🎁 QUÀ HẰNG NGÀY</button><button id="settingsBtn" class="menuButton">⚙️ CÀI ĐẶT</button><button id="helpBtn" class="menuButton">❔ HƯỚNG DẪN</button></div><div id="helpText">🎮 Joystick trái để di chuyển.<br>🎯 Máy bay tự nhắm và bắn quái gần nhất.<br>⚡/💥 dùng skill 1/3 kể cả khi đang giữ hướng trên TV.<br>🚀 Stage: 100 màn. Màn 5,10,...,95 là màn boss đặc biệt; màn 100 có cả 6 boss.</div></div></div>
+<div id="mainMenu"><div class="menuPanel megaMenu"><div class="title">SPACE RADIANT v1.16.7</div><div class="sub">CHỌN CHẾ ĐỘ</div><div class="currencyLine">🪙 <b id="menuGold">0</b> &nbsp;&nbsp; ♦️ <b id="menuRuby">0</b></div><div class="modeGrid"><button id="endlessBtn" class="menuButton">♾️ ENDLESS<br><small>Chế độ cũ • không tường</small></button><button id="stageBtn" class="menuButton">🚀 STAGE<br><small>Chọn màn 1–100</small></button></div><div class="menuGrid2"><button id="upgradeMenuBtn" class="menuButton">⬆️ NÂNG CẤP</button><button id="hangarBtn" class="menuButton">✈️ KHO MÁY BAY</button><button id="missionsBtn" class="menuButton">📋 NHIỆM VỤ</button><button id="attendanceBtn" class="menuButton">🎁 QUÀ HẰNG NGÀY</button><button id="settingsBtn" class="menuButton">⚙️ CÀI ĐẶT</button><button id="helpBtn" class="menuButton">❔ HƯỚNG DẪN</button></div><div id="helpText">🎮 Joystick trái để di chuyển.<br>🎯 Máy bay tự nhắm và bắn quái gần nhất.<br>⚡/💥 dùng skill 1/3 kể cả khi đang giữ hướng trên TV.<br>🚀 Stage: 100 màn. Màn 10,20,...,100 là màn boss; các màn 10–90 có 6 boss ở wave 5, màn 100 có 6 boss ngay wave 1.</div></div></div>
 <div id="stageSelect" class="overlayMenu" style="display:none"><div class="menuPanel stagePanel"><button class="closePanel" onclick="closeStageSelect()">✕</button><h2 class="sectionTitle">🚀 CHỌN MÀN</h2><p style="text-align:center">Vượt màn trước để mở màn sau</p><div id="stageGrid" class="stageGrid"></div></div></div>
-<div id="settingsPanel" class="overlayMenu" style="display:none"><div class="menuPanel"><h2 class="sectionTitle">⚙️ CÀI ĐẶT</h2><p id="accountLabel" style="text-align:center"></p><div style="margin:12px 0"><input id="codeInput" maxlength="8" inputmode="numeric" placeholder="Nhập code 8 số" style="width:100%;box-sizing:border-box;padding:12px;border-radius:10px;border:1px solid #567;background:#101827;color:#fff;font-size:16px;text-align:center"><button id="redeemCodeBtn" class="menuButton">🎁 NHẬP CODE</button><div id="codeMsg" style="text-align:center;min-height:22px"></div><div style="font-size:10px;opacity:.45;text-align:center">Code DB: v3 • 8 số</div></div><button id="logoutBtn" class="menuButton">🚪 ĐĂNG XUẤT</button><button class="menuButton" onclick="closeSettings()">ĐÓNG</button></div></div>
+<div id="settingsPanel" class="overlayMenu" style="display:none"><div class="menuPanel"><h2 class="sectionTitle">⚙️ CÀI ĐẶT</h2><p id="accountLabel" style="text-align:center"></p><div class="audioBox"><b>🔊 ÂM THANH</b><label>🎵 Nhạc: <input id="musicVol" type="range" min="0" max="100" value="35"> <span id="musicVolText">35%</span></label><label>🔔 Hiệu ứng: <input id="sfxVol" type="range" min="0" max="100" value="70"> <span id="sfxVolText">70%</span></label><button id="muteBtn" class="menuButton">🔊 BẬT ÂM THANH</button></div><div style="margin:12px 0"><input id="codeInput" maxlength="8" inputmode="numeric" placeholder="Nhập code 8 số" style="width:100%;box-sizing:border-box;padding:12px;border-radius:10px;border:1px solid #567;background:#101827;color:#fff;font-size:16px;text-align:center"><button id="redeemCodeBtn" class="menuButton">🎁 NHẬP CODE</button><div id="codeMsg" style="text-align:center;min-height:22px"></div><div style="font-size:10px;opacity:.45;text-align:center">Code DB: v3 • 8 số</div></div><button id="logoutBtn" class="menuButton">🚪 ĐĂNG XUẤT</button><button class="menuButton" onclick="closeSettings()">ĐÓNG</button></div></div>
 <div id="attendancePanel" class="overlayMenu" style="display:none"><div class="menuPanel"><h2 class="sectionTitle">🎁 QUÀ HẰNG NGÀY</h2><div id="attendanceContent" style="text-align:center"></div><button class="menuButton" onclick="closeAttendance()">ĐÓNG</button></div></div>
 <div id="collectionPanel" class="collectionPanel"><div class="menuPanel"><button class="closePanel" onclick="closeCollection()">✕</button><div id="collectionContent"></div></div></div>
 <div id="pauseMenu">
@@ -161,12 +161,29 @@ const planes={
  guardian:{name:'Guardian',icon:'🛡️',shape:'shield',color:'#d8f7ff',accent:'#54cfff',stars:4,hp:8,atk:14,fire:.27,s1:'🛡️ Guard Dash',s2:'🌊 Shockwave',price:55},
  phantom:{name:'Phantom',icon:'👻',shape:'wing',color:'#eee0ff',accent:'#c17cff',stars:4,hp:4,atk:20,fire:.16,s1:'👻 Blink',s2:'🌑 Void Burst',price:80},
  striker:{name:'Striker',icon:'⚔️',shape:'blade',color:'#ffe0e8',accent:'#ff526f',stars:5,hp:5,atk:30,fire:.19,s1:'⚡ Thunder Dash',s2:'☄️ Meteor',price:120},
- titan:{name:'Titan',icon:'🚀',shape:'heavy',color:'#e1e8f2',accent:'#9aaeff',stars:5,hp:11,atk:22,fire:.31,s1:'💢 Ram',s2:'🌀 Titan Blast',price:180}
+ titan:{name:'Titan',icon:'🚀',shape:'heavy',color:'#e1e8f2',accent:'#9aaeff',stars:5,hp:11,atk:22,fire:.31,s1:'💢 Ram',s2:'🌀 Titan Blast',price:180},
+ pulse:{name:'Pulse',icon:'🔵',shape:'orb',color:'#d9f7ff',accent:'#39d9ff',stars:4,hp:6,atk:19,fire:.22,s1:'🛡️ Pulse Shield',s2:'⚡ Chain Lightning',price:150},
+ medic:{name:'Medic',icon:'💚',shape:'cross',color:'#d8ffd9',accent:'#62ff8a',stars:4,hp:7,atk:15,fire:.25,s1:'💚 Emergency Heal',s2:'🌿 Healing Field',price:165},
+ hunter:{name:'Hunter',icon:'🎯',shape:'needle',color:'#fff2d1',accent:'#ffd34d',stars:5,hp:5,atk:28,fire:.17,s1:'🎯 Mark Target',s2:'🚀 Missile Salvo',price:210},
+ chronos:{name:'Chronos',icon:'⏱️',shape:'clock',color:'#e5ddff',accent:'#a987ff',stars:5,hp:5,atk:23,fire:.21,s1:'⏱️ Time Freeze',s2:'🌀 Time Rift',price:240},
+ drone:{name:'Drone',icon:'🤖',shape:'drone',color:'#e0ecff',accent:'#72a8ff',stars:5,hp:8,atk:20,fire:.24,s1:'🤖 Combat Drone',s2:'🔫 Drone Barrage',price:270},
+ solar:{name:'Solaris',icon:'☀️',shape:'sun',color:'#fff4c7',accent:'#ffcf4d',stars:5,hp:7,atk:32,fire:.20,s1:'☀️ Solar Charge',s2:'🌟 Solar Beam',price:320}
 };
 for(const id of Object.keys(planes))planeUpgrades[id]={hp:0,atk:0,fire:0};
 let missions={day:'',week:'',daily:[],weekly:[]};let redeemedCodes=[];let firstClearRewards=[];
 let unlockedStage=1;
 const SPACERADIANT_FIREBASE_DB_URL="https://waveradiant-rise-default-rtdb.asia-southeast1.firebasedatabase.app";
+// === SPACE RADIANT AUDIO (WebAudio, no external audio files needed) ===
+let audioCtx=null, musicGain=null, sfxGain=null, musicTimer=null, audioMuted=false;
+let musicVolume=Number(localStorage.getItem('sr_music_vol')||35)/100, sfxVolume=Number(localStorage.getItem('sr_sfx_vol')||70)/100;
+function ensureAudio(){if(audioCtx)return; try{audioCtx=new (window.AudioContext||window.webkitAudioContext)(); musicGain=audioCtx.createGain();sfxGain=audioCtx.createGain();musicGain.gain.value=musicVolume;sfxGain.gain.value=sfxVolume;musicGain.connect(audioCtx.destination);sfxGain.connect(audioCtx.destination);startMusic();}catch(e){console.warn('Audio unavailable',e)}}
+function tone(freq,dur,type='sine',gain=.08,when=0,out=sfxGain){if(!audioCtx||audioMuted||!out)return;const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type=type;o.frequency.setValueAtTime(freq,audioCtx.currentTime+when);g.gain.setValueAtTime(.0001,audioCtx.currentTime+when);g.gain.exponentialRampToValueAtTime(Math.max(.0001,gain),audioCtx.currentTime+when+.015);g.gain.exponentialRampToValueAtTime(.0001,audioCtx.currentTime+when+dur);o.connect(g);g.connect(out);o.start(audioCtx.currentTime+when);o.stop(audioCtx.currentTime+when+dur+.03)}
+function sfx(kind){ensureAudio();if(!audioCtx)return;const m={shoot:[420,.045,'square',.035],hit:[150,.06,'sawtooth',.045],dash:[620,.14,'triangle',.07],blast:[90,.25,'sawtooth',.09],pickup:[760,.12,'sine',.06],hurt:[95,.16,'square',.08],boss:[80,.35,'sawtooth',.1],level:[520,.1,'sine',.06],wave:[330,.12,'triangle',.06]};const a=m[kind];if(!a)return;tone(a[0],a[1],a[2],a[3]);if(kind==='pickup'||kind==='level'){tone(a[0]*1.5,a[1],a[2],a[3],.08)}if(kind==='boss'){tone(120,.28,'sawtooth',.07,.12)}}
+function startMusic(){if(!audioCtx||musicTimer)return;let step=0;const notes=[220,277,330,277,247,330,370,330];musicTimer=setInterval(()=>{if(!audioCtx||audioMuted)return;tone(notes[step%notes.length],.28,'triangle',.025,0,musicGain);step++},360)}
+function setAudioVolumes(){if(musicGain)musicGain.gain.value=audioMuted?0:musicVolume;if(sfxGain)sfxGain.gain.value=audioMuted?0:sfxVolume;const m=document.getElementById('musicVol'),q=document.getElementById('sfxVol');if(m)m.value=Math.round(musicVolume*100);if(q)q.value=Math.round(sfxVolume*100);const mt=document.getElementById('musicVolText'),qt=document.getElementById('sfxVolText');if(mt)mt.textContent=Math.round(musicVolume*100)+'%';if(qt)qt.textContent=Math.round(sfxVolume*100)+'%';const b=document.getElementById('muteBtn');if(b)b.textContent=audioMuted?'🔇 ÂM THANH ĐANG TẮT':'🔊 BẬT ÂM THANH'}
+function initAudioSettings(){const m=document.getElementById('musicVol'),q=document.getElementById('sfxVol'),b=document.getElementById('muteBtn');if(m)m.oninput=()=>{musicVolume=Number(m.value)/100;localStorage.setItem('sr_music_vol',m.value);ensureAudio();setAudioVolumes()};if(q)q.oninput=()=>{sfxVolume=Number(q.value)/100;localStorage.setItem('sr_sfx_vol',q.value);ensureAudio();setAudioVolumes()};if(b)b.onclick=()=>{audioMuted=!audioMuted;ensureAudio();setAudioVolumes()};setAudioVolumes()}
+['pointerdown','keydown','touchstart'].forEach(ev=>window.addEventListener(ev,()=>{if(ev==='keydown' && ['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName))return;ensureAudio()},{once:false,passive:true}));
+
 // === SPACERADIANT_CODES_BEGIN ===
 const REDEEM_CODES={"12345678":{"gold":1000,"ruby":5,"once":true},"87654321":{"gold":2500,"ruby":10,"once":true},"19646159":{"gold":7777,"ruby":8,"once":true}};
 // === SPACERADIANT_CODES_END ===
@@ -185,7 +202,7 @@ function resetGameState(mode=state.mode||'endless',chosenStage=1){
   enemies.length=0; bullets.length=0; enemyBullets.length=0; particles.length=0; texts.length=0; expDrops.length=0; chests.length=0;
   player.x=world.w/2; player.y=world.h/2; player.healFxTimer=0; player.regenTimer=15; player.r=17; player.hp=5; player.maxhp=5; player.angle=-Math.PI/2;
   const pp=planes[equippedPlane]||planes.radiant,pu=planeUpgrades[equippedPlane]||{hp:0,atk:0,fire:0}; player.speed=250; player.damage=pp.atk*(1+pu.atk*.08); player.fire=0; player.fireRate=Math.max(.07,pp.fire*(1-pu.fire*.06)); player.bullets=1;
-  player.bulletSpeed=560; player.maxhp=pp.hp+pu.hp; player.hp=player.maxhp; player.dash=0; player.blast=0; player.invuln=0; player.crit=.08; player.critMult=1.8; player.armor=0; player.regen=0; player.magnet=0; player.dashMax=3; player.blastMax=8; player.skillDmg=1; player.range=400; miniActive=false; 
+  player.bulletSpeed=560; player.markTimer=0;player.markTarget=null;player.timeFreeze=0;player.timeRift=0;player.droneTimer=0;player.droneBarrage=0;player.solarCharge=0; player.maxhp=pp.hp+pu.hp; player.hp=player.maxhp; player.dash=0; player.blast=0; player.invuln=0; player.crit=.08; player.critMult=1.8; player.armor=0; player.regen=0; player.magnet=0; player.dashMax=3; player.blastMax=8; player.skillDmg=1; player.range=400; miniActive=false; 
   paused=false; over=false; miniActive=false; miniObjects=[];
   document.getElementById('bossBox').style.display='none'; document.getElementById('bossBox').innerHTML=''; updateHUD(); supplies.length=0; shieldHits=0; rapidFire=0; supplyTimer=7+Math.random()*9; state.bossesSpawned=0; state.bossesTarget=0;
 }
@@ -456,8 +473,8 @@ function smartMoveEnemy(e,dx,dy,dt){
     if(threat){const td=Math.hypot(nx-(e.x+threat.dx),ny-(e.y+threat.dy));score+=(td<120? -20:20);}
     if(score>bestScore){bestScore=score;best={x:nx,y:ny,a};}
   }
-  if(best){moveEntity(e,Math.cos(best.a)*e.spd*dt,Math.sin(best.a)*e.spd*dt,e.r);}
-  else moveEntity(e,Math.cos(desired)*e.spd*dt,Math.sin(desired)*e.spd*dt,e.r);
+  if(best){moveEntity(e,Math.cos(best.a)*e.spd*edt,Math.sin(best.a)*e.spd*edt,e.r);}
+  else moveEntity(e,Math.cos(desired)*e.spd*edt,Math.sin(desired)*e.spd*edt,e.r);
 }
 
 function spawnEnemy(kind,elite=false,boss=false){
@@ -478,7 +495,14 @@ function spawnEnemy(kind,elite=false,boss=false){
   {n:'Mine Layer',r:16,hp:78,dmg:2,spd:48,range:190,color:10},
   {n:'Orbit',r:18,hp:105,dmg:1,spd:88,range:210,color:11},
   {n:'Healer',r:16,hp:75,dmg:0,spd:52,range:220,color:12},
-  {n:'Turret',r:20,hp:125,dmg:1,spd:20,range:360,color:13}
+  {n:'Turret',r:20,hp:125,dmg:1,spd:20,range:360,color:13},
+  {n:'Leech',r:14,hp:95,dmg:2,spd:115,range:55,color:21},
+  {n:'Bomber',r:18,hp:110,dmg:3,spd:72,range:150,color:22},
+  {n:'Frost',r:16,hp:105,dmg:1,spd:45,range:330,color:23},
+  {n:'Teleporter',r:15,hp:115,dmg:2,spd:78,range:260,color:24},
+  {n:'Laserer',r:17,hp:135,dmg:2,spd:35,range:500,color:25},
+  {n:'Swarm Drone',r:11,hp:32,dmg:1,spd:205,range:60,color:26},
+  {n:'Shielded',r:19,hp:210,dmg:2,spd:52,range:180,color:27}
  ];
  let bossTypes=[
   {n:'RADIANT BOSS',r:48,hp:1200,dmg:2,spd:48,range:330,color:6,bossStyle:'ring'},
@@ -541,7 +565,7 @@ function openChest(i){
  const r=rewards[Math.floor(Math.random()*rewards.length)]; r[1](); addText(player.x,player.y-35,'🎁 '+r[0]); fxBanner('🎁 '+r[0]); burst(q.x,q.y,30,.6); chests.splice(i,1); updateHUD();
 }
 
-function firePlayer(){
+function firePlayer(){ ensureAudio(); sfx('shoot');
  const count=player.bullets, spread=.16;
  for(let i=0;i<count;i++){let off=(i-(count-1)/2)*spread,a=player.angle+off;
  bullets.push({x:player.x+Math.cos(a)*20,y:player.y+Math.sin(a)*20,vx:Math.cos(a)*player.bulletSpeed,vy:Math.sin(a)*player.bulletSpeed,r:4,dmg:(Math.random()<player.crit?player.damage*player.critMult:player.damage),life:player.range/player.bulletSpeed})}
@@ -575,29 +599,41 @@ function enemyFire(e){
   }
 }
 function hurt(v){
- if(player.invuln>0||over)return;
+ if(player.invuln>0||over)return; ensureAudio(); sfx('hurt');
  let dmg=Math.max(.2,v-player.armor); if(shieldHits>0){shieldHits--; addText(player.x,player.y-30,'🛡️ ĐỠ ĐÒN! CÒN '+shieldHits); player.invuln=2; shakeIt(10); burst(player.x,player.y,16,.45); return;} if(dmg>0)player.hp-=dmg;player.invuln=2;shakeIt(10);burst(player.x,player.y,12,.4);
  if(player.hp<=0){over=true;document.getElementById('finalScore').textContent=state.score;document.getElementById('finalStage').textContent=state.stage;document.getElementById('gameover').style.display='flex'}
 }
 function skillDash(){
- if(paused||over||player.dash>0)return; missionProgress('d5');
+ if(paused||over||player.dash>0)return; missionProgress('d5'); ensureAudio(); sfx('dash');
  const pid=equippedPlane, a0=(left.active&&Math.hypot(left.x,left.y)>.12)?Math.atan2(left.y,left.x):player.angle;
- if(pid==='guardian'){player.invuln=Math.max(player.invuln,1.15);player.x+=Math.cos(a0)*145;player.y+=Math.sin(a0)*145;}
+ if(pid==='pulse'){shieldHits=Math.max(shieldHits,2);player.invuln=Math.max(player.invuln,1.2);}
+ else if(pid==='medic'){const old=player.hp;player.hp=Math.min(player.maxhp,player.hp+2);if(player.hp>old)healFX(player.x,player.y,player.hp-old);}
+ else if(pid==='hunter'){player.markTimer=6;player.markTarget=enemies.reduce((a,e)=>!a||Math.hypot(e.x-player.x,e.y-player.y)<Math.hypot(a.x-player.x,a.y-player.y)?e:a,null);}
+ else if(pid==='chronos'){player.timeFreeze=3;}
+ else if(pid==='drone'){player.droneTimer=10;}
+ else if(pid==='solar'){player.solarCharge=5;}
+ else if(pid==='guardian'){player.invuln=Math.max(player.invuln,1.15);player.x+=Math.cos(a0)*145;player.y+=Math.sin(a0)*145;}
  else if(pid==='phantom'){player.invuln=Math.max(player.invuln,1.0);player.x+=Math.cos(a0)*245;player.y+=Math.sin(a0)*245;burst(player.x,player.y,30,.6);}
  else if(pid==='titan'){player.invuln=Math.max(player.invuln,.75);player.x+=Math.cos(a0)*165;player.y+=Math.sin(a0)*165;for(const e of enemies)if(Math.hypot(e.x-player.x,e.y-player.y)<85)e.hp-=85;}
  else {const dist=pid==='striker'?220:(pid==='comet'?205:190);player.x+=Math.cos(a0)*dist;player.y+=Math.sin(a0)*dist;}
  player.x=Math.max(22,Math.min(world.w-22,player.x));player.y=Math.max(85,Math.min(world.h-22,player.y));
- player.dash=player.dashMax;shakeIt(pid==='titan'?16:13);burst(player.x,player.y,pid==='guardian'?30:22,.5);
+ player.dash=player.dashMax;shakeIt(13);burst(player.x,player.y,28,.5);
 }
 function skillBlast(){
- if(paused||over||player.blast>0)return; missionProgress('d5');
+ if(paused||over||player.blast>0)return; missionProgress('d5'); ensureAudio(); sfx('blast');
  const pid=equippedPlane;player.blast=player.blastMax;shakeIt(18);burst(player.x,player.y,pid==='titan'?75:55,.7);
+ if(pid==='hunter'){for(let k=0;k<7;k++){const a=player.angle+(k-3)*.16;bullets.push({x:player.x,y:player.y,vx:Math.cos(a)*760,vy:Math.sin(a)*760,r:7,dmg:player.damage*2.2,life:2.2})}return}
+ if(pid==='chronos'){player.timeRift=5;for(const e of enemies)e.special=Math.max(e.special,2);return}
+ if(pid==='drone'){player.droneBarrage=4;for(let k=0;k<18;k++){const a=Math.random()*Math.PI*2;bullets.push({x:player.x,y:player.y,vx:Math.cos(a)*600,vy:Math.sin(a)*600,r:5,dmg:player.damage*1.5,life:1.5})}return}
+ if(pid==='solar'){for(const e of enemies)if(Math.hypot(e.x-player.x,e.y-player.y)<420)e.hp-=player.damage*8;return}
  let radius=170,dmg=90+state.level*18;
- if(pid==='comet'){radius=230;dmg*=1.15;rapidFire=Math.max(rapidFire,5);}
- if(pid==='guardian'){radius=155;dmg*=.8;player.invuln=Math.max(player.invuln,1.5);shieldHits=Math.max(shieldHits,1);}
- if(pid==='phantom'){radius=205;dmg*=1.2;player.x=Math.max(22,Math.min(world.w-22,player.x+Math.cos(player.angle)*45));}
- if(pid==='striker'){radius=190;dmg*=1.35;for(const e of enemies)if(Math.hypot(e.x-player.x,e.y-player.y)<radius)e.hp-=dmg*.25;}
- if(pid==='titan'){radius=260;dmg*=1.35;}
+ if(pid==='comet'){radius=230;dmg*=1.15;rapidFire=Math.max(rapidFire,5)}
+ if(pid==='guardian'){radius=155;dmg*=.8;player.invuln=Math.max(player.invuln,1.5);shieldHits=Math.max(shieldHits,1)}
+ if(pid==='phantom'){radius=205;dmg*=1.2;player.x=Math.max(22,Math.min(world.w-22,player.x+Math.cos(player.angle)*45))}
+ if(pid==='striker'){radius=190;dmg*=1.35;for(const e of enemies)if(Math.hypot(e.x-player.x,e.y-player.y)<radius)e.hp-=dmg*.25}
+ if(pid==='titan'){radius=260;dmg*=1.35}
+ if(pid==='medic'){radius=150;for(const e of enemies)if(Math.hypot(e.x-player.x,e.y-player.y)<radius)e.hp-=dmg*.5;const old=player.hp;player.hp=Math.min(player.maxhp,player.hp+2);if(player.hp>old)healFX(player.x,player.y,player.hp-old);return}
+ if(pid==='pulse'){radius=280;dmg*=.75;shieldHits=Math.max(shieldHits,2)}
  for(const e of enemies)if(Math.hypot(e.x-player.x,e.y-player.y)<radius){e.hp-=dmg*(player.skillDmg||1);e.hit=.12}
 }
 const dashBtn=document.getElementById('dash'), blastBtn=document.getElementById('blast');
@@ -708,11 +744,11 @@ if(nearest){
  }
  state.waveTimer+=dt;
  let target=state.mode==='stage'?Math.min(5+state.stage,14):Math.min(5+state.stage,12);
- let specialBossStage=state.mode==='stage'&&(state.stage%5===0||state.stage===100);
+ let specialBossStage=state.mode==='stage'&&(state.stage%10===0||state.stage===100);
  // Stage mode always lasts exactly 5 waves. Boss stages put the boss on wave 5 so the stage can finish after the boss dies.
  let bossWave=state.mode==='stage'?(state.wave===5):state.wave===5;
- if(state.mode==='stage'&&state.stage===100){if(state.wave===5&&!state.bossesTarget){state.bossesTarget=6;state.bossesSpawned=0;for(let b=0;b<6;b++){spawnEnemy(null,false,true);state.bossesSpawned++;}}}
- else if(bossWave&&!state.bossesTarget){state.bossesTarget=1;state.bossesSpawned=0;spawnEnemy(null,false,true);state.bossesSpawned=1;}
+ if(state.mode==='stage'&&state.stage===100){if(state.wave===1&&!state.bossesTarget){state.bossesTarget=6;state.bossesSpawned=0;for(let b=0;b<6;b++){spawnEnemy(null,false,true);state.bossesSpawned++;}}}
+ else if(bossWave&&!state.bossesTarget){state.bossesTarget=(state.mode==='stage'&&state.stage%10===0)?6:1;state.bossesSpawned=0;for(let b=0;b<state.bossesTarget;b++){spawnEnemy(null,false,true);state.bossesSpawned++;}if(state.bossesTarget>1)sfx('boss');}
  else if(!bossWave){if(state.spawned<target&&state.waveTimer>=1){state.waveTimer=0;spawnEnemy(null,Math.random()<Math.min(.05+state.stage*.012,.22),false);state.spawned++;}}
  // Safety caps prevent accidental runaway arrays from freezing the browser.
  if(particles.length>300) particles.splice(0,particles.length-300);
@@ -734,7 +770,7 @@ if(nearest){
   if(b.mine && Math.hypot(b.x-player.x,b.y-player.y)<b.r+player.r+4){hurt(b.dmg);enemyBullets.splice(i,1);continue}
   if(b.life<=0||b.x<-100||b.x>world.w+100||b.y<-100||b.y>world.h+100)enemyBullets.splice(i,1)
  }
- for(let i=enemies.length-1;i>=0;i--){let e=enemies[i];if(!e||e._deathHandled){enemies.splice(i,1);continue;}e.hit=Math.max(0,e.hit-dt);e.shot-=dt;e.phase+=dt;
+ for(let i=enemies.length-1;i>=0;i--){let e=enemies[i]; const edt=(player.timeFreeze>0?0.22:player.timeRift>0?0.45:1)*dt;if(!e||e._deathHandled){enemies.splice(i,1);continue;}e.hit=Math.max(0,e.hit-dt);e.shot-=dt;e.phase+=dt;
   let dx=player.x-e.x,dy=player.y-e.y,d=Math.hypot(dx,dy)||1;
   if(e.boss&&e.phase2){
     // Phase 2 makes every boss mobile, including the normally stationary sniper/turret types.
@@ -1196,10 +1232,10 @@ function loop(t){
   requestAnimationFrame(loop);
 }
 
-function openCollection(kind){if(!currentUser)return;paused=true;resetMissions();const box=document.getElementById('collectionPanel'),c=document.getElementById('collectionContent');box.style.display='flex';if(kind==='upgrade'){const p=planes[equippedPlane],u=planeUpgrades[equippedPlane];c.innerHTML=`<h2 class="sectionTitle">⬆️ NÂNG CẤP • ${p.name}</h2><p style="text-align:center">🪙 ${gold}</p><div class="twoCol"><div class="upgradeCard">❤️ Máu<br>Lv ${u.hp}<div class="cost">🪙 ${500*(u.hp+1)}</div><button onclick="buyPlaneUpgrade('hp')">NÂNG CẤP</button></div><div class="upgradeCard">⚔️ Tấn công<br>Lv ${u.atk}<div class="cost">🪙 ${600*(u.atk+1)}</div><button onclick="buyPlaneUpgrade('atk')">NÂNG CẤP</button></div><div class="upgradeCard">⚡ Tốc đánh<br>Lv ${u.fire}<div class="cost">🪙 ${700*(u.fire+1)}</div><button onclick="buyPlaneUpgrade('fire')">NÂNG CẤP</button></div></div>`}else if(kind==='hangar'){c.innerHTML=`<h2 class="sectionTitle">✈️ KHO MÁY BAY</h2><p style="text-align:center">♦️ ${ruby}</p><div class="cardGrid">${Object.entries(planes).map(([id,p])=>{let own=ownedPlanes.includes(id),eq=equippedPlane===id,u=planeUpgrades[id];return `<div class="planeCard ${eq?'equipped':''}"><div class="planeIcon">${p.icon}</div><b>${p.name}</b><div class="stars">${'★'.repeat(p.stars)}${'☆'.repeat(5-p.stars)}</div><div class="statLine">❤️<div class="statBar"><i style="width:${Math.min(100,(p.hp+u.hp)*8)}%"></i></div>${p.hp+u.hp}</div><div class="statLine">⚔️<div class="statBar"><i style="width:${Math.min(100,p.atk*(1+u.atk*.08)/40*100)}%"></i></div>${Math.round(p.atk*(1+u.atk*.08))}</div><div class="statLine">⚡<div class="statBar"><i style="width:${Math.min(100,.35/Math.max(.07,p.fire*(1-u.fire*.06))*100)}%"></i></div>${p.fire.toFixed(2)}s</div><small>${p.s1} • ${p.s2}</small><div class="cost">${own?'ĐÃ MUA':'♦️ '+p.price}</div><button onclick="planeAction('${id}')">${eq?'ĐANG TRANG BỊ':own?'TRANG BỊ':'MUA'}</button></div>`}).join('')}</div>`}else{const R=a=>a.map(q=>`<div class="missionCard ${q.done?'missionDone':''}"><b>${q.text}</b><p>${q.prog}/${q.need}</p><div class="cost">Thưởng: ${a===missions.daily?'🪙 '+q.reward:'♦️ '+q.reward}</div>${q.done?'✅ ĐÃ HOÀN THÀNH':'🔄 ĐANG THỰC HIỆN'}</div>`).join('');c.innerHTML=`<h2 class="sectionTitle">📋 NHIỆM VỤ</h2><h3>🌞 Hằng ngày</h3><div class="cardGrid">${R(missions.daily)}</div><h3>📅 Hằng tuần</h3><div class="cardGrid">${R(missions.weekly)}</div>`}}
+function openCollection(kind){if(!currentUser)return;paused=true;resetMissions();const box=document.getElementById('collectionPanel'),c=document.getElementById('collectionContent');box.style.display='flex';if(kind==='upgrade'){const p=planes[equippedPlane],u=planeUpgrades[equippedPlane];c.innerHTML=`<h2 class="sectionTitle">⬆️ NÂNG CẤP • ${p.name}</h2><p style="text-align:center">🪙 ${gold}</p><div class="twoCol"><div class="upgradeCard">❤️ Máu<br>Lv ${u.hp}/25<div class="cost">${u.hp>=25?'⭐ TỐI ĐA':'🪙 '+500*(u.hp+1)}</div><button onclick="buyPlaneUpgrade('hp')">NÂNG CẤP</button></div><div class="upgradeCard">⚔️ Tấn công<br>Lv ${u.atk}/25<div class="cost">${u.atk>=25?'⭐ TỐI ĐA':'🪙 '+600*(u.atk+1)}</div><button onclick="buyPlaneUpgrade('atk')">NÂNG CẤP</button></div><div class="upgradeCard">⚡ Tốc đánh<br>Lv ${u.fire}/25<div class="cost">${u.fire>=25?'⭐ TỐI ĐA':'🪙 '+700*(u.fire+1)}</div><button onclick="buyPlaneUpgrade('fire')">NÂNG CẤP</button></div></div>`}else if(kind==='hangar'){c.innerHTML=`<h2 class="sectionTitle">✈️ KHO MÁY BAY</h2><p style="text-align:center">♦️ ${ruby}</p><div class="cardGrid">${Object.entries(planes).map(([id,p])=>{let own=ownedPlanes.includes(id),eq=equippedPlane===id,u=planeUpgrades[id];return `<div class="planeCard ${eq?'equipped':''}"><div class="planeIcon">${p.icon}</div><b>${p.name}</b><div class="stars">${'★'.repeat(p.stars)}${'☆'.repeat(5-p.stars)}</div><div class="statLine">❤️<div class="statBar"><i style="width:${Math.min(100,(p.hp+u.hp)*8)}%"></i></div>${p.hp+u.hp}</div><div class="statLine">⚔️<div class="statBar"><i style="width:${Math.min(100,p.atk*(1+u.atk*.08)/40*100)}%"></i></div>${Math.round(p.atk*(1+u.atk*.08))}</div><div class="statLine">⚡<div class="statBar"><i style="width:${Math.min(100,.35/Math.max(.07,p.fire*(1-u.fire*.06))*100)}%"></i></div>${p.fire.toFixed(2)}s</div><small>${p.s1} • ${p.s2}</small><div class="cost">${own?'ĐÃ MUA':'♦️ '+p.price}</div><button onclick="planeAction('${id}')">${eq?'ĐANG TRANG BỊ':own?'TRANG BỊ':'MUA'}</button></div>`}).join('')}</div>`}else{const R=a=>a.map(q=>`<div class="missionCard ${q.done?'missionDone':''}"><b>${q.text}</b><p>${q.prog}/${q.need}</p><div class="cost">Thưởng: ${a===missions.daily?'🪙 '+q.reward:'♦️ '+q.reward}</div>${q.done?'✅ ĐÃ HOÀN THÀNH':'🔄 ĐANG THỰC HIỆN'}</div>`).join('');c.innerHTML=`<h2 class="sectionTitle">📋 NHIỆM VỤ</h2><h3>🌞 Hằng ngày</h3><div class="cardGrid">${R(missions.daily)}</div><h3>📅 Hằng tuần</h3><div class="cardGrid">${R(missions.weekly)}</div>`}}
 function closeCollection(){document.getElementById('collectionPanel').style.display='none';if(gameStarted)paused=false}
 function planeAction(id){const p=planes[id];if(!ownedPlanes.includes(id)){if(ruby<p.price)return;ruby-=p.price;ownedPlanes.push(id)}equippedPlane=id;saveMeta();openCollection('hangar')}
-function buyPlaneUpgrade(t){const u=planeUpgrades[equippedPlane],cost={hp:500*(u.hp+1),atk:600*(u.atk+1),fire:700*(u.fire+1)}[t];if(gold<cost)return;gold-=cost;u[t]++;saveMeta();openCollection('upgrade')}
+function buyPlaneUpgrade(t){const u=planeUpgrades[equippedPlane],MAX=25;if((u[t]||0)>=MAX){addText(player.x,player.y-35,'⭐ ĐÃ TỐI ĐA LV 25');return}const cost={hp:500*(u.hp+1),atk:600*(u.atk+1),fire:700*(u.fire+1)}[t];if(gold<cost)return;gold-=cost;u[t]++;saveMeta();openCollection('upgrade')}
 
 // ACCOUNT / STAGE SELECT
 function setAuthLocation(mode){const e=document.getElementById('authLocation');if(e)e.textContent=mode==='register'?'📍 Khu đăng ký':'📍 Khu đăng nhập'}
@@ -1235,7 +1271,7 @@ async function redeemCode(){
   }catch(err){console.error(err);msg.textContent='❌ Không kết nối được máy chủ code.';}
 }
 function closeSettings(){document.getElementById('settingsPanel').style.display='none';paused=false}
-function openSettings(){document.getElementById('accountLabel').textContent='Đang đăng nhập: '+currentUser;document.getElementById('settingsPanel').style.display='flex';paused=true}
+function openSettings(){ensureAudio();initAudioSettings();document.getElementById('accountLabel').textContent='Đang đăng nhập: '+currentUser;document.getElementById('settingsPanel').style.display='flex';paused=true}
 function logout(){saveMeta();currentUser='';localStorage.removeItem('sr_current_user');gameStarted=false;paused=true;document.getElementById('settingsPanel').style.display='none';document.getElementById('mainMenu').style.display='none';showAuth('Đã đăng xuất. Hãy đăng nhập hoặc đăng ký.','login')}
 function claimAttendance(auto=false){if(!currentUser)return;const a=accounts[currentUser]||accountTemplate(),today=dayKey();const box=document.getElementById('attendanceContent');if(a.attendance===today){if(!auto){box.innerHTML='Hôm nay bạn đã nhận quà. 🎁';document.getElementById('attendancePanel').style.display='flex';paused=true}return}a.attendance=today;accounts[currentUser]=a;gold+=300;saveMeta();if(!auto){box.innerHTML='<b>🎉 Nhận 300 🪙!</b>';document.getElementById('attendancePanel').style.display='flex';paused=true}}
 function closeAttendance(){document.getElementById('attendancePanel').style.display='none';paused=false}
@@ -1279,7 +1315,7 @@ updateHUD();updateCurrencyUI();setStageWalls();
 setInterval(()=>{try{updateHUD();}catch(e){}},100);
 requestAnimationFrame(loop);
 </script>
-<style>.currencyLine{display:flex;justify-content:center;gap:18px;font-size:18px;margin:4px 0 12px}.modeGrid,.menuGrid2,.twoCol{display:grid;grid-template-columns:1fr 1fr;gap:9px}.collectionPanel{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:#030611f2;z-index:30}.collectionPanel .menuPanel{max-height:90vh;overflow:auto;position:relative}.closePanel{position:absolute;right:10px;top:8px;background:#18223a;color:#fff;border:1px solid #6feaff55;border-radius:9px;padding:6px 10px}.cardGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.planeCard,.missionCard,.upgradeCard{background:#101a30;border:1px solid #ffffff22;border-radius:13px;padding:10px;text-align:center}.planeIcon{font-size:44px;height:56px}.stars{color:#ffd85c;letter-spacing:2px}.statLine{display:flex;align-items:center;gap:4px;font-size:10px;margin:4px 0}.statBar{height:7px;flex:1;background:#242d42;border-radius:8px;overflow:hidden}.statBar i{display:block;height:100%;background:#6feaff}.planeCard button,.upgradeCard button{width:100%;margin-top:6px;padding:7px}.equipped{box-shadow:0 0 16px #6feaff55;border-color:#6feaffaa}.missionDone{border-color:#76ff9b88}.sectionTitle{text-align:center}.cost{font-size:11px;color:#ffd86b}@media(max-width:430px){.menuGrid2{grid-template-columns:1fr}.cardGrid{grid-template-columns:1fr 1fr}}</style><style>
+<style>.currencyLine{display:flex;justify-content:center;gap:18px;font-size:18px;margin:4px 0 12px}.modeGrid,.menuGrid2,.twoCol{display:grid;grid-template-columns:1fr 1fr;gap:9px}.collectionPanel{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:#030611f2;z-index:30}.collectionPanel .menuPanel{max-height:90vh;overflow:auto;position:relative}.closePanel{position:absolute;right:10px;top:8px;background:#18223a;color:#fff;border:1px solid #6feaff55;border-radius:9px;padding:6px 10px}.cardGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.planeCard,.missionCard,.upgradeCard{background:#101a30;border:1px solid #ffffff22;border-radius:13px;padding:10px;text-align:center}.planeIcon{font-size:44px;height:56px}.stars{color:#ffd85c;letter-spacing:2px}.statLine{display:flex;align-items:center;gap:4px;font-size:10px;margin:4px 0}.statBar{height:7px;flex:1;background:#242d42;border-radius:8px;overflow:hidden}.statBar i{display:block;height:100%;background:#6feaff}.planeCard button,.upgradeCard button{width:100%;margin-top:6px;padding:7px}.equipped{box-shadow:0 0 16px #6feaff55;border-color:#6feaffaa}.missionDone{border-color:#76ff9b88}.sectionTitle{text-align:center}.audioBox{background:#101a30;border:1px solid #ffffff22;border-radius:12px;padding:10px;margin:10px 0}.audioBox label{display:flex;align-items:center;gap:7px;margin:8px 0;font-size:13px}.audioBox input[type=range]{flex:1}.cost{font-size:11px;color:#ffd86b}@media(max-width:430px){.menuGrid2{grid-template-columns:1fr}.cardGrid{grid-template-columns:1fr 1fr}}</style><style>
 .overlayMenu{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#030611ef;z-index:40}.overlayMenu input{display:block;width:100%;margin:7px 0;padding:12px;border-radius:10px;border:1px solid #ffffff30;background:#080e1e;color:#fff}.stagePanel{max-height:90vh;overflow:auto}.stageGrid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-top:12px}.stageBtn{padding:12px 4px;border-radius:10px;font-weight:900}.stageBtn.unlocked{border-color:#6feaff99}.stageBtn.locked{opacity:.28}.stageBtn.bossStage{background:#45111a;border-color:#ff4055;color:#ff6677}.stageBtn.bossStage.unlocked{box-shadow:0 0 9px #ff405555}.stageBtn:not(.bossStage).unlocked{background:#10182a}.stagePanel .closePanel{position:absolute}.overlayMenu .menuPanel{position:relative}
 </style></body>
 </html>
