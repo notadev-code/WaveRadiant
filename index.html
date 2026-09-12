@@ -167,7 +167,7 @@ for(const id of Object.keys(planes))planeUpgrades[id]={hp:0,atk:0,fire:0};
 let missions={day:'',week:'',daily:[],weekly:[]};let redeemedCodes=[];let firstClearRewards=[];
 let unlockedStage=1;
 // === SPACERADIANT_CODES_BEGIN ===
-const REDEEM_CODES={"12345678":{"gold":1000,"ruby":5,"once":true},"87654321":{"gold":2500,"ruby":10,"once":true},"19646159":{"gold":7777,"ruby":8,"once":true},"62924834":{"infinite":true,"gold":0,"ruby":0,"once":true}};
+const REDEEM_CODES={"12345678":{"gold":1000,"ruby":5,"once":true},"87654321":{"gold":2500,"ruby":10,"once":true},"19646159":{"gold":7777,"ruby":8,"once":true}};
 // === SPACERADIANT_CODES_END ===
 
 function accountTemplate(){return {gold:0,ruby:0,infiniteResources:false,equippedPlane:'radiant',ownedPlanes:['radiant'],planeUpgrades:Object.fromEntries(Object.keys(planes).map(id=>[id,{hp:0,atk:0,fire:0}])),unlockedStage:1,missions:{day:'',week:'',daily:[],weekly:[]},attendance:'',redeemedCodes:[],firstClearRewards:[]}}
@@ -1209,20 +1209,29 @@ function register(){const n=document.getElementById('authName').value.trim(),p=d
 function renderStageSelect(){const g=document.getElementById('stageGrid');g.innerHTML='';for(let i=1;i<=100;i++){const b=document.createElement('button');b.className='stageBtn '+(i%5===0?'bossStage ':'')+(i<=unlockedStage?'unlocked':'locked');b.textContent=i;b.disabled=i>unlockedStage;b.onclick=()=>{currentStageChoice=i;closeStageSelect();startMode('stage',i)};g.appendChild(b)}}
 function openStageSelect(){if(!currentUser)return;renderStageSelect();document.getElementById('stageSelect').style.display='flex';paused=true}
 function closeStageSelect(){document.getElementById('stageSelect').style.display='none';if(!gameStarted)paused=false}
-function redeemCode(){
+async function redeemCode(){
   if(!currentUser)return;
   const input=document.getElementById('codeInput'),msg=document.getElementById('codeMsg');
   const code=String(input.value||'').replace(/\s+/g,'').trim();
   if(!/^\d{8}$/.test(code)){msg.textContent='❌ Code phải gồm đúng 8 số.';return}
-  const reward=REDEEM_CODES[code];
-  if(!reward){msg.textContent='❌ Code không hợp lệ.';return}
-  if(reward.once&&redeemedCodes.includes(code)){msg.textContent='⚠️ Code này đã được dùng.';return}
-  if(reward.infinite){infiniteResources=true;gold=Infinity;ruby=Infinity;}
-  else{gold+=Math.max(0,Number(reward.gold)||0);ruby+=Math.max(0,Number(reward.ruby)||0);}
-  if(reward.once)redeemedCodes.push(code);
-  saveMeta();
-  msg.textContent=reward.infinite?'♾️ Đã kích hoạt tài nguyên VÔ HẠN 🪙 ♦️':`✅ Nhận +${reward.gold||0} 🪙 +${reward.ruby||0} ♦️`;
-  input.value='';
+  if(!SPACERADIANT_FIREBASE_DB_URL||SPACERADIANT_FIREBASE_DB_URL.includes('__FIREBASE_DATABASE_URL__')){msg.textContent='⚠️ Game chưa cấu hình Firebase.';return}
+  msg.textContent='⏳ Đang kiểm tra code...';
+  try{
+    const res=await fetch(SPACERADIANT_FIREBASE_DB_URL+'/codes/'+encodeURIComponent(code)+'.json',{cache:'no-store'});
+    if(!res.ok)throw new Error('HTTP '+res.status);
+    const reward=await res.json();
+    if(!reward){msg.textContent='❌ Code không hợp lệ.';return}
+    if(reward.used&&reward.once){msg.textContent='⚠️ Code này đã được dùng.';return}
+    if(reward.infinite){infiniteResources=true;gold=Infinity;ruby=Infinity;}
+    else{gold+=Math.max(0,Number(reward.gold)||0);ruby+=Math.max(0,Number(reward.ruby)||0);}
+    if(reward.once){
+      try{await fetch(SPACERADIANT_FIREBASE_DB_URL+'/codes/'+encodeURIComponent(code)+'/used.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:'true'});}catch(e){}
+      redeemedCodes.push(code);
+    }
+    saveMeta();
+    msg.textContent=reward.infinite?'♾️ Đã kích hoạt tài nguyên VÔ HẠN 🪙 ♦️':`✅ Nhận +${reward.gold||0} 🪙 +${reward.ruby||0} ♦️`;
+    input.value='';
+  }catch(err){console.error(err);msg.textContent='❌ Không kết nối được máy chủ code.';}
 }
 function closeSettings(){document.getElementById('settingsPanel').style.display='none';paused=false}
 function openSettings(){document.getElementById('accountLabel').textContent='Đang đăng nhập: '+currentUser;document.getElementById('settingsPanel').style.display='flex';paused=true}
