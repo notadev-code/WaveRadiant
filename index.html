@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>SpaceRadiant v1.16.8</title>
+<title>SpaceRadiant v1.16</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#070912;color:#fff;font-family:Arial,sans-serif;touch-action:none}
@@ -93,7 +93,7 @@ small{color:#aebbd6}
 <button id="menuBtn">☰</button>
 
 <div id="authMenu" class="overlayMenu"><div class="menuPanel"><div class="title">SPACE RADIANT</div><div class="sub">TÀI KHOẢN</div><div id="authForm"><div id="authLocation" class="authLocation">📍 Khu đăng nhập</div><input id="authName" placeholder="Tên tài khoản" maxlength="20" autocomplete="username"><input id="authPass" type="password" placeholder="Mật khẩu" maxlength="30" autocomplete="current-password"><button id="loginBtn" type="button" class="menuButton">🔐 ĐĂNG NHẬP</button><button id="registerBtn" type="button" class="menuButton">📝 ĐĂNG KÝ</button><div id="authMsg"></div></div></div></div>
-<div id="mainMenu"><div class="menuPanel megaMenu"><div class="title">SPACE RADIANT v1.16.8</div><div class="sub">CHỌN CHẾ ĐỘ</div><div class="currencyLine">🪙 <b id="menuGold">0</b> &nbsp;&nbsp; ♦️ <b id="menuRuby">0</b></div><div class="modeGrid"><button id="endlessBtn" class="menuButton">♾️ ENDLESS<br><small>Chế độ cũ • không tường</small></button><button id="stageBtn" class="menuButton">🚀 STAGE<br><small>Chọn màn 1–100</small></button></div><div class="menuGrid2"><button id="upgradeMenuBtn" class="menuButton">⬆️ NÂNG CẤP</button><button id="hangarBtn" class="menuButton">✈️ KHO MÁY BAY</button><button id="missionsBtn" class="menuButton">📋 NHIỆM VỤ</button><button id="attendanceBtn" class="menuButton">🎁 QUÀ HẰNG NGÀY</button><button id="settingsBtn" class="menuButton">⚙️ CÀI ĐẶT</button><button id="helpBtn" class="menuButton">❔ HƯỚNG DẪN</button></div><div id="helpText">🎮 Joystick trái để di chuyển.<br>🎯 Máy bay tự nhắm và bắn quái gần nhất.<br>⚡/💥 dùng skill 1/3 kể cả khi đang giữ hướng trên TV.<br>🚀 Stage: 100 màn. Màn 10,20,...,100 là màn boss; các màn 10–90 có 6 boss ở wave 5, màn 100 có 6 boss ngay wave 1.</div></div></div>
+<div id="mainMenu"><div class="menuPanel megaMenu"><div class="title">SPACE RADIANT v1.16.9</div><div class="sub">CHỌN CHẾ ĐỘ</div><div class="currencyLine">🪙 <b id="menuGold">0</b> &nbsp;&nbsp; ♦️ <b id="menuRuby">0</b></div><div class="modeGrid"><button id="endlessBtn" class="menuButton">♾️ ENDLESS<br><small>Chế độ cũ • không tường</small></button><button id="stageBtn" class="menuButton">🚀 STAGE<br><small>Chọn màn 1–100</small></button></div><div class="menuGrid2"><button id="upgradeMenuBtn" class="menuButton">⬆️ NÂNG CẤP</button><button id="hangarBtn" class="menuButton">✈️ KHO MÁY BAY</button><button id="missionsBtn" class="menuButton">📋 NHIỆM VỤ</button><button id="attendanceBtn" class="menuButton">🎁 QUÀ HẰNG NGÀY</button><button id="settingsBtn" class="menuButton">⚙️ CÀI ĐẶT</button><button id="helpBtn" class="menuButton">❔ HƯỚNG DẪN</button></div><div id="helpText">🎮 Joystick trái để di chuyển.<br>🎯 Máy bay tự nhắm và bắn quái gần nhất.<br>⚡/💥 dùng skill 1/3 kể cả khi đang giữ hướng trên TV.<br>🚀 Stage: 100 màn. Màn 10,20,...,100 là màn boss; các màn 10–90 có 6 boss ở wave 5, màn 100 có 6 boss ngay wave 1.</div></div></div>
 <div id="stageSelect" class="overlayMenu" style="display:none"><div class="menuPanel stagePanel"><button class="closePanel" onclick="closeStageSelect()">✕</button><h2 class="sectionTitle">🚀 CHỌN MÀN</h2><p style="text-align:center">Vượt màn trước để mở màn sau</p><div id="stageGrid" class="stageGrid"></div></div></div>
 <div id="settingsPanel" class="overlayMenu" style="display:none"><div class="menuPanel"><h2 class="sectionTitle">⚙️ CÀI ĐẶT</h2><p id="accountLabel" style="text-align:center"></p><div class="audioBox"><b>🔊 ÂM THANH</b><label>🎵 Nhạc: <input id="musicVol" type="range" min="0" max="100" value="35"> <span id="musicVolText">35%</span></label><label>🔔 Hiệu ứng: <input id="sfxVol" type="range" min="0" max="100" value="70"> <span id="sfxVolText">70%</span></label><button id="muteBtn" class="menuButton">🔊 BẬT ÂM THANH</button></div><div style="margin:12px 0"><input id="codeInput" maxlength="8" inputmode="numeric" placeholder="Nhập code 8 số" style="width:100%;box-sizing:border-box;padding:12px;border-radius:10px;border:1px solid #567;background:#101827;color:#fff;font-size:16px;text-align:center"><button id="redeemCodeBtn" class="menuButton">🎁 NHẬP CODE</button><div id="codeMsg" style="text-align:center;min-height:22px"></div><div style="font-size:10px;opacity:.45;text-align:center">Code DB: v3 • 8 số</div></div><button id="logoutBtn" class="menuButton">🚪 ĐĂNG XUẤT</button><button class="menuButton" onclick="closeSettings()">ĐÓNG</button></div></div>
 <div id="attendancePanel" class="overlayMenu" style="display:none"><div class="menuPanel"><h2 class="sectionTitle">🎁 QUÀ HẰNG NGÀY</h2><div id="attendanceContent" style="text-align:center"></div><button class="menuButton" onclick="closeAttendance()">ĐÓNG</button></div></div>
@@ -176,13 +176,13 @@ const SPACERADIANT_FIREBASE_DB_URL="https://waveradiant-rise-default-rtdb.asia-s
 // === SPACE RADIANT AUDIO (WebAudio, no external audio files needed) ===
 let audioCtx=null, musicGain=null, sfxGain=null, musicTimer=null, audioMuted=false;
 let musicVolume=Number(localStorage.getItem('sr_music_vol')||35)/100, sfxVolume=Number(localStorage.getItem('sr_sfx_vol')||70)/100;
-function ensureAudio(){if(audioCtx)return; try{audioCtx=new (window.AudioContext||window.webkitAudioContext)(); musicGain=audioCtx.createGain();sfxGain=audioCtx.createGain();musicGain.gain.value=musicVolume;sfxGain.gain.value=sfxVolume;musicGain.connect(audioCtx.destination);sfxGain.connect(audioCtx.destination);startMusic();}catch(e){console.warn('Audio unavailable',e)}}
+function ensureAudio(){try{if(!audioCtx){audioCtx=new (window.AudioContext||window.webkitAudioContext)();musicGain=audioCtx.createGain();sfxGain=audioCtx.createGain();musicGain.connect(audioCtx.destination);sfxGain.connect(audioCtx.destination);setAudioVolumes();startMusic();}if(audioCtx.state==='suspended')audioCtx.resume().catch(()=>{});}catch(e){console.warn('Audio unavailable',e)}}
 function tone(freq,dur,type='sine',gain=.08,when=0,out=sfxGain){if(!audioCtx||audioMuted||!out)return;const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type=type;o.frequency.setValueAtTime(freq,audioCtx.currentTime+when);g.gain.setValueAtTime(.0001,audioCtx.currentTime+when);g.gain.exponentialRampToValueAtTime(Math.max(.0001,gain),audioCtx.currentTime+when+.015);g.gain.exponentialRampToValueAtTime(.0001,audioCtx.currentTime+when+dur);o.connect(g);g.connect(out);o.start(audioCtx.currentTime+when);o.stop(audioCtx.currentTime+when+dur+.03)}
 function sfx(kind){ensureAudio();if(!audioCtx)return;const m={shoot:[420,.045,'square',.035],hit:[150,.06,'sawtooth',.045],dash:[620,.14,'triangle',.07],blast:[90,.25,'sawtooth',.09],pickup:[760,.12,'sine',.06],hurt:[95,.16,'square',.08],boss:[80,.35,'sawtooth',.1],level:[520,.1,'sine',.06],wave:[330,.12,'triangle',.06]};const a=m[kind];if(!a)return;tone(a[0],a[1],a[2],a[3]);if(kind==='pickup'||kind==='level'){tone(a[0]*1.5,a[1],a[2],a[3],.08)}if(kind==='boss'){tone(120,.28,'sawtooth',.07,.12)}}
 function startMusic(){if(!audioCtx||musicTimer)return;let step=0;const notes=[220,277,330,277,247,330,370,330];musicTimer=setInterval(()=>{if(!audioCtx||audioMuted)return;tone(notes[step%notes.length],.28,'triangle',.025,0,musicGain);step++},360)}
 function setAudioVolumes(){if(musicGain)musicGain.gain.value=audioMuted?0:musicVolume;if(sfxGain)sfxGain.gain.value=audioMuted?0:sfxVolume;const m=document.getElementById('musicVol'),q=document.getElementById('sfxVol');if(m)m.value=Math.round(musicVolume*100);if(q)q.value=Math.round(sfxVolume*100);const mt=document.getElementById('musicVolText'),qt=document.getElementById('sfxVolText');if(mt)mt.textContent=Math.round(musicVolume*100)+'%';if(qt)qt.textContent=Math.round(sfxVolume*100)+'%';const b=document.getElementById('muteBtn');if(b)b.textContent=audioMuted?'🔇 ÂM THANH ĐANG TẮT':'🔊 BẬT ÂM THANH'}
 function initAudioSettings(){const m=document.getElementById('musicVol'),q=document.getElementById('sfxVol'),b=document.getElementById('muteBtn');if(m)m.oninput=()=>{musicVolume=Number(m.value)/100;localStorage.setItem('sr_music_vol',m.value);ensureAudio();setAudioVolumes()};if(q)q.oninput=()=>{sfxVolume=Number(q.value)/100;localStorage.setItem('sr_sfx_vol',q.value);ensureAudio();setAudioVolumes()};if(b)b.onclick=()=>{audioMuted=!audioMuted;ensureAudio();setAudioVolumes()};setAudioVolumes()}
-['pointerdown','keydown','touchstart'].forEach(ev=>window.addEventListener(ev,()=>{if(ev==='keydown' && ['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName))return;ensureAudio()},{once:false,passive:true}));
+['pointerdown','keydown','touchstart','click'].forEach(ev=>window.addEventListener(ev,()=>{if(ev==='keydown' && ['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName))return;ensureAudio();if(audioCtx&&audioCtx.state==='suspended')audioCtx.resume().catch(()=>{});},{once:false,passive:true}));document.addEventListener('visibilitychange',()=>{if(!document.hidden&&audioCtx&&audioCtx.state==='suspended')audioCtx.resume().catch(()=>{})});
 
 // === SPACERADIANT_CODES_BEGIN ===
 const REDEEM_CODES={"12345678":{"gold":1000,"ruby":5,"once":true},"87654321":{"gold":2500,"ruby":10,"once":true},"19646159":{"gold":7777,"ruby":8,"once":true}};
@@ -202,7 +202,7 @@ function resetGameState(mode=state.mode||'endless',chosenStage=1){
   enemies.length=0; bullets.length=0; enemyBullets.length=0; particles.length=0; texts.length=0; expDrops.length=0; chests.length=0;
   player.x=world.w/2; player.y=world.h/2; player.healFxTimer=0; player.regenTimer=15; player.r=17; player.hp=5; player.maxhp=5; player.angle=-Math.PI/2;
   const pp=planes[equippedPlane]||planes.radiant,pu=planeUpgrades[equippedPlane]||{hp:0,atk:0,fire:0}; player.speed=250; player.damage=pp.atk*(1+pu.atk*.08); player.fire=0; player.fireRate=Math.max(.07,pp.fire*(1-pu.fire*.06)); player.bullets=1;
-  player.bulletSpeed=560; player.markTimer=0;player.markTarget=null;player.timeFreeze=0;player.timeRift=0;player.droneTimer=0;player.droneShotTimer=0;player.droneBarrage=0;player.solarCharge=0; player.maxhp=pp.hp+pu.hp; player.hp=player.maxhp; player.dash=0; player.blast=0; player.invuln=0; player.crit=.08; player.critMult=1.8; player.armor=0; player.regen=0; player.magnet=0; player.dashMax=3; player.blastMax=8; player.skillDmg=1; player.range=400; miniActive=false; 
+  player.bulletSpeed=560; player.markTimer=0;player.markTarget=null;player.timeFreeze=0;player.timeRift=0;player.droneTimer=0;player.droneBarrage=0;player.solarCharge=0; player.maxhp=pp.hp+pu.hp; player.hp=player.maxhp; player.dash=0; player.blast=0; player.invuln=0; player.crit=.08; player.critMult=1.8; player.armor=0; player.regen=0; player.magnet=0; player.dashMax=3; player.blastMax=8; player.skillDmg=1; player.range=400; miniActive=false; 
   paused=false; over=false; miniActive=false; miniObjects=[];
   document.getElementById('bossBox').style.display='none'; document.getElementById('bossBox').innerHTML=''; updateHUD(); supplies.length=0; shieldHits=0; rapidFire=0; supplyTimer=7+Math.random()*9; state.bossesSpawned=0; state.bossesTarget=0;
 }
@@ -473,8 +473,8 @@ function smartMoveEnemy(e,dx,dy,dt){
     if(threat){const td=Math.hypot(nx-(e.x+threat.dx),ny-(e.y+threat.dy));score+=(td<120? -20:20);}
     if(score>bestScore){bestScore=score;best={x:nx,y:ny,a};}
   }
-  if(best){moveEntity(e,Math.cos(best.a)*e.spd*edt,Math.sin(best.a)*e.spd*edt,e.r);}
-  else moveEntity(e,Math.cos(desired)*e.spd*edt,Math.sin(desired)*e.spd*edt,e.r);
+  if(best){moveEntity(e,Math.cos(best.a)*e.spd*dt,Math.sin(best.a)*e.spd*dt,e.r);}
+  else moveEntity(e,Math.cos(desired)*e.spd*dt,Math.sin(desired)*e.spd*dt,e.r);
 }
 
 function spawnEnemy(kind,elite=false,boss=false){
@@ -568,7 +568,7 @@ function openChest(i){
 function firePlayer(){ ensureAudio(); sfx('shoot');
  const count=player.bullets, spread=.16;
  for(let i=0;i<count;i++){let off=(i-(count-1)/2)*spread,a=player.angle+off;
- bullets.push({x:player.x+Math.cos(a)*20,y:player.y+Math.sin(a)*20,vx:Math.cos(a)*player.bulletSpeed,vy:Math.sin(a)*player.bulletSpeed,r:4,dmg:(Math.random()<player.crit?player.damage*player.critMult:player.damage)*(player.solarCharge>0?1.5:1),life:player.range/player.bulletSpeed})}
+ bullets.push({x:player.x+Math.cos(a)*20,y:player.y+Math.sin(a)*20,vx:Math.cos(a)*player.bulletSpeed,vy:Math.sin(a)*player.bulletSpeed,r:4,dmg:(Math.random()<player.crit?player.damage*player.critMult:player.damage),life:player.range/player.bulletSpeed})}
 }
 function enemyFire(e){
   let a=Math.atan2(player.y-e.y,player.x-e.x);
@@ -608,10 +608,10 @@ function skillDash(){
  const pid=equippedPlane, a0=(left.active&&Math.hypot(left.x,left.y)>.12)?Math.atan2(left.y,left.x):player.angle;
  if(pid==='pulse'){shieldHits=Math.max(shieldHits,2);player.invuln=Math.max(player.invuln,1.2);}
  else if(pid==='medic'){const old=player.hp;player.hp=Math.min(player.maxhp,player.hp+2);if(player.hp>old)healFX(player.x,player.y,player.hp-old);}
- else if(pid==='hunter'){player.markTimer=6;player.markTarget=enemies.reduce((a,e)=>!a||Math.hypot(e.x-player.x,e.y-player.y)<Math.hypot(a.x-player.x,a.y-player.y)?e:a,null);if(player.markTarget){addText(player.markTarget.x,player.markTarget.y-player.markTarget.r-18,'🎯 MARK');burst(player.markTarget.x,player.markTarget.y,18,.4);}}
+ else if(pid==='hunter'){player.markTimer=6;player.markTarget=enemies.reduce((a,e)=>!a||Math.hypot(e.x-player.x,e.y-player.y)<Math.hypot(a.x-player.x,a.y-player.y)?e:a,null);}
  else if(pid==='chronos'){player.timeFreeze=3;}
- else if(pid==='drone'){player.droneTimer=10;player.droneShotTimer=0;}
- else if(pid==='solar'){player.solarCharge=5;addText(player.x,player.y-35,'☀️ SOLAR CHARGE');}
+ else if(pid==='drone'){player.droneTimer=10;}
+ else if(pid==='solar'){player.solarCharge=5;}
  else if(pid==='guardian'){player.invuln=Math.max(player.invuln,1.15);player.x+=Math.cos(a0)*145;player.y+=Math.sin(a0)*145;}
  else if(pid==='phantom'){player.invuln=Math.max(player.invuln,1.0);player.x+=Math.cos(a0)*245;player.y+=Math.sin(a0)*245;burst(player.x,player.y,30,.6);}
  else if(pid==='titan'){player.invuln=Math.max(player.invuln,.75);player.x+=Math.cos(a0)*165;player.y+=Math.sin(a0)*165;for(const e of enemies)if(Math.hypot(e.x-player.x,e.y-player.y)<85)e.hp-=85;}
@@ -669,21 +669,6 @@ function update(dt){
  supplyTimer-=dt;
  if(supplyTimer<=0){if(Math.random()<.45)spawnSupply();supplyTimer=11+Math.random()*18;}
  rapidFire=Math.max(0,rapidFire-dt);
- player.markTimer=Math.max(0,player.markTimer-dt);
- if(player.markTimer<=0)player.markTarget=null;
- player.timeFreeze=Math.max(0,player.timeFreeze-dt);
- player.timeRift=Math.max(0,player.timeRift-dt);
- player.solarCharge=Math.max(0,player.solarCharge-dt);
- player.droneTimer=Math.max(0,player.droneTimer-dt);
- if(player.droneTimer<=0)player.droneShotTimer=0;
- if(player.droneTimer>0){
-   player.droneShotTimer-=dt;
-   if(player.droneShotTimer<=0){
-     player.droneShotTimer=.62;
-     let de=enemies.reduce((a,e)=>!a||Math.hypot(e.x-player.x,e.y-player.y)<Math.hypot(a.x-player.x,a.y-player.y)?e:a,null);
-     if(de){const da=Math.atan2(de.y-player.y,de.x-player.x),dx=player.x+Math.cos(performance.now()/1000*3)*38,dy=player.y+Math.sin(performance.now()/1000*3)*38;bullets.push({x:dx,y:dy,vx:Math.cos(da)*650,vy:Math.sin(da)*650,r:4,dmg:player.damage*.75,life:1.6,droneShot:true});sfx('shoot');}
-   }
- }
  for(let i=supplies.length-1;i>=0;i--){
    const q=supplies[i]; q.life-=dt; q.bob+=dt*4;
    if(q.life<=0){supplies.splice(i,1);continue;}
@@ -760,7 +745,7 @@ if(nearest){
  state.waveTimer+=dt;
  let target=state.mode==='stage'?Math.min(5+state.stage,14):Math.min(5+state.stage,12);
  let specialBossStage=state.mode==='stage'&&(state.stage%10===0||state.stage===100);
- // Stage mode always lasts exactly 5 waves. Boss stages (10,20,...,90) put 6 bosses on wave 5; stage 100 has 6 bosses on wave 1.
+ // Stage mode always lasts exactly 5 waves. Boss stages put the boss on wave 5 so the stage can finish after the boss dies.
  let bossWave=state.mode==='stage'?(state.wave===5):state.wave===5;
  if(state.mode==='stage'&&state.stage===100){if(state.wave===1&&!state.bossesTarget){state.bossesTarget=6;state.bossesSpawned=0;for(let b=0;b<6;b++){spawnEnemy(null,false,true);state.bossesSpawned++;}}}
  else if(bossWave&&!state.bossesTarget){state.bossesTarget=(state.mode==='stage'&&state.stage%10===0)?6:1;state.bossesSpawned=0;for(let b=0;b<state.bossesTarget;b++){spawnEnemy(null,false,true);state.bossesSpawned++;}if(state.bossesTarget>1)sfx('boss');}
@@ -822,7 +807,7 @@ if(nearest){
     else if(d>e.range)smartMoveEnemy(e,dx,dy,dt)
   }else if(e.n==='Splitter'){
     if(d>e.range)smartMoveEnemy(e,dx,dy,dt)
-    if(e.shot<=0){enemyFire(e);e.shot=2.0}
+    if(e.hp>0&&e.shot<=0){enemyFire(e);e.shot=2.0}
   }else if(e.n==='Mine Layer'){
     e.special-=dt;
     if(d<130){moveEntity(e,-dx/d*e.spd*dt,-dy/d*e.spd*dt,e.r)}
@@ -847,7 +832,7 @@ if(nearest){
     }
     e.x=Math.max(e.r,Math.min(world.w-e.r,e.x));
     e.y=Math.max(e.r,Math.min(world.h-e.r,e.y));
-    if(e.shot<=0){enemyFire(e);e.shot=1.8}
+    if(e.hp>0&&e.shot<=0){enemyFire(e);e.shot=1.8}
   }else if(e.n==='Healer'){
     if(d<150){moveEntity(e,-dx/d*e.spd*dt,-dy/d*e.spd*dt,e.r)}
     else if(d>e.range)smartMoveEnemy(e,dx,dy,dt)
@@ -867,7 +852,7 @@ if(nearest){
   }else{
     if(e.boss)triggerBossPhase(e);
     if(d>e.range)smartMoveEnemy(e,dx,dy,dt)
-    if(e.shot<=0){enemyFire(e);const baseCd=e.n==='Ring Shooter'?2.2:e.n==='Sniper'?3.4:e.n==='Turret'?1.8:1.25;e.shot=e.boss?(e.phase2?baseCd*.48:baseCd*.95):baseCd}
+    if(e.hp>0&&e.shot<=0){enemyFire(e);const baseCd=e.n==='Ring Shooter'?2.2:e.n==='Sniper'?3.4:e.n==='Turret'?1.8:1.25;e.shot=e.boss?(e.phase2?baseCd*.48:baseCd*.95):baseCd}
   }
   // Every enemy is kept inside the map, including direct-movement enemies.
   e.x=Math.max(e.r,Math.min(world.w-e.r,e.x));
@@ -1015,7 +1000,6 @@ function draw(){
    ctx.font='18px Arial';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(q.type==='shield'?'🛡️':'⚡',0,1);ctx.restore();
  }
  if(shieldHits>0){ctx.save();ctx.beginPath();ctx.arc(player.x,player.y,player.r+9,0,7);ctx.strokeStyle='#64cfff';ctx.lineWidth=4;ctx.stroke();ctx.font='bold 12px Arial';ctx.textAlign='center';ctx.fillStyle='#bcefff';ctx.fillText('🛡 '+shieldHits+' ĐÒN',player.x,player.y-player.r-16);ctx.restore();}
- if(player.droneTimer>0){const da=performance.now()/1000*3,dx=player.x+Math.cos(da)*38,dy=player.y+Math.sin(da)*38;ctx.save();ctx.translate(dx,dy);ctx.rotate(da+Math.PI/2);ctx.fillStyle='#243b66';ctx.strokeStyle='#72a8ff';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,-10);ctx.lineTo(10,7);ctx.lineTo(0,4);ctx.lineTo(-10,7);ctx.closePath();ctx.fill();ctx.stroke();ctx.fillStyle='#bde0ff';ctx.beginPath();ctx.arc(0,0,3,0,Math.PI*2);ctx.fill();ctx.restore();}
  // bullets
  for(const b of bullets){ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,7);ctx.fillStyle='#dffbff';ctx.shadowBlur=12;ctx.shadowColor='#62e7ff';ctx.fill();ctx.shadowBlur=0}
  for(const b of enemyBullets){ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,7);ctx.fillStyle='#ff6688';ctx.fill()}
@@ -1031,7 +1015,6 @@ function draw(){
   ctx.translate(e.x,e.y);
   if(e.hit>0)ctx.globalAlpha=.55;
   if(e.phase2&&e.boss){ctx.shadowBlur=18;ctx.shadowColor='#ffd36a';}
-  if(player.markTimer>0&&e===player.markTarget&&!e.boss){ctx.beginPath();ctx.arc(0,0,e.r+8,0,Math.PI*2);ctx.strokeStyle='#ffd34d';ctx.lineWidth=3;ctx.stroke();}
   const pulse=1+Math.sin(e.phase*4)*.035;
   ctx.scale(pulse,pulse);
   ctx.rotate(e.phase*.06);
@@ -1260,7 +1243,7 @@ function showAuth(msg='',mode='login'){setGameplayVisible(false);document.getEle
 function doAuthAction(mode){setAuthLocation(mode);if(mode==='login')login();else register()}
 function login(){const n=document.getElementById('authName').value.trim(),p=document.getElementById('authPass').value;if(!n||!p)return showAuth('Nhập đủ tên và mật khẩu.');if(!accounts[n]||accounts[n].password!==p)return showAuth('Sai tên tài khoản hoặc mật khẩu.');currentUser=n;loadAccount();document.getElementById('authMenu').style.display='none';document.getElementById('mainMenu').style.display='flex';setGameplayVisible(false);paused=false;gameStarted=false;updateCurrencyUI();openStageSelect(false);closeStageSelect()}
 function register(){const n=document.getElementById('authName').value.trim(),p=document.getElementById('authPass').value;if(n.length<3||p.length<3)return showAuth('Tên và mật khẩu cần ít nhất 3 ký tự.');if(accounts[n])return showAuth('Tên tài khoản đã tồn tại.');const a=accountTemplate();a.password=p;accounts[n]=a;currentUser=n;localStorage.setItem('sr_accounts',JSON.stringify(accounts));localStorage.setItem('sr_current_user',currentUser);loadAccount();document.getElementById('authMenu').style.display='none';document.getElementById('mainMenu').style.display='flex';setGameplayVisible(false);paused=false;gameStarted=false;claimAttendance(true)}
-function renderStageSelect(){const g=document.getElementById('stageGrid');g.innerHTML='';for(let i=1;i<=100;i++){const b=document.createElement('button');b.className='stageBtn '+(i%10===0?'bossStage ':'')+(i<=unlockedStage?'unlocked':'locked');b.textContent=i;b.disabled=i>unlockedStage;b.onclick=()=>{currentStageChoice=i;closeStageSelect();startMode('stage',i)};g.appendChild(b)}}
+function renderStageSelect(){const g=document.getElementById('stageGrid');g.innerHTML='';for(let i=1;i<=100;i++){const b=document.createElement('button');b.className='stageBtn '+(i%5===0?'bossStage ':'')+(i<=unlockedStage?'unlocked':'locked');b.textContent=i;b.disabled=i>unlockedStage;b.onclick=()=>{currentStageChoice=i;closeStageSelect();startMode('stage',i)};g.appendChild(b)}}
 function openStageSelect(){if(!currentUser)return;renderStageSelect();document.getElementById('stageSelect').style.display='flex';paused=true}
 function closeStageSelect(){document.getElementById('stageSelect').style.display='none';if(!gameStarted)paused=false}
 async function redeemCode(){
