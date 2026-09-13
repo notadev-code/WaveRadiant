@@ -24,8 +24,17 @@ SPACE RADIANT v1.17.1
 - Code tool option 3 creates stage-unlock codes (unlock up to a chosen stage).
 
 
-Cập nhật v1.17.6:
+Cập nhật v1.17.7:
 - Sửa lỗi màn boss: sau khi hoàn thành wave boss cuối không spawn thêm boss ngoài số wave đã quy định.
 - Màn 5,15,...,95: 6 wave, mỗi wave 1 boss.
 - Màn 10,20,...,90: 2 wave, mỗi wave 3 boss.
 - Màn 100: 1 wave, 6 boss.
+
+- Tăng damage quái: damage va chạm/đạn của quái thường tối thiểu 10 HP; các quái mạnh khoảng 18–22 HP.
+- Damage boss tăng lên khoảng 20–35 HP tùy boss/đòn đánh, để tránh tình trạng bị trừ chỉ 1–2 HP mỗi lần.
+
+Cập nhật v1.17.8:
+- Bổ sung hiệu ứng hình ảnh rõ ràng cho kỹ năng của các máy bay.
+- Skill Mark Target / Ghim quái nay có đường liên kết, vòng khóa mục tiêu và chữ GHIM trên quái bị đánh dấu.
+- Thêm hiệu ứng riêng cho khiên, hồi máu, đóng băng thời gian, drone, Solar, dash, Overdrive, Missile Salvo, Time Rift, Nova, Void Burst, Meteor, Titan Blast và Chain Lightning.
+- Các hiệu ứng chỉ mang tính hiển thị, giữ nguyên cơ chế gameplay hiện có.
