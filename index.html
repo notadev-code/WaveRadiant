@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>SpaceRadiant v1.17.5</title>
+<title>SpaceRadiant v1.17.6</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#070912;color:#fff;font-family:Arial,sans-serif;touch-action:none}
@@ -822,7 +822,7 @@ if(nearest){
  let target=bossCount>0?0:(state.mode==='stage'?Math.min(5+state.stage,14):Math.min(5+state.stage,12));
  state.waveMax=state.mode==='stage'?getStageWaveMax(state.stage):5;
  let bossWave=bossCount>0;
- if(bossWave&&!state.bossesTarget){
+ if(!over&&!state.stageComplete&&bossWave&&!state.bossesTarget){
    state.bossesTarget=bossCount;state.bossesSpawned=0;state.spawned=0;
    for(let b=0;b<bossCount;b++){spawnEnemy(null,false,true);state.bossesSpawned++;}
    sfx('boss');
@@ -968,7 +968,7 @@ if(nearest){
  }
  for(let i=particles.length-1;i>=0;i--){let p=particles[i];p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.96;p.vy*=.96;p.t-=dt;if(p.t<=0)particles.splice(i,1)}
  for(let i=texts.length-1;i>=0;i--){texts[i].y-=25*dt;texts[i].t-=dt;if(texts[i].t<=0)texts.splice(i,1)}
- if(state.wave<=5&&state.spawned>=target&&enemies.length===0)nextWave();
+ if(!over&&!state.stageComplete&&state.spawned>=target&&enemies.length===0)nextWave();
  updateBossHUD();
 }
 let miniType=0,miniObjects=[],miniScore=0;

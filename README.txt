@@ -22,3 +22,10 @@ SPACE RADIANT v1.17.1
 - Shop, achievements, cosmetic neon trail.
 - Boss pool expanded to 10 types; boss stages remain 10,20,...,100.
 - Code tool option 3 creates stage-unlock codes (unlock up to a chosen stage).
+
+
+Cập nhật v1.17.6:
+- Sửa lỗi màn boss: sau khi hoàn thành wave boss cuối không spawn thêm boss ngoài số wave đã quy định.
+- Màn 5,15,...,95: 6 wave, mỗi wave 1 boss.
+- Màn 10,20,...,90: 2 wave, mỗi wave 3 boss.
+- Màn 100: 1 wave, 6 boss.
