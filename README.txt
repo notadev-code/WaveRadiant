@@ -15,3 +15,10 @@ SAU ĐÓ:
 BẢO MẬT:
 - firebase_admin.json chứa email/mật khẩu admin sau khi cấu hình. KHÔNG upload file này lên GitHub.
 - Web API key có thể xuất hiện trong cấu hình Web App; không gửi mật khẩu/private key.
+
+SPACE RADIANT v1.17.1
+- Build level-up 3 choices, combo system, random events.
+- Loot: Core / Mảnh máy bay / Token. Core dùng nâng cấp máy bay; Mảnh đổi Ruby; Token mua cosmetic.
+- Shop, achievements, cosmetic neon trail.
+- Boss pool expanded to 10 types; boss stages remain 10,20,...,100.
+- Code tool option 3 creates stage-unlock codes (unlock up to a chosen stage).

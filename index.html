@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>SpaceRadiant v1.16</title>
+<title>SpaceRadiant v1.17.1</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#070912;color:#fff;font-family:Arial,sans-serif;touch-action:none}
@@ -78,7 +78,7 @@ small{color:#aebbd6}
 
 <div id="hud">
   <div id="fxBanner" aria-hidden="true"></div>
-  <div class="row"><span id="hearts">❤️❤️❤️❤️❤️</span><span>Stage <b id="stage">1</b></span><span>Wave <b id="wave">1</b>/<b id="waveMax">5</b></span><span>Range <b id="rangeStat">400</b></span><span>Score <b id="score">0</b></span><span>🪙 <b id="goldHud">0</b></span><span>♦️ <b id="rubyHud">0</b></span></div>
+  <div class="row"><span id="hpStat">HP 100/100</span><span id="mpStat">MP 100/100</span><span>Stage <b id="stage">1</b></span><span>Wave <b id="wave">1</b>/<b id="waveMax">5</b></span><span>Range <b id="rangeStat">400</b></span><span>Score <b id="score">0</b></span><span>🪙 <b id="goldHud">0</b></span><span>♦️ <b id="rubyHud">0</b></span></div>
   <div class="bar"><div id="expFill" class="fill"></div></div>
   <div class="row"><small>EXP <span id="expText">0/20</span> • Lv <span id="level">1</span></small></div>
   <div id="bossBox"></div>
@@ -93,7 +93,9 @@ small{color:#aebbd6}
 <button id="menuBtn">☰</button>
 
 <div id="authMenu" class="overlayMenu"><div class="menuPanel"><div class="title">SPACE RADIANT</div><div class="sub">TÀI KHOẢN</div><div id="authForm"><div id="authLocation" class="authLocation">📍 Khu đăng nhập</div><input id="authName" placeholder="Tên tài khoản" maxlength="20" autocomplete="username"><input id="authPass" type="password" placeholder="Mật khẩu" maxlength="30" autocomplete="current-password"><button id="loginBtn" type="button" class="menuButton">🔐 ĐĂNG NHẬP</button><button id="registerBtn" type="button" class="menuButton">📝 ĐĂNG KÝ</button><div id="authMsg"></div></div></div></div>
-<div id="mainMenu"><div class="menuPanel megaMenu"><div class="title">SPACE RADIANT v1.16.9</div><div class="sub">CHỌN CHẾ ĐỘ</div><div class="currencyLine">🪙 <b id="menuGold">0</b> &nbsp;&nbsp; ♦️ <b id="menuRuby">0</b></div><div class="modeGrid"><button id="endlessBtn" class="menuButton">♾️ ENDLESS<br><small>Chế độ cũ • không tường</small></button><button id="stageBtn" class="menuButton">🚀 STAGE<br><small>Chọn màn 1–100</small></button></div><div class="menuGrid2"><button id="upgradeMenuBtn" class="menuButton">⬆️ NÂNG CẤP</button><button id="hangarBtn" class="menuButton">✈️ KHO MÁY BAY</button><button id="missionsBtn" class="menuButton">📋 NHIỆM VỤ</button><button id="attendanceBtn" class="menuButton">🎁 QUÀ HẰNG NGÀY</button><button id="settingsBtn" class="menuButton">⚙️ CÀI ĐẶT</button><button id="helpBtn" class="menuButton">❔ HƯỚNG DẪN</button></div><div id="helpText">🎮 Joystick trái để di chuyển.<br>🎯 Máy bay tự nhắm và bắn quái gần nhất.<br>⚡/💥 dùng skill 1/3 kể cả khi đang giữ hướng trên TV.<br>🚀 Stage: 100 màn. Màn 10,20,...,100 là màn boss; các màn 10–90 có 6 boss ở wave 5, màn 100 có 6 boss ngay wave 1.</div></div></div>
+<div id="mainMenu"><div class="menuPanel megaMenu"><div class="title">SPACE RADIANT v1.17.2</div><div class="sub">CHỌN CHẾ ĐỘ</div><div class="currencyLine">🪙 <b id="menuGold">0</b> &nbsp;&nbsp; ♦️ <b id="menuRuby">0</b></div><div style="text-align:center;font-size:11px;opacity:.8">◆ Core <b id="menuCore">0</b> &nbsp; ◇ Mảnh <b id="menuFrag">0</b> &nbsp; 🎟 <b id="menuToken">0</b></div><div class="modeGrid"><button id="endlessBtn" class="menuButton">♾️ ENDLESS<br><small>Chế độ cũ • không tường</small></button><button id="stageBtn" class="menuButton">🚀 STAGE<br><small>Chọn màn 1–100</small></button></div><div class="menuGrid2"><button id="upgradeMenuBtn" class="menuButton">⬆️ NÂNG CẤP</button><button id="hangarBtn" class="menuButton">✈️ KHO MÁY BAY</button><button id="missionsBtn" class="menuButton">📋 NHIỆM VỤ</button><button id="shopBtn" class="menuButton">🛒 CỬA HÀNG</button><button id="achievementsBtn" class="menuButton">🏆 THÀNH TỰU</button><button id="attendanceBtn" class="menuButton">🎁 QUÀ HẰNG NGÀY</button><button id="settingsBtn" class="menuButton">⚙️ CÀI ĐẶT</button><button id="helpBtn" class="menuButton">❔ HƯỚNG DẪN</button></div><div id="helpText">🎮 Joystick trái để di chuyển.<br>🎯 Máy bay tự nhắm và bắn quái gần nhất.<br>⚡/💥 dùng skill 1/3 kể cả khi đang giữ hướng trên TV.<br>🚀 Stage: 100 màn. Màn 10,20,...,100 là màn boss; các màn boss có 6 boss mạnh.
+Build 3 lựa chọn, event ngẫu nhiên, vật phẩm rơi và shop.
+🎟 Code màn có thể mở khóa đến một màn cụ thể.</div></div></div>
 <div id="stageSelect" class="overlayMenu" style="display:none"><div class="menuPanel stagePanel"><button class="closePanel" onclick="closeStageSelect()">✕</button><h2 class="sectionTitle">🚀 CHỌN MÀN</h2><p style="text-align:center">Vượt màn trước để mở màn sau</p><div id="stageGrid" class="stageGrid"></div></div></div>
 <div id="settingsPanel" class="overlayMenu" style="display:none"><div class="menuPanel"><h2 class="sectionTitle">⚙️ CÀI ĐẶT</h2><p id="accountLabel" style="text-align:center"></p><div class="audioBox"><b>🔊 ÂM THANH</b><label>🎵 Nhạc: <input id="musicVol" type="range" min="0" max="100" value="35"> <span id="musicVolText">35%</span></label><label>🔔 Hiệu ứng: <input id="sfxVol" type="range" min="0" max="100" value="70"> <span id="sfxVolText">70%</span></label><button id="muteBtn" class="menuButton">🔊 BẬT ÂM THANH</button></div><div style="margin:12px 0"><input id="codeInput" maxlength="8" inputmode="numeric" placeholder="Nhập code 8 số" style="width:100%;box-sizing:border-box;padding:12px;border-radius:10px;border:1px solid #567;background:#101827;color:#fff;font-size:16px;text-align:center"><button id="redeemCodeBtn" class="menuButton">🎁 NHẬP CODE</button><div id="codeMsg" style="text-align:center;min-height:22px"></div><div style="font-size:10px;opacity:.45;text-align:center">Code DB: v3 • 8 số</div></div><button id="logoutBtn" class="menuButton">🚪 ĐĂNG XUẤT</button><button class="menuButton" onclick="closeSettings()">ĐÓNG</button></div></div>
 <div id="attendancePanel" class="overlayMenu" style="display:none"><div class="menuPanel"><h2 class="sectionTitle">🎁 QUÀ HẰNG NGÀY</h2><div id="attendanceContent" style="text-align:center"></div><button class="menuButton" onclick="closeAttendance()">ĐÓNG</button></div></div>
@@ -155,6 +157,9 @@ let miniActive=false,miniCount=0,miniTime=0,miniTimer=0;
 let accounts=JSON.parse(localStorage.getItem('sr_accounts')||'{}');
 let currentUser=localStorage.getItem('sr_current_user')||'';
 let gold=0,ruby=0,infiniteResources=false,equippedPlane='radiant',ownedPlanes=['radiant'],planeUpgrades={};
+let cores=0,fragments=0,tokens=0,ownedCosmetics=['default'],equippedCosmetic='default';
+let achievements={kills:0,bosses:0,stages:0,planes:1};
+let runMods={damage:1,fire:1,speed:1,loot:1};
 const planes={
  radiant:{name:'Radiant',icon:'✦',shape:'arrow',color:'#e9fbff',accent:'#62e7ff',stars:3,hp:5,atk:18,fire:.23,s1:'⚡ Photon Dash',s2:'💥 Radiant Nova',price:0},
  comet:{name:'Comet',icon:'☄️',shape:'comet',color:'#fff0c2',accent:'#ff9d4d',stars:3,hp:4,atk:24,fire:.20,s1:'🔥 Overdrive',s2:'💥 Comet Nova',price:30},
@@ -188,26 +193,26 @@ function initAudioSettings(){const m=document.getElementById('musicVol'),q=docum
 const REDEEM_CODES={"12345678":{"gold":1000,"ruby":5,"once":true},"87654321":{"gold":2500,"ruby":10,"once":true},"19646159":{"gold":7777,"ruby":8,"once":true}};
 // === SPACERADIANT_CODES_END ===
 
-function accountTemplate(){return {gold:0,ruby:0,infiniteResources:false,equippedPlane:'radiant',ownedPlanes:['radiant'],planeUpgrades:Object.fromEntries(Object.keys(planes).map(id=>[id,{hp:0,atk:0,fire:0}])),unlockedStage:1,missions:{day:'',week:'',daily:[],weekly:[]},attendance:'',redeemedCodes:[],firstClearRewards:[]}}
-function loadAccount(){const a=accounts[currentUser]||accountTemplate();const inf=!!a.infiniteResources;gold=inf?Infinity:Number(a.gold||0);ruby=inf?Infinity:Number(a.ruby||0);equippedPlane=a.equippedPlane||'radiant';ownedPlanes=Array.isArray(a.ownedPlanes)?a.ownedPlanes:['radiant'];planeUpgrades=a.planeUpgrades||{};for(const id of Object.keys(planes))if(!planeUpgrades[id])planeUpgrades[id]={hp:0,atk:0,fire:0};unlockedStage=Math.max(1,Math.min(100,Number(a.unlockedStage||1)));missions=a.missions||{day:'',week:'',daily:[],weekly:[]};redeemedCodes=Array.isArray(a.redeemedCodes)?a.redeemedCodes:[];firstClearRewards=Array.isArray(a.firstClearRewards)?a.firstClearRewards:[];resetMissions();updateCurrencyUI()}
-function saveMeta(){if(!currentUser)return;const old=accounts[currentUser]||accountTemplate();accounts[currentUser]={...old,gold:infiniteResources?0:gold,ruby:infiniteResources?0:ruby,infiniteResources,equippedPlane,ownedPlanes,planeUpgrades,unlockedStage,missions,attendance:old.attendance||'',redeemedCodes,firstClearRewards};localStorage.setItem('sr_accounts',JSON.stringify(accounts));localStorage.setItem('sr_current_user',currentUser);updateCurrencyUI()}
+function accountTemplate(){return {gold:0,ruby:0,infiniteResources:false,cores:0,fragments:0,tokens:0,ownedCosmetics:['default'],equippedCosmetic:'default',achievements:{kills:0,bosses:0,stages:0,planes:1},equippedPlane:'radiant',ownedPlanes:['radiant'],planeUpgrades:Object.fromEntries(Object.keys(planes).map(id=>[id,{hp:0,atk:0,fire:0}])),unlockedStage:1,missions:{day:'',week:'',daily:[],weekly:[]},attendance:'',redeemedCodes:[],firstClearRewards:[]}}
+function loadAccount(){const a=accounts[currentUser]||accountTemplate();const inf=!!a.infiniteResources;gold=inf?Infinity:Number(a.gold||0);ruby=inf?Infinity:Number(a.ruby||0);equippedPlane=a.equippedPlane||'radiant';ownedPlanes=Array.isArray(a.ownedPlanes)?a.ownedPlanes:['radiant'];planeUpgrades=a.planeUpgrades||{};for(const id of Object.keys(planes))if(!planeUpgrades[id])planeUpgrades[id]={hp:0,atk:0,fire:0};unlockedStage=Math.max(1,Math.min(100,Number(a.unlockedStage||1)));missions=a.missions||{day:'',week:'',daily:[],weekly:[]};redeemedCodes=Array.isArray(a.redeemedCodes)?a.redeemedCodes:[];firstClearRewards=Array.isArray(a.firstClearRewards)?a.firstClearRewards:[];cores=Number(a.cores||0);fragments=Number(a.fragments||0);tokens=Number(a.tokens||0);ownedCosmetics=Array.isArray(a.ownedCosmetics)?a.ownedCosmetics:['default'];equippedCosmetic=a.equippedCosmetic||'default';achievements=a.achievements||{kills:0,bosses:0,stages:0,planes:ownedPlanes.length};resetMissions();updateCurrencyUI()}
+function saveMeta(){if(!currentUser)return;const old=accounts[currentUser]||accountTemplate();accounts[currentUser]={...old,gold:infiniteResources?0:gold,ruby:infiniteResources?0:ruby,infiniteResources,cores,fragments,tokens,ownedCosmetics,equippedCosmetic,achievements,equippedPlane,ownedPlanes,planeUpgrades,unlockedStage,missions,attendance:old.attendance||'',redeemedCodes,firstClearRewards};localStorage.setItem('sr_accounts',JSON.stringify(accounts));localStorage.setItem('sr_current_user',currentUser);updateCurrencyUI()}
 function dayKey(){return new Date().toLocaleDateString('sv-SE')} function weekKey(){const d=new Date(),x=new Date(d);x.setDate(d.getDate()-((d.getDay()+6)%7));return x.toLocaleDateString('sv-SE')}
 function resetMissions(){const dk=dayKey(),wk=weekKey();if(missions.day!==dk){missions.day=dk;missions.daily=[{id:'d1',text:'Hoàn thành 2 màn Stage',need:2,prog:0,reward:500,done:false},{id:'d2',text:'Tiêu diệt 25 quái',need:25,prog:0,reward:400,done:false},{id:'d3',text:'Tiêu diệt 2 Boss',need:2,prog:0,reward:600,done:false},{id:'d4',text:'Kiếm 1.500 vàng',need:1500,prog:0,reward:500,done:false},{id:'d5',text:'Dùng skill 5 lần',need:5,prog:0,reward:450,done:false}]}if(missions.week!==wk){missions.week=wk;missions.weekly=[{id:'w1',text:'Hoàn thành 10 màn Stage',need:10,prog:0,reward:8,done:false},{id:'w2',text:'Đánh bại 10 Boss',need:10,prog:0,done:false},{id:'w3',text:'Kiếm 10.000 vàng',need:10000,prog:0,reward:15,done:false},{id:'w4',text:'Hoàn thành 30 wave',need:30,prog:0,reward:12,done:false},{id:'w5',text:'Mua 1 máy bay',need:1,prog:0,reward:10,done:false}]}saveMeta()}
 function missionProgress(id,n=1){for(const arr of [missions.daily,missions.weekly]){const q=arr.find(x=>x.id===id);if(q&&!q.done){q.prog=Math.min(q.need,q.prog+n);if(q.prog>=q.need){q.done=true;if(arr===missions.daily)gold+=q.reward;else ruby+=q.reward;addText(player.x,player.y-40,'🎁 NHIỆM VỤ +'+(arr===missions.daily?q.reward+' 🪙':q.reward+' ♦️'));}}}saveMeta()}
-function updateCurrencyUI(){for(const id of ['menuGold','goldHud']){const e=document.getElementById(id);if(e)e.textContent=Number.isFinite(gold)?Math.floor(gold):'∞'}for(const id of ['menuRuby','rubyHud']){const e=document.getElementById(id);if(e)e.textContent=Number.isFinite(ruby)?Math.floor(ruby):'∞'}}
+function updateCurrencyUI(){for(const id of ['menuGold','goldHud']){const e=document.getElementById(id);if(e)e.textContent=Number.isFinite(gold)?Math.floor(gold):'∞'}for(const id of ['menuRuby','rubyHud']){const e=document.getElementById(id);if(e)e.textContent=Number.isFinite(ruby)?Math.floor(ruby):'∞'}for(const [id,val] of [['menuCore',cores],['menuFrag',fragments],['menuToken',tokens]]){const e=document.getElementById(id);if(e)e.textContent=Math.floor(val)}}
 
 function resetGameState(mode=state.mode||'endless',chosenStage=1){
   state.mode=mode; state.stage=mode==='stage'?Math.max(1,Math.min(unlockedStage,chosenStage)):1; state.wave=1; state.score=0; state.level=1; state.exp=5; state.next=20;
-  state.spawned=0; state.killed=0; state.waveTimer=0; uiTimer=0;
+  state.spawned=0; state.killed=0; state.waveTimer=0; uiTimer=0;runMods={damage:1,fire:1,speed:1,loot:1};
   enemies.length=0; bullets.length=0; enemyBullets.length=0; particles.length=0; texts.length=0; expDrops.length=0; chests.length=0;
-  player.x=world.w/2; player.y=world.h/2; player.healFxTimer=0; player.regenTimer=15; player.r=17; player.hp=5; player.maxhp=5; player.angle=-Math.PI/2;
-  const pp=planes[equippedPlane]||planes.radiant,pu=planeUpgrades[equippedPlane]||{hp:0,atk:0,fire:0}; player.speed=250; player.damage=pp.atk*(1+pu.atk*.08); player.fire=0; player.fireRate=Math.max(.07,pp.fire*(1-pu.fire*.06)); player.bullets=1;
-  player.bulletSpeed=560; player.markTimer=0;player.markTarget=null;player.timeFreeze=0;player.timeRift=0;player.droneTimer=0;player.droneBarrage=0;player.solarCharge=0; player.maxhp=pp.hp+pu.hp; player.hp=player.maxhp; player.dash=0; player.blast=0; player.invuln=0; player.crit=.08; player.critMult=1.8; player.armor=0; player.regen=0; player.magnet=0; player.dashMax=3; player.blastMax=8; player.skillDmg=1; player.range=400; miniActive=false; 
+  player.x=world.w/2; player.y=world.h/2; player.healFxTimer=0; player.regenTimer=15; player.r=17; player.hp=100; player.maxhp=100; player.mp=100; player.maxmp=100; player.angle=-Math.PI/2;
+  const pp=planes[equippedPlane]||planes.radiant,pu=planeUpgrades[equippedPlane]||{hp:0,atk:0,fire:0}; player.speed=250; player.damage=pp.atk*(1+pu.atk*.08); player.fire=0; player.fireRate=Math.max(.07,pp.fire*(1-pu.fire*.06)); player.bullets=1; player.comboDamage=1;
+  player.bulletSpeed=560; player.mpRegen=4; player.shotMp=2; player.doubleDash=!!(accounts[currentUser]&&accounts[currentUser].doubleDash); player.dashUses=0; player.markTimer=0;player.markTarget=null;player.timeFreeze=0;player.timeRift=0;player.droneTimer=0;player.droneBarrage=0;player.solarCharge=0; player.maxhp=100+(pp.hp+pu.hp-5)*12; player.hp=player.maxhp; player.maxmp=100; player.dash=0; player.blast=0; player.dashUses=0; player.invuln=0; player.crit=.08; player.critMult=1.8; player.armor=0; player.regen=0; player.magnet=0; player.dashMax=3; player.blastMax=8; player.skillDmg=1; player.range=400; miniActive=false; 
   paused=false; over=false; miniActive=false; miniObjects=[];
   document.getElementById('bossBox').style.display='none'; document.getElementById('bossBox').innerHTML=''; updateHUD(); supplies.length=0; shieldHits=0; rapidFire=0; supplyTimer=7+Math.random()*9; state.bossesSpawned=0; state.bossesTarget=0;
 }
 
-const player={x:W/2,y:H/2,r:17,hp:5,maxhp:5,angle:-Math.PI/2,speed:250,damage:18,fire:0,fireRate:.17,bullets:1,bulletSpeed:560,dash:0,blast:0,invuln:0,crit:.08,critMult:1.8,armor:0,regen:0,regenTimer:15,magnet:0,dashMax:3,blastMax:8,range:400};
+const player={x:W/2,y:H/2,r:17,hp:100,maxhp:100,mp:100,maxmp:100,mpRegen:4,shotMp:2,angle:-Math.PI/2,speed:250,damage:18,fire:0,fireRate:.17,bullets:1,bulletSpeed:560,dash:0,blast:0,dashUses:0,doubleDash:false,invuln:0,crit:.08,critMult:1.8,armor:0,regen:0,regenTimer:15,magnet:0,dashMax:3,blastMax:8,range:400};
 const enemies=[],bullets=[],enemyBullets=[],particles=[],texts=[],expDrops=[];
 let supplies=[],shieldHits=0,rapidFire=0,supplyTimer=7+Math.random()*9;
 let chests=[];
@@ -373,20 +378,20 @@ function fxBanner(msg){
   clearTimeout(fxBanner.timer); fxBanner.timer=setTimeout(()=>el.classList.remove('show'),900);
 }
 function updateHUD(){
-  const hearts=document.getElementById('hearts');
-  const hp=Math.max(0,Math.ceil(player.hp));
-  const max=Math.max(1,Math.ceil(player.maxhp));
-  hearts.textContent='❤️'.repeat(Math.min(hp,20))+'🖤'.repeat(Math.max(0,Math.min(max-hp,20)));
+  const hpEl=document.getElementById('hpStat'),mpEl=document.getElementById('mpStat');
+  if(hpEl)hpEl.textContent='HP '+Math.ceil(Math.max(0,player.hp))+'/'+Math.ceil(player.maxhp);
+  if(mpEl)mpEl.textContent='MP '+Math.ceil(Math.max(0,player.mp))+'/'+Math.ceil(player.maxmp);
   document.getElementById('stage').textContent=state.stage;
   document.getElementById('wave').textContent=state.wave;
   document.getElementById('rangeStat').textContent=Math.round(player.range);
   document.getElementById('score').textContent=Math.floor(state.score);
+  const lootHud=document.getElementById('lootHud');if(lootHud)lootHud.textContent=cores+' • '+fragments+' • '+tokens;
   document.getElementById('level').textContent=state.level;
   document.getElementById('expText').textContent=Math.floor(state.exp)+'/'+Math.floor(state.next);
   document.getElementById('expFill').style.width=Math.max(0,Math.min(100,state.exp/state.next*100))+'%';
 }
 function healFX(x,y,amount){
-  burst(x,y,14,.55); addText(x,y-20,'❤️ +'+Math.ceil(amount)); fxBanner('💚 HỒI MÁU');
+  burst(x,y,14,.55); addText(x,y-20,'+'+Math.ceil(amount)+' HP'); fxBanner('💚 HỒI HP');
 }
 function levelFX(){
   burst(player.x,player.y,42,.9); addText(player.x,player.y-38,'✨ LEVEL UP!'); fxBanner('✨ LEVEL '+state.level);
@@ -399,6 +404,38 @@ function burst(x,y,n=12,life=.5){
 }
 function shakeIt(n=7){shake=Math.max(shake,n)}
 function addText(x,y,s){texts.push({x,y,s,t:1})}
+function dropLoot(e){
+  const mult=runMods.loot||1;
+  const r=Math.random();
+  if(e.boss){cores+=2;fragments+=1;tokens+=1;addText(e.x,e.y-38,'◆ CORE +2  ◇ FRAGMENT +1');}
+  else if(e.elite){if(r<.45)cores+=1;if(r<.18)fragments+=1;if(r<.08)tokens+=1;}
+  else if(r<.09*mult){cores+=1;addText(e.x,e.y-25,'◆ CORE');}
+  else if(r<.13*mult){fragments+=1;addText(e.x,e.y-25,'◇ FRAGMENT');}
+  if(r<.025*mult)tokens+=1;
+  saveMeta();
+}
+function achievementCheck(){
+  achievements.kills=Math.max(achievements.kills,state.killed+achievements.kills); if(state.mode==='stage'&&state.stageComplete)achievements.stages++;
+  achievements.planes=Math.max(achievements.planes,ownedPlanes.length);
+  saveMeta();
+}
+function grantAchievement(name,reward){addText(player.x,player.y-55,'🏆 '+name+' +'+reward);fxBanner('🏆 THÀNH TỰU');gold+=reward;}
+function shopBuy(id){
+ const items={damageCore:{name:'Core Công Kích',cost:2,kind:'core',apply:()=>{planeUpgrades[equippedPlane].atk++;}},fireCore:{name:'Core Tốc Độ',cost:3,kind:'core',apply:()=>{planeUpgrades[equippedPlane].fire++;}},hpCore:{name:'Core Giáp',cost:2,kind:'core',apply:()=>{planeUpgrades[equippedPlane].hp++;}},doubleDash:{name:'Core Double Dash',cost:250,kind:'core',apply:()=>{if(!player.doubleDash){player.doubleDash=true;}else return;accounts[currentUser].doubleDash=true;}},fragmentPlane:{name:'Mảnh máy bay',cost:3,kind:'fragment',apply:()=>{ruby+=2;}},tokenTrail:{name:'Trail Neon',cost:2,kind:'token',apply:()=>{if(!ownedCosmetics.includes('neon'))ownedCosmetics.push('neon');equippedCosmetic='neon';}}};
+ const q=items[id];if(!q)return;if(id==='doubleDash'&&accounts[currentUser]&&accounts[currentUser].doubleDash)return;let have=q.kind==='core'?cores:q.kind==='fragment'?fragments:tokens;if(have<q.cost)return;
+ if(q.kind==='core')cores-=q.cost;else if(q.kind==='fragment')fragments-=q.cost;else tokens-=q.cost;q.apply();saveMeta();openCollection('shop');
+}
+function equipCosmetic(id){if(!ownedCosmetics.includes(id))return;equippedCosmetic=id;saveMeta();openCollection('shop');}
+function openFeatureShop(){openCollection('shop')}
+function showEvent(){
+ const events=[
+  ['☄️ METEOR STORM',()=>{for(let i=0;i<10;i++){const x=50+Math.random()*(world.w-100),y=100+Math.random()*(world.h-200);burst(x,y,20,.5);for(const e of enemies)if(Math.hypot(e.x-x,e.y-y)<110)e.hp-=80;}}],
+  ['⚡ OVERDRIVE',()=>{rapidFire=12;runMods.fire=1.25;}],
+  ['💚 REPAIR ZONE',()=>{player.hp=Math.min(player.maxhp,player.hp+2);shieldHits=2;}],
+  ['◆ CORE RUSH',()=>{runMods.loot=2;cores+=2;}],
+  ['👾 ENEMY RUSH',()=>{for(let i=0;i<5;i++)spawnEnemy(null,true,false);}] ];
+ const q=events[Math.floor(Math.random()*events.length)];q[1]();fxBanner(q[0]);addText(player.x,player.y-50,'🎲 EVENT: '+q[0]);saveMeta();
+}
 function gainExp(v){
  state.exp+=v;
  while(state.exp>=state.next){state.exp-=state.next;state.level++;state.next=Math.floor(state.next*1.38+8);levelFX();showUpgrade()}
@@ -415,12 +452,17 @@ function showUpgrade(){
   ['🎯 +1 Projectile','multi'],
   ['📡 Tầm bắn +15%','range'],
   ['🛡️ +1 Giáp','armor'],
-  ['💚 +15% Hồi phục • 15s','regen']
+  ['💚 +15% Hồi phục • 15s','regen'],
+  ['💥 Skill damage +15%','skilldmg'],
+  ['🎯 Crit +8%','crit'],
+  ['🔮 Hút EXP +90','magnet'],
+  ['⚡ Cooldown Skill 1 -18%','dashcd'],
+  ['💥 Cooldown Skill 2 -16%','blastcd']
  ];
- const available=opts.filter(([name,type])=>type!=='regen' || player.regen<=0);
+ const available=opts;
  available.sort(()=>Math.random()-.5).slice(0,3).forEach(([name,type])=>{
   const b=document.createElement('button');b.className='choice';b.textContent=name;
-  b.onclick=()=>{if(type==='damage')player.damage*=1.12;if(type==='fire')player.fireRate*=.90;if(type==='speed')player.speed*=1.10;if(type==='hp'){const old=player.hp;player.maxhp++;player.hp=player.maxhp;healFX(player.x,player.y,player.hp-old)}if(type==='multi')player.bullets++;if(type==='range')player.range*=1.15;if(type==='bspeed')player.bulletSpeed*=1.2;if(type==='crit')player.crit=Math.min(.65,player.crit+.08);if(type==='critmult')player.critMult+=.3;if(type==='armor')player.armor++;if(type==='regen'){player.regen=.15;player.regenTimer=15;}if(type==='magnet')player.magnet+=90;if(type==='dashcd')player.dashMax=Math.max(.25,player.dashMax*.82);if(type==='blastcd')player.blastMax=Math.max(.7,player.blastMax*.84);if(type==='skilldmg')player.skillDmg=(player.skillDmg||1)+.1;
+  b.onclick=()=>{if(type==='damage')player.damage*=1.12*runMods.damage;if(type==='fire')player.fireRate*=.90/runMods.fire;if(type==='speed')player.speed*=1.10;if(type==='hp'){player.maxhp+=12;player.hp=Math.min(player.maxhp,player.hp+12);healFX(player.x,player.y,12)}if(type==='mp'){player.maxmp+=15;player.mp=Math.min(player.maxmp,player.mp+15)}if(type==='multi')player.bullets++;if(type==='range')player.range*=1.15;if(type==='bspeed')player.bulletSpeed*=1.2;if(type==='crit')player.crit=Math.min(.65,player.crit+.08);if(type==='critmult')player.critMult+=.3;if(type==='magnet')player.magnet+=90;if(type==='dashcd')player.dashMax=Math.max(.25,player.dashMax*.82);if(type==='blastcd')player.blastMax=Math.max(.7,player.blastMax*.84);if(type==='skilldmg')player.skillDmg=(player.skillDmg||1)+.1;
    document.getElementById('upgrade').style.display='none';paused=false;
   };box.appendChild(b)
  });
@@ -510,11 +552,16 @@ function spawnEnemy(kind,elite=false,boss=false){
   {n:'BERSERKER BOSS',r:44,hp:1100,dmg:3,spd:85,range:100,color:16,bossStyle:'dash'},
   {n:'SWARM BOSS',r:46,hp:1000,dmg:1,spd:58,range:260,color:17,bossStyle:'swarm'},
   {n:'FORTRESS BOSS',r:58,hp:1900,dmg:2,spd:22,range:430,color:18,bossStyle:'turret'},
-  {n:'PHANTOM BOSS',r:50,hp:1300,dmg:2,spd:62,range:300,color:19,bossStyle:'orbit'}
+  {n:'PHANTOM BOSS',r:50,hp:1300,dmg:2,spd:62,range:300,color:19,bossStyle:'orbit'},
+  {n:'GRAVITY BOSS',r:54,hp:2400,dmg:3,spd:30,range:380,color:28,bossStyle:'gravity'},
+  {n:'INFERNO BOSS',r:50,hp:2200,dmg:3,spd:72,range:260,color:29,bossStyle:'inferno'},
+  {n:'CHRONO BOSS',r:49,hp:2100,dmg:2,spd:55,range:420,color:30,bossStyle:'chrono'},
+  {n:'ABYSS BOSS',r:60,hp:3000,dmg:4,spd:40,range:500,color:31,bossStyle:'abyss'}
  ];
  let t=boss?bossTypes[Math.floor(Math.random()*bossTypes.length)]:types[Math.floor(Math.random()*types.length)];
  if(!boss && !elite && Math.random()<.08)t=types.find(q=>q.n==='Timedasher')||t;
  let e={x,y,...t,maxhp:t.hp*scale,hp:t.hp*scale,elite,boss,shot:Math.random()*2,hit:0,phase:Math.random()*6,
+  bossPhase:1,
   special:1.5+Math.random()*2.5, dash:0, vx:0, vy:0, mines:0, orbitR:70+Math.random()*45,phase2:false,phasePulse:0,tdState:0,tdTimer:0,tdLockX:0,tdLockY:0};
  if(elite&&!boss){e.maxhp*=2.5;e.hp=e.maxhp;e.r*=1.22;e.dmg=2;e.spd*=1.05}
  if(boss){e.maxhp=t.hp+state.stage*500;e.hp=e.maxhp}
@@ -532,7 +579,11 @@ function updateBossHUD(){
   dash:{icon:'⚔️',tag:'BERSERKER • CUỒNG NỘ',bc:'#ff5a52',dark:'#861d1d',light:'#ffc0a8',glow:'#ff4c6688',bg1:'#3a0d12',bg2:'#18090e',txt:'#ffd0c8'},
   swarm:{icon:'🐝',tag:'SWARM • BẦY ĐÀN',bc:'#f5d04a',dark:'#795300',light:'#fff2a0',glow:'#f5d04a77',bg1:'#30240a',bg2:'#171109',txt:'#fff2ae'},
   turret:{icon:'🏰',tag:'FORTRESS • PHÁO ĐÀI',bc:'#64c7ff',dark:'#18558a',light:'#d2f2ff',glow:'#64c7ff88',bg1:'#0c2940',bg2:'#09121d',txt:'#d7f3ff'},
-  orbit:{icon:'👻',tag:'PHANTOM • HƯ ẢNH',bc:'#d58cff',dark:'#64218a',light:'#f0caff',glow:'#d58cff88',bg1:'#2c123c',bg2:'#120a1c',txt:'#f1ddff'}
+  orbit:{icon:'👻',tag:'PHANTOM • HƯ ẢNH',bc:'#d58cff',dark:'#64218a',light:'#f0caff',glow:'#d58cff88',bg1:'#2c123c',bg2:'#120a1c',txt:'#f1ddff'},
+  gravity:{icon:'🌀',tag:'GRAVITY • TRỌNG LỰC',bc:'#7c8cff',dark:'#20266f',light:'#d6d8ff',glow:'#7c8cff88',bg1:'#121744',bg2:'#090b20',txt:'#dfe1ff'},
+  inferno:{icon:'🔥',tag:'INFERNO • HỎA NGỤC',bc:'#ff704d',dark:'#8f2510',light:'#ffd0a0',glow:'#ff704d88',bg1:'#40150c',bg2:'#1b0907',txt:'#ffe0c8'},
+  chrono:{icon:'⏱️',tag:'CHRONO • THỜI GIAN',bc:'#58e0d0',dark:'#126c66',light:'#c4fff8',glow:'#58e0d088',bg1:'#0b3534',bg2:'#081819',txt:'#d6fff9'},
+  abyss:{icon:'🌌',tag:'ABYSS • VỰC THẲM',bc:'#c75cff',dark:'#58107c',light:'#f0c2ff',glow:'#c75cff88',bg1:'#28093d',bg2:'#100619',txt:'#f2d9ff'}
  };
  box.innerHTML='<div class=\"bossHudTitle\">☠ WAVE 5 • BOSS ENCOUNTER ☠</div>'+bosses.map((e,i)=>{
    const pct=Math.max(0,Math.min(100,e.hp/e.maxhp*100));
@@ -544,9 +595,14 @@ function updateBossHUD(){
  }).join('');
 }
 function triggerBossPhase(e){
- if(!e||!e.boss||e.phase2||e.hp>e.maxhp*.5)return;
- e.phase2=true; e.phasePulse=1.2; e.spd*=1.25; e.dmg+=1; e.shot=Math.min(e.shot,.22); e.phase2Move=true;
- addText(e.x,e.y-e.r-30,'⚠ PHASE 2!'); fxBanner('⚠ BOSS PHASE 2'); burst(e.x,e.y,35,.7); shakeIt(9);
+ if(!e||!e.boss)return;
+ const hp=e.hp/e.maxhp;
+ let want=hp<=.33?3:(hp<=.66?2:1);
+ if(want<=e.bossPhase)return;
+ e.bossPhase=want; e.phase2=want>=2; e.phasePulse=1.2; e.spd*=want===3?1.22:1.28; e.dmg+=want===3?2:1; e.shot=Math.min(e.shot,.18); e.phase2Move=true;
+ addText(e.x,e.y-e.r-30,'⚠ PHASE '+want+'!'); fxBanner('⚠ BOSS PHASE '+want); burst(e.x,e.y,want===3?60:35,.7); shakeIt(want===3?14:9);
+ if(want===2){for(let k=0;k<4;k++){let a=Math.random()*Math.PI*2;enemyBullets.push({x:e.x,y:e.y,vx:Math.cos(a)*230,vy:Math.sin(a)*230,r:6,dmg:2,life:4})}}
+ if(want===3){for(let k=0;k<8;k++){let a=k*Math.PI/4+e.phase;enemyBullets.push({x:e.x,y:e.y,vx:Math.cos(a)*300,vy:Math.sin(a)*300,r:7,dmg:3,life:5,blockHits:2})}}
 }
 function spawnChest(){
  const safe=findSafeSpawn(24); chests.push({x:safe.x,y:safe.y,r:24,bob:Math.random()*6.28,life:30});
@@ -565,14 +621,15 @@ function openChest(i){
  const r=rewards[Math.floor(Math.random()*rewards.length)]; r[1](); addText(player.x,player.y-35,'🎁 '+r[0]); fxBanner('🎁 '+r[0]); burst(q.x,q.y,30,.6); chests.splice(i,1); updateHUD();
 }
 
-function firePlayer(){ ensureAudio(); sfx('shoot');
+function firePlayer(){ if(player.mp<player.shotMp)return false; player.mp=Math.max(0,player.mp-player.shotMp); ensureAudio(); sfx('shoot');
  const count=player.bullets, spread=.16;
  for(let i=0;i<count;i++){let off=(i-(count-1)/2)*spread,a=player.angle+off;
  bullets.push({x:player.x+Math.cos(a)*20,y:player.y+Math.sin(a)*20,vx:Math.cos(a)*player.bulletSpeed,vy:Math.sin(a)*player.bulletSpeed,r:4,dmg:(Math.random()<player.crit?player.damage*player.critMult:player.damage),life:player.range/player.bulletSpeed})}
+ return true;
 }
 function enemyFire(e){
   let a=Math.atan2(player.y-e.y,player.x-e.x);
-  const bm=e.boss&&e.phase2?1.45:1;
+  const bm=e.boss?(e.bossPhase===3?1.9:e.bossPhase===2?1.45:1):1;
   const bs=v=>v*bm;
   if(e.boss){
     if(e.bossStyle==='sniper'){for(let k=0;k<3;k++)enemyBullets.push({x:e.x,y:e.y,vx:Math.cos(a)*bs(255),vy:Math.sin(a)*bs(255),r:8,dmg:2,life:5,sniper:true,blockHits:2});}
@@ -580,6 +637,10 @@ function enemyFire(e){
     else if(e.bossStyle==='swarm'){for(let i=0;i<6;i++){let aa=a+(Math.random()-.5)*1.8;enemyBullets.push({x:e.x,y:e.y,vx:Math.cos(aa)*bs(140),vy:Math.sin(aa)*bs(140),r:4,dmg:1,life:5})}}
     else if(e.bossStyle==='turret'){for(let k=-3;k<=3;k++){let aa=a+k*.13;enemyBullets.push({x:e.x,y:e.y,vx:Math.cos(aa)*bs(175),vy:Math.sin(aa)*bs(175),r:5,dmg:1,life:5})}}
     else if(e.bossStyle==='orbit'){for(let i=0;i<4;i++){let aa=a+i*Math.PI/2+e.phase;enemyBullets.push({x:e.x,y:e.y,vx:Math.cos(aa)*bs(125),vy:Math.sin(aa)*bs(125),r:5,dmg:1,life:5})}}
+    else if(e.bossStyle==='gravity'){for(let i=0;i<8;i++){let aa=i*Math.PI/4+e.phase;enemyBullets.push({x:e.x,y:e.y,vx:Math.cos(aa)*bs(155),vy:Math.sin(aa)*bs(155),r:6,dmg:2,life:5,homing:true})}}
+    else if(e.bossStyle==='inferno'){for(let i=-4;i<=4;i++){let aa=a+i*.18;enemyBullets.push({x:e.x,y:e.y,vx:Math.cos(aa)*bs(230),vy:Math.sin(aa)*bs(230),r:7,dmg:2,life:4})}}
+    else if(e.bossStyle==='chrono'){for(let i=0;i<5;i++){let aa=a+(i-2)*.22;enemyBullets.push({x:e.x,y:e.y,vx:Math.cos(aa)*bs(180),vy:Math.sin(aa)*bs(180),r:5,dmg:2,life:6,homing:true})}}
+    else if(e.bossStyle==='abyss'){for(let i=0;i<12;i++){let aa=i*Math.PI/6+e.phase*.7;enemyBullets.push({x:e.x,y:e.y,vx:Math.cos(aa)*bs(195),vy:Math.sin(aa)*bs(195),r:7,dmg:2,life:5,blockHits:2})}}
     else {for(let i=0;i<10;i++){let aa=i*Math.PI*2/10+e.phase;enemyBullets.push({x:e.x,y:e.y,vx:Math.cos(aa)*bs(105),vy:Math.sin(aa)*bs(105),r:5,dmg:1,life:5})}}
   }else if(e.n==='Ring Shooter'){
     for(let i=0;i<8;i++){let aa=i*Math.PI/4+e.phase;
@@ -600,11 +661,11 @@ function enemyFire(e){
 }
 function hurt(v){
  if(player.invuln>0||over)return; ensureAudio(); sfx('hurt');
- let dmg=Math.max(.2,v-player.armor); if(shieldHits>0){shieldHits--; addText(player.x,player.y-30,'🛡️ ĐỠ ĐÒN! CÒN '+shieldHits); player.invuln=2; shakeIt(10); burst(player.x,player.y,16,.45); return;} if(dmg>0)player.hp-=dmg;player.invuln=2;shakeIt(10);burst(player.x,player.y,12,.4);
+ let dmg=Math.max(0,v); if(shieldHits>0){shieldHits--; addText(player.x,player.y-30,'🛡️ ĐỠ ĐÒN! CÒN '+shieldHits); player.invuln=2; shakeIt(10); burst(player.x,player.y,16,.45); return;} if(dmg>0){player.hp=Math.max(0,player.hp-dmg);addText(player.x,player.y-28,'-'+Math.ceil(dmg)+' HP');}player.invuln=2;shakeIt(10);burst(player.x,player.y,12,.4);
  if(player.hp<=0){over=true;document.getElementById('finalScore').textContent=state.score;document.getElementById('finalStage').textContent=state.stage;document.getElementById('gameover').style.display='flex'}
 }
 function skillDash(){
- if(paused||over||player.dash>0)return; missionProgress('d5'); ensureAudio(); sfx('dash');
+ if(paused||over)return; if(player.dash>0 && !(player.doubleDash && player.dashUses===1))return; if(player.mp<20)return; player.mp-=20; player.dashUses++; missionProgress('d5'); ensureAudio(); sfx('dash');
  const pid=equippedPlane, a0=(left.active&&Math.hypot(left.x,left.y)>.12)?Math.atan2(left.y,left.x):player.angle;
  if(pid==='pulse'){shieldHits=Math.max(shieldHits,2);player.invuln=Math.max(player.invuln,1.2);}
  else if(pid==='medic'){const old=player.hp;player.hp=Math.min(player.maxhp,player.hp+2);if(player.hp>old)healFX(player.x,player.y,player.hp-old);}
@@ -617,10 +678,10 @@ function skillDash(){
  else if(pid==='titan'){player.invuln=Math.max(player.invuln,.75);player.x+=Math.cos(a0)*165;player.y+=Math.sin(a0)*165;for(const e of enemies)if(Math.hypot(e.x-player.x,e.y-player.y)<85)e.hp-=85;}
  else {const dist=pid==='striker'?220:(pid==='comet'?205:190);player.x+=Math.cos(a0)*dist;player.y+=Math.sin(a0)*dist;}
  player.x=Math.max(22,Math.min(world.w-22,player.x));player.y=Math.max(85,Math.min(world.h-22,player.y));
- player.dash=player.dashMax;shakeIt(13);burst(player.x,player.y,28,.5);
+ player.dash=player.dashMax; if(!player.doubleDash)player.dashUses=1; else if(player.dashUses>=2){player.dashUses=0;} shakeIt(13);burst(player.x,player.y,28,.5);
 }
 function skillBlast(){
- if(paused||over||player.blast>0)return; missionProgress('d5'); ensureAudio(); sfx('blast');
+ if(paused||over||player.blast>0)return; if(player.mp<35)return; player.mp-=35; missionProgress('d5'); ensureAudio(); sfx('blast');
  const pid=equippedPlane;player.blast=player.blastMax;shakeIt(18);burst(player.x,player.y,pid==='titan'?75:55,.7);
  if(pid==='hunter'){for(let k=0;k<7;k++){const a=player.angle+(k-3)*.16;bullets.push({x:player.x,y:player.y,vx:Math.cos(a)*760,vy:Math.sin(a)*760,r:7,dmg:player.damage*2.2,life:2.2})}return}
  if(pid==='chronos'){player.timeRift=5;for(const e of enemies)e.special=Math.max(e.special,2);return}
@@ -715,7 +776,7 @@ if(nearest){
   player.angle=Math.atan2(left.y,left.x);
 }
  player.x=Math.max(22,Math.min(world.w-22,player.x));player.y=Math.max(85,Math.min(world.h-22,player.y));
- player.invuln=Math.max(0,player.invuln-dt);
+ player.invuln=Math.max(0,player.invuln-dt); player.mp=Math.min(player.maxmp,player.mp+(player.mpRegen||4)*dt);
  player.fire-=dt;player.dash=Math.max(0,player.dash-dt);player.blast=Math.max(0,player.blast-dt);
  if(player.regen>0){
    player.regenTimer=(player.regenTimer||15)-dt;
@@ -759,7 +820,7 @@ if(nearest){
  for(let i=bullets.length-1;i>=0;i--){let b=bullets[i];b.x+=b.vx*dt;b.y+=b.vy*dt;b.life-=dt;let hit=false;
   if(blocked(b.x,b.y,b.r)){bullets.splice(i,1);continue}
   for(let j=enemyBullets.length-1;j>=0;j--){const eb=enemyBullets[j];if(Math.hypot(b.x-eb.x,b.y-eb.y)<b.r+eb.r+2){eb.blockHits=Math.max(0,(eb.blockHits||1)-1);if(eb.blockHits<=0)enemyBullets.splice(j,1);hit=true;break}}
-  if(!hit)for(const e of enemies){if(Math.hypot(b.x-e.x,b.y-e.y)<b.r+e.r){e.hp-=b.dmg;e.hit=.08;hit=true;break}}
+  if(!hit)for(const e of enemies){if(Math.hypot(b.x-e.x,b.y-e.y)<b.r+e.r){let guard=1;for(const g of enemies){if(g===e||g._deathHandled||g.hp<=0)continue;if((g.n==='Shielded'||g.n==='Tanker')&&!g.boss&&Math.hypot(g.x-e.x,g.y-e.y)<105){guard=.72;break;}}e.hp-=b.dmg*guard;e.hit=.08;hit=true;break}}
   if(hit||b.life<=0||b.x<-30||b.x>world.w+30||b.y<-30||b.y>world.h+30)bullets.splice(i,1)
  }
  for(let i=enemyBullets.length-1;i>=0;i--){let b=enemyBullets[i];
@@ -774,16 +835,16 @@ if(nearest){
   let dx=player.x-e.x,dy=player.y-e.y,d=Math.hypot(dx,dy)||1;
   if(e.boss&&e.phase2){
     // Phase 2 makes every boss mobile, including the normally stationary sniper/turret types.
-    smartMoveEnemy(e,dx,dy,dt);
+    smartMoveEnemy(e,dx,dy,edt);
   }
   if(e.n==='Melee'||e.n==='Chaser'||e.n==='Tanker'||e.n==='Shard'){
-    smartMoveEnemy(e,dx,dy,dt);
+    smartMoveEnemy(e,dx,dy,edt);
   }else if(e.n==='Timedasher'){
     // Timedasher: no global warning. It aims continuously during the 1.5s charge-up,
     // then captures the player's direction at the exact moment the dash begins.
     if(e.tdState===0){
       if(d<=e.range){e.tdState=1;e.tdTimer=1.5;e.tdAimX=player.x-e.x;e.tdAimY=player.y-e.y;e.tdLockX=player.x;e.tdLockY=player.y;}
-      else smartMoveEnemy(e,dx,dy,dt);
+      else smartMoveEnemy(e,dx,dy,edt);
     }else if(e.tdState===1){
       const ax=player.x-e.x,ay=player.y-e.y,am=Math.hypot(ax,ay)||1;
       e.tdAimX=ax/am;e.tdAimY=ay/am;
@@ -804,14 +865,14 @@ if(nearest){
       e.vx=dx/d*430;e.vy=dy/d*430;
     }
     if(e.dash>0){e.dash-=dt;e.x+=e.vx*dt;e.y+=e.vy*dt}
-    else if(d>e.range)smartMoveEnemy(e,dx,dy,dt)
+    else if(d>e.range)smartMoveEnemy(e,dx,dy,edt)
   }else if(e.n==='Splitter'){
-    if(d>e.range)smartMoveEnemy(e,dx,dy,dt)
+    if(d>e.range)smartMoveEnemy(e,dx,dy,edt)
     if(e.hp>0&&e.shot<=0){enemyFire(e);e.shot=2.0}
   }else if(e.n==='Mine Layer'){
     e.special-=dt;
     if(d<130){moveEntity(e,-dx/d*e.spd*dt,-dy/d*e.spd*dt,e.r)}
-    else if(d>e.range)smartMoveEnemy(e,dx,dy,dt)
+    else if(d>e.range)smartMoveEnemy(e,dx,dy,edt)
     if(e.special<=0 && e.mines<4){
       enemyBullets.push({x:e.x,y:e.y,vx:0,vy:0,r:11,dmg:2,life:8,mine:true});
       e.mines++;e.special=3.0;
@@ -835,7 +896,7 @@ if(nearest){
     if(e.hp>0&&e.shot<=0){enemyFire(e);e.shot=1.8}
   }else if(e.n==='Healer'){
     if(d<150){moveEntity(e,-dx/d*e.spd*dt,-dy/d*e.spd*dt,e.r)}
-    else if(d>e.range)smartMoveEnemy(e,dx,dy,dt)
+    else if(d>e.range)smartMoveEnemy(e,dx,dy,edt)
     e.special-=dt;
     if(e.special<=0){
       let ally=null,bestRatio=Infinity;
@@ -851,7 +912,12 @@ if(nearest){
     }
   }else{
     if(e.boss)triggerBossPhase(e);
-    if(d>e.range)smartMoveEnemy(e,dx,dy,dt)
+    // Coordinated formation: ranged enemies stay behind Tanker/Shielded allies while closing on the player.
+    if(!e.boss&&(e.n==='Ranged'||e.n==='Sniper'||e.n==='Turret'||e.n==='Laserer')){
+      let guard=enemies.find(g=>g!==e&&!g._deathHandled&&g.hp>0&&(g.n==='Tanker'||g.n==='Shielded')&&Math.hypot(g.x-e.x,g.y-e.y)<190);
+      if(guard&&d<210){ const gx=guard.x-e.x,gy=guard.y-e.y,gd=Math.hypot(gx,gy)||1; moveEntity(e,-gx/gd*e.spd*.7*edt,-gy/gd*e.spd*.7*edt,e.r); }
+      else if(d>e.range)smartMoveEnemy(e,dx,dy,edt);
+    } else if(d>e.range)smartMoveEnemy(e,dx,dy,edt)
     if(e.hp>0&&e.shot<=0){enemyFire(e);const baseCd=e.n==='Ring Shooter'?2.2:e.n==='Sniper'?3.4:e.n==='Turret'?1.8:1.25;e.shot=e.boss?(e.phase2?baseCd*.48:baseCd*.95):baseCd}
   }
   // Every enemy is kept inside the map, including direct-movement enemies.
@@ -863,13 +929,13 @@ if(nearest){
   }
   if(!e._deathHandled && (!Number.isFinite(e.hp) || e.hp<=0)){
     e._deathHandled=true;
-    state.killed++; missionProgress('d2'); if(e.boss){missionProgress('d3'); missionProgress('w2');}
+    state.killed++; missionProgress('d2'); if(e.boss){missionProgress('d3'); missionProgress('w2'); achievements.bosses++;} achievements.kills++;
     const reward=e.boss?1500:Math.floor((e.maxhp/10)*(e.elite?3:1));
     const expValue=e.boss?45:e.elite?14:5;
-    state.score+=Number.isFinite(reward)?reward:0;
+    const finalReward=Math.floor(Number.isFinite(reward)?reward:0); state.score+=finalReward; if(e.boss||e.elite)dropLoot(e); else dropLoot(e);
     if(Number.isFinite(expValue) && expValue>0){ expDrops.push({x:e.x,y:e.y,value:expValue,r:e.boss?11:e.elite?8:6,t:0,_collected:false}); }
     burst(e.x,e.y,e.boss?60:e.elite?28:12,e.boss?.9:.45);
-    addText(e.x,e.y,e.elite?'ELITE +'+reward:'+'+reward);
+    addText(e.x,e.y,e.elite?'ELITE +'+finalReward:'+'+finalReward);
     if(e.n==='Splitter' && !e.boss){
       const childScale=1+(state.stage-1)*.17;
       for(let k=0;k<2;k++){
@@ -894,6 +960,7 @@ function endMiniGame(){}
 function completeStage(){
   if(state.mode!=='stage'||state.stageComplete)return;
   state.stageComplete=true;
+  achievements.stages++;
   over=true;
   paused=true;
 
@@ -971,7 +1038,7 @@ function victoryNext(){
   updateSkillUI();
   updateCurrencyUI();
 }
-function nextWave(){if(state.mode==='stage'){missionProgress('w4');if(state.stage===100){completeStage();return}if(state.wave>=5){completeStage();return}state.wave++;state.spawned=0;state.killed=0;state.waveTimer=-1.2;state.bossesTarget=0;state.bossesSpawned=0;waveFX();return}missionProgress('w4');state.wave++;state.spawned=0;state.waveTimer=-1.2;if(state.wave>5){gold+=120+state.stage*20;saveMeta();missionProgress('w4');state.wave=1;state.stage++;state.spawned=0;waveFX()}}
+function nextWave(){if(state.mode==='stage'){missionProgress('w4');if(state.stage===100){completeStage();return}if(state.wave>=5){completeStage();return}state.wave++;state.spawned=0;state.killed=0;state.waveTimer=-1.2;state.bossesTarget=0;state.bossesSpawned=0;waveFX();return}missionProgress('w4');state.wave++;state.spawned=0;state.waveTimer=-1.2;if(state.wave%2===0)showEvent();if(state.wave>5){gold+=120+state.stage*20;saveMeta();missionProgress('w4');state.wave=1;state.stage++;state.spawned=0;waveFX()}}
 
 function draw(){
  ctx.save();if(shake>0){ctx.translate((Math.random()-.5)*shake,(Math.random()-.5)*shake);shake*=.86;if(shake<.3)shake=0}
@@ -1197,6 +1264,8 @@ function draw(){
  }
  // player firing range
  ctx.save();ctx.beginPath();ctx.arc(player.x,player.y,player.range,0,Math.PI*2);ctx.strokeStyle='#62e7ff22';ctx.lineWidth=2;ctx.setLineDash([10,12]);ctx.stroke();ctx.restore();
+ // cosmetic trail
+ if(equippedCosmetic==='neon'){ctx.save();for(let i=1;i<=6;i++){ctx.globalAlpha=.10*(7-i);ctx.fillStyle='#72eaff';ctx.beginPath();ctx.arc(player.x-Math.cos(player.angle)*i*8,player.y-Math.sin(player.angle)*i*8,Math.max(2,7-i*.7),0,7);ctx.fill()}ctx.restore();}
  // player mouse-plane
  ctx.save();if(player.invuln>0 && Math.floor(player.invuln*10)%2===0)ctx.globalAlpha=.22;
  const pp=planes[equippedPlane]||planes.radiant;ctx.translate(player.x,player.y);ctx.rotate(player.angle);
@@ -1232,7 +1301,7 @@ function loop(t){
   requestAnimationFrame(loop);
 }
 
-function openCollection(kind){if(!currentUser)return;paused=true;resetMissions();const box=document.getElementById('collectionPanel'),c=document.getElementById('collectionContent');box.style.display='flex';if(kind==='upgrade'){const p=planes[equippedPlane],u=planeUpgrades[equippedPlane];c.innerHTML=`<h2 class="sectionTitle">⬆️ NÂNG CẤP • ${p.name}</h2><p style="text-align:center">🪙 ${gold}</p><div class="twoCol"><div class="upgradeCard">❤️ Máu<br>Lv ${u.hp}/25<div class="cost">${u.hp>=25?'⭐ TỐI ĐA':'🪙 '+500*(u.hp+1)}</div><button onclick="buyPlaneUpgrade('hp')">NÂNG CẤP</button></div><div class="upgradeCard">⚔️ Tấn công<br>Lv ${u.atk}/25<div class="cost">${u.atk>=25?'⭐ TỐI ĐA':'🪙 '+600*(u.atk+1)}</div><button onclick="buyPlaneUpgrade('atk')">NÂNG CẤP</button></div><div class="upgradeCard">⚡ Tốc đánh<br>Lv ${u.fire}/25<div class="cost">${u.fire>=25?'⭐ TỐI ĐA':'🪙 '+700*(u.fire+1)}</div><button onclick="buyPlaneUpgrade('fire')">NÂNG CẤP</button></div></div>`}else if(kind==='hangar'){c.innerHTML=`<h2 class="sectionTitle">✈️ KHO MÁY BAY</h2><p style="text-align:center">♦️ ${ruby}</p><div class="cardGrid">${Object.entries(planes).map(([id,p])=>{let own=ownedPlanes.includes(id),eq=equippedPlane===id,u=planeUpgrades[id];return `<div class="planeCard ${eq?'equipped':''}"><div class="planeIcon">${p.icon}</div><b>${p.name}</b><div class="stars">${'★'.repeat(p.stars)}${'☆'.repeat(5-p.stars)}</div><div class="statLine">❤️<div class="statBar"><i style="width:${Math.min(100,(p.hp+u.hp)*8)}%"></i></div>${p.hp+u.hp}</div><div class="statLine">⚔️<div class="statBar"><i style="width:${Math.min(100,p.atk*(1+u.atk*.08)/40*100)}%"></i></div>${Math.round(p.atk*(1+u.atk*.08))}</div><div class="statLine">⚡<div class="statBar"><i style="width:${Math.min(100,.35/Math.max(.07,p.fire*(1-u.fire*.06))*100)}%"></i></div>${p.fire.toFixed(2)}s</div><small>${p.s1} • ${p.s2}</small><div class="cost">${own?'ĐÃ MUA':'♦️ '+p.price}</div><button onclick="planeAction('${id}')">${eq?'ĐANG TRANG BỊ':own?'TRANG BỊ':'MUA'}</button></div>`}).join('')}</div>`}else{const R=a=>a.map(q=>`<div class="missionCard ${q.done?'missionDone':''}"><b>${q.text}</b><p>${q.prog}/${q.need}</p><div class="cost">Thưởng: ${a===missions.daily?'🪙 '+q.reward:'♦️ '+q.reward}</div>${q.done?'✅ ĐÃ HOÀN THÀNH':'🔄 ĐANG THỰC HIỆN'}</div>`).join('');c.innerHTML=`<h2 class="sectionTitle">📋 NHIỆM VỤ</h2><h3>🌞 Hằng ngày</h3><div class="cardGrid">${R(missions.daily)}</div><h3>📅 Hằng tuần</h3><div class="cardGrid">${R(missions.weekly)}</div>`}}
+function openCollection(kind){if(!currentUser)return;paused=true;resetMissions();const box=document.getElementById('collectionPanel'),c=document.getElementById('collectionContent');box.style.display='flex';if(kind==='upgrade'){const p=planes[equippedPlane],u=planeUpgrades[equippedPlane];c.innerHTML=`<h2 class="sectionTitle">⬆️ NÂNG CẤP • ${p.name}</h2><p style="text-align:center">🪙 ${gold}</p><div class="twoCol"><div class="upgradeCard">HP<br>Lv ${u.hp}/25<div class="cost">${u.hp>=25?'⭐ TỐI ĐA':'🪙 '+500*(u.hp+1)}</div><button onclick="buyPlaneUpgrade('hp')">NÂNG CẤP</button></div><div class="upgradeCard">⚔️ Tấn công<br>Lv ${u.atk}/25<div class="cost">${u.atk>=25?'⭐ TỐI ĐA':'🪙 '+600*(u.atk+1)}</div><button onclick="buyPlaneUpgrade('atk')">NÂNG CẤP</button></div><div class="upgradeCard">⚡ Tốc đánh<br>Lv ${u.fire}/25<div class="cost">${u.fire>=25?'⭐ TỐI ĐA':'🪙 '+700*(u.fire+1)}</div><button onclick="buyPlaneUpgrade('fire')">NÂNG CẤP</button></div></div>`}else if(kind==='hangar'){c.innerHTML=`<h2 class="sectionTitle">✈️ KHO MÁY BAY</h2><p style="text-align:center">♦️ ${ruby}</p><div class="cardGrid">${Object.entries(planes).map(([id,p])=>{let own=ownedPlanes.includes(id),eq=equippedPlane===id,u=planeUpgrades[id];return `<div class="planeCard ${eq?'equipped':''}"><div class="planeIcon">${p.icon}</div><b>${p.name}</b><div class="stars">${'★'.repeat(p.stars)}${'☆'.repeat(5-p.stars)}</div><div class="statLine">HP<div class="statBar"><i style="width:${Math.min(100,(p.hp+u.hp)*8)}%"></i></div>${p.hp+u.hp}</div><div class="statLine">⚔️<div class="statBar"><i style="width:${Math.min(100,p.atk*(1+u.atk*.08)/40*100)}%"></i></div>${Math.round(p.atk*(1+u.atk*.08))}</div><div class="statLine">⚡<div class="statBar"><i style="width:${Math.min(100,.35/Math.max(.07,p.fire*(1-u.fire*.06))*100)}%"></i></div>${p.fire.toFixed(2)}s</div><small>${p.s1} • ${p.s2}</small><div class="cost">${own?'ĐÃ MUA':'♦️ '+p.price}</div><button onclick="planeAction('${id}')">${eq?'ĐANG TRANG BỊ':own?'TRANG BỊ':'MUA'}</button></div>`}).join('')}</div>`}else if(kind==='shop'){c.innerHTML=`<h2 class="sectionTitle">🛒 CỬA HÀNG</h2><p style="text-align:center">◆ Core: ${cores} &nbsp; ◇ Mảnh: ${fragments} &nbsp; 🎟 Token: ${tokens}</p><div class="cardGrid"><div class="upgradeCard"><b>◆ Core Công Kích</b><p>+1 cấp ATK máy bay</p><div class="cost">◆ 2</div><button onclick="shopBuy('damageCore')">MUA</button></div><div class="upgradeCard"><b>◆ Core Tốc Độ</b><p>+1 cấp tốc bắn</p><div class="cost">◆ 3</div><button onclick="shopBuy('fireCore')">MUA</button></div><div class="upgradeCard"><b>◆ Core Giáp</b><p>+1 cấp HP</p><div class="cost">◆ 2</div><button onclick="shopBuy('hpCore')">MUA</button></div><div class="upgradeCard"><b>◇ Mảnh máy bay</b><p>Đổi thành 2 Ruby</p><div class="cost">◇ 3</div><button onclick="shopBuy('fragmentPlane')">ĐỔI</button></div><div class="upgradeCard"><b>⚡ Core Double Dash</b><p>Cho phép dùng Skill 1 dash 2 lần liên tiếp</p><div class="cost">◆ 250</div><button onclick="shopBuy('doubleDash')" ${accounts[currentUser]&&accounts[currentUser].doubleDash?'disabled':''}>MUA</button></div><div class="upgradeCard"><b>🎟 Trail Neon</b><p>Hiệu ứng vệt neon</p><div class="cost">🎟 2</div><button onclick="shopBuy('tokenTrail')">MUA</button></div></div><h3>🎨 Cosmetic</h3><div class="cardGrid"><div class="upgradeCard"><b>Vệt mặc định</b><button onclick="equipCosmetic('default')">TRANG BỊ</button></div><div class="upgradeCard"><b>Vệt Neon</b><button onclick="equipCosmetic('neon')" ${ownedCosmetics.includes('neon')?'':'disabled'}>TRANG BỊ</button></div></div>`}else if(kind==='achievements'){const A=[['👾 100 quái',achievements.kills,100,300],['☠️ 10 boss',achievements.bosses,10,5],['🚀 10 stage',achievements.stages,10,1000],['✈️ 12 máy bay',achievements.planes,12,10]];c.innerHTML=`<h2 class="sectionTitle">🏆 THÀNH TỰU</h2><div class="cardGrid">${A.map(x=>`<div class="missionCard"><b>${x[0]}</b><p>${Math.min(x[1],x[2])}/${x[2]}</p><small>Thưởng ${x[3]} ${x[0].includes('boss')?'♦️':'🪙'}</small></div>`).join('')}</div>`}else{const R=a=>a.map(q=>`<div class="missionCard ${q.done?'missionDone':''}"><b>${q.text}</b><p>${q.prog}/${q.need}</p><div class="cost">Thưởng: ${a===missions.daily?'🪙 '+q.reward:'♦️ '+q.reward}</div>${q.done?'✅ ĐÃ HOÀN THÀNH':'🔄 ĐANG THỰC HIỆN'}</div>`).join('');c.innerHTML=`<h2 class="sectionTitle">📋 NHIỆM VỤ</h2><h3>🌞 Hằng ngày</h3><div class="cardGrid">${R(missions.daily)}</div><h3>📅 Hằng tuần</h3><div class="cardGrid">${R(missions.weekly)}</div>`}}
 function closeCollection(){document.getElementById('collectionPanel').style.display='none';if(gameStarted)paused=false}
 function planeAction(id){const p=planes[id];if(!ownedPlanes.includes(id)){if(ruby<p.price)return;ruby-=p.price;ownedPlanes.push(id)}equippedPlane=id;saveMeta();openCollection('hangar')}
 function buyPlaneUpgrade(t){const u=planeUpgrades[equippedPlane],MAX=25;if((u[t]||0)>=MAX){addText(player.x,player.y-35,'⭐ ĐÃ TỐI ĐA LV 25');return}const cost={hp:500*(u.hp+1),atk:600*(u.atk+1),fire:700*(u.fire+1)}[t];if(gold<cost)return;gold-=cost;u[t]++;saveMeta();openCollection('upgrade')}
@@ -1243,7 +1312,7 @@ function showAuth(msg='',mode='login'){setGameplayVisible(false);document.getEle
 function doAuthAction(mode){setAuthLocation(mode);if(mode==='login')login();else register()}
 function login(){const n=document.getElementById('authName').value.trim(),p=document.getElementById('authPass').value;if(!n||!p)return showAuth('Nhập đủ tên và mật khẩu.');if(!accounts[n]||accounts[n].password!==p)return showAuth('Sai tên tài khoản hoặc mật khẩu.');currentUser=n;loadAccount();document.getElementById('authMenu').style.display='none';document.getElementById('mainMenu').style.display='flex';setGameplayVisible(false);paused=false;gameStarted=false;updateCurrencyUI();openStageSelect(false);closeStageSelect()}
 function register(){const n=document.getElementById('authName').value.trim(),p=document.getElementById('authPass').value;if(n.length<3||p.length<3)return showAuth('Tên và mật khẩu cần ít nhất 3 ký tự.');if(accounts[n])return showAuth('Tên tài khoản đã tồn tại.');const a=accountTemplate();a.password=p;accounts[n]=a;currentUser=n;localStorage.setItem('sr_accounts',JSON.stringify(accounts));localStorage.setItem('sr_current_user',currentUser);loadAccount();document.getElementById('authMenu').style.display='none';document.getElementById('mainMenu').style.display='flex';setGameplayVisible(false);paused=false;gameStarted=false;claimAttendance(true)}
-function renderStageSelect(){const g=document.getElementById('stageGrid');g.innerHTML='';for(let i=1;i<=100;i++){const b=document.createElement('button');b.className='stageBtn '+(i%5===0?'bossStage ':'')+(i<=unlockedStage?'unlocked':'locked');b.textContent=i;b.disabled=i>unlockedStage;b.onclick=()=>{currentStageChoice=i;closeStageSelect();startMode('stage',i)};g.appendChild(b)}}
+function renderStageSelect(){const g=document.getElementById('stageGrid');g.innerHTML='';for(let i=1;i<=100;i++){const b=document.createElement('button');b.className='stageBtn '+(i%10===0?'bossStage ':'')+(i<=unlockedStage?'unlocked':'locked');b.textContent=i;b.disabled=i>unlockedStage;b.onclick=()=>{currentStageChoice=i;closeStageSelect();startMode('stage',i)};g.appendChild(b)}}
 function openStageSelect(){if(!currentUser)return;renderStageSelect();document.getElementById('stageSelect').style.display='flex';paused=true}
 function closeStageSelect(){document.getElementById('stageSelect').style.display='none';if(!gameStarted)paused=false}
 async function redeemCode(){
@@ -1259,14 +1328,15 @@ async function redeemCode(){
     const reward=await res.json();
     if(!reward){msg.textContent='❌ Code không hợp lệ.';return}
     if(reward.used&&reward.once){msg.textContent='⚠️ Code này đã được dùng.';return}
+    if(reward.stageUnlock){unlockedStage=Math.max(unlockedStage,Math.min(100,Number(reward.stageUnlock)||1));fxBanner('🔓 MỞ KHÓA ĐẾN MÀN '+unlockedStage);}
     if(reward.infinite){infiniteResources=true;gold=Infinity;ruby=Infinity;}
-    else{gold+=Math.max(0,Number(reward.gold)||0);ruby+=Math.max(0,Number(reward.ruby)||0);}
+    else{gold+=Math.max(0,Number(reward.gold)||0);ruby+=Math.max(0,Number(reward.ruby)||0);cores+=Math.max(0,Number(reward.cores)||0);fragments+=Math.max(0,Number(reward.fragments)||0);tokens+=Math.max(0,Number(reward.tokens)||0);}
     if(reward.once){
       try{await fetch(SPACERADIANT_FIREBASE_DB_URL+'/codes/'+encodeURIComponent(code)+'/used.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:'true'});}catch(e){}
       redeemedCodes.push(code);
     }
     saveMeta();
-    msg.textContent=reward.infinite?'♾️ Đã kích hoạt tài nguyên VÔ HẠN 🪙 ♦️':`✅ Nhận +${reward.gold||0} 🪙 +${reward.ruby||0} ♦️`;
+    msg.textContent=reward.stageUnlock?`✅ Đã mở khóa đến màn ${unlockedStage}.`:reward.infinite?'♾️ Đã kích hoạt tài nguyên VÔ HẠN 🪙 ♦️':`✅ Nhận +${reward.gold||0} 🪙 +${reward.ruby||0} ♦️ +${reward.cores||0} ◆ +${reward.fragments||0} ◇ +${reward.tokens||0} 🎟`;
     input.value='';
   }catch(err){console.error(err);msg.textContent='❌ Không kết nối được máy chủ code.';}
 }
@@ -1286,7 +1356,7 @@ const mainMenu=document.getElementById('mainMenu');
 const pauseMenu=document.getElementById('pauseMenu');
 function setGameplayVisible(v){const d=v?'':'none';for(const id of ['hud','joyL','skill','menuBtn']){const e=document.getElementById(id);if(e)e.style.display=d;}c.style.display=d}
 function startMode(m,chosenStage=1){if(!currentUser)return showAuth('Bạn phải đăng nhập để chơi.');resetGameState(m,chosenStage);gameStarted=true;paused=false;setGameplayVisible(true);mainMenu.style.display='none';closeCollection();closeStageSelect();updateSkillUI();updateCurrencyUI()}
-document.getElementById('endlessBtn').onclick=()=>startMode('endless');document.getElementById('stageBtn').onclick=()=>openStageSelect();document.getElementById('upgradeMenuBtn').onclick=()=>openCollection('upgrade');document.getElementById('hangarBtn').onclick=()=>openCollection('hangar');document.getElementById('missionsBtn').onclick=()=>{paused=true;openCollection('missions')};document.getElementById('attendanceBtn').onclick=()=>claimAttendance(false);document.getElementById('settingsBtn').onclick=()=>openSettings();document.getElementById('redeemCodeBtn').onclick=redeemCode;document.getElementById('logoutBtn').onclick=logout;document.getElementById('logoutBtn').ontouchend=e=>{e.preventDefault();logout()};document.getElementById('helpBtn').onclick=()=>{
+document.getElementById('endlessBtn').onclick=()=>startMode('endless');document.getElementById('stageBtn').onclick=()=>openStageSelect();document.getElementById('upgradeMenuBtn').onclick=()=>openCollection('upgrade');document.getElementById('hangarBtn').onclick=()=>openCollection('hangar');document.getElementById('missionsBtn').onclick=()=>{paused=true;openCollection('missions')};document.getElementById('shopBtn').onclick=()=>{paused=true;openCollection('shop')};document.getElementById('achievementsBtn').onclick=()=>{paused=true;openCollection('achievements')};document.getElementById('attendanceBtn').onclick=()=>claimAttendance(false);document.getElementById('settingsBtn').onclick=()=>openSettings();document.getElementById('redeemCodeBtn').onclick=redeemCode;document.getElementById('logoutBtn').onclick=logout;document.getElementById('logoutBtn').ontouchend=e=>{e.preventDefault();logout()};document.getElementById('helpBtn').onclick=()=>{
   const h=document.getElementById('helpText');
   h.style.display=h.style.display==='block'?'none':'block';
 };
