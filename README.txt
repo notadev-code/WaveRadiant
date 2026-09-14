@@ -1,40 +1,61 @@
-SpaceRadiant v1.16.6 — Firebase Code System
+SPACE RADIANT v1.17.9
 
-CẤU HÌNH 1 LẦN:
-1. Firebase project + Realtime Database (khu vực Singapore/asia-southeast1 là OK).
-2. Bật Authentication > Sign-in method > Email/Password và tạo 1 tài khoản admin riêng cho code_tool.py.
-3. Realtime Database > Rules: dùng nội dung firebase_rules.json và thay YOUR_ADMIN_EMAIL bằng email admin.
-4. Chạy: python code_tool.py
-5. Lần đầu nhập Database URL, Web API key, email admin và mật khẩu admin. Tool lưu cấu hình trên Termux và tự cập nhật Database URL trong index.html.
-6. Upload index.html lên GitHub Pages MỘT LẦN.
+CẬP NHẬT v1.17.9
+- Cửa hàng: vật phẩm chỉ mua 1 lần nay sau khi mua sẽ hiện "ĐÃ MUA" và nút bị khóa.
+- Nâng cấp máy bay: khi đạt Lv25 sẽ hiện "⭐ TỐI ĐA"; không thể mua vượt cấp.
+- Boss HUD: thu nhỏ thanh máu, tự chia nhiều boss thành lưới để không che khuất màn hình; đặc biệt gọn khi có 3 hoặc 6 boss.
+- HP player: đổi từ số dạng 00/00 sang thanh HP màu xanh lá.
+- MP player: đổi từ số dạng 00/00 sang thanh MP màu xanh nước biển.
+- Skill 1 giảm từ 20 MP xuống 10 MP.
+- Skill 2 giảm từ 35 MP xuống 20 MP.
+- Bổ sung hình dạng riêng cho Gravity Boss, Inferno Boss, Chrono Boss và Abyss Boss.
+- Giữ nguyên Firebase, tài khoản, save, mã code và các hệ thống gameplay trước đó.
 
-SAU ĐÓ:
-- Tạo code bằng code_tool.py -> code được lưu trực tiếp lên Firebase.
-- Game GitHub Pages tự kiểm tra Firebase -> KHÔNG cần upload lại index.html.
+CÁC QUÁI THƯỜNG
+1. Melee — hình bọ/cua đỏ có 2 càng — cận chiến.
+2. Ranged — UFO/đĩa bay — bắn đạn tầm xa.
+3. Chaser — mũi giáo — lao/đuổi theo người chơi, đạn có xu hướng bám mục tiêu.
+4. Ring Shooter — đĩa bay có vòng — bắn vòng 8 hướng.
+5. Speed Shooter — tia sét — di chuyển nhanh, bắn đạn nhanh.
+6. Tanker — xe tăng bọc giáp — rất nhiều HP, áp sát gây sát thương.
+7. Sniper — súng/bệ ngắm — bắn tỉa chậm, đạn mạnh.
+8. Dasher — phi tiêu 2 cánh — tích lực rồi dash nhanh về phía người chơi.
+9. Timedasher — viên đạn/phi tiêu đỏ — khóa hướng người chơi rồi dash cực nhanh.
+10. Splitter — tinh thể xanh nứt — khi chết tạo 2 Shard.
+11. Mine Layer — quả mìn gai — đặt mìn trên bản đồ.
+12. Orbit — lõi nguyên tử có 3 vòng — bay quanh người chơi và bắn đạn theo quỹ đạo.
+13. Healer — tinh thể dấu cộng — hồi máu cho quái đồng minh gần đó.
+14. Turret — robot tháp pháo — đứng tương đối xa và bắn chùm 3 viên.
+15. Shard — mảnh tinh thể — con nhỏ sinh ra từ Splitter, áp sát.
+16. Leech — sinh vật hút máu — áp sát để gây sát thương.
+17. Bomber — khối bom — áp sát/tiếp cận để gây sát thương lớn.
+18. Frost — tinh thể băng — đánh tầm xa.
+19. Teleporter — tinh thể/dạng dịch chuyển — di chuyển linh hoạt và bắn tầm xa.
+20. Laserer — pháo/laser — tầm bắn rất xa, được Tanker/Shielded hỗ trợ che chắn.
+21. Swarm Drone — drone nhỏ — di chuyển rất nhanh và áp sát.
+22. Shielded — khối giáp — HP cao, đóng vai trò che chắn cho quái tầm xa.
 
-BẢO MẬT:
-- firebase_admin.json chứa email/mật khẩu admin sau khi cấu hình. KHÔNG upload file này lên GitHub.
-- Web API key có thể xuất hiện trong cấu hình Web App; không gửi mật khẩu/private key.
+BOSS
+1. RADIANT BOSS — mặt trời nhiều tia — bắn vòng đạn lan tỏa.
+2. VOID BOSS — mắt/hố đen — bắn 3 đạn tầm xa, đạn lớn và khó chặn.
+3. BERSERKER BOSS — chiến binh/rìu gai — bắn chùm 3 đạn và di chuyển nhanh.
+4. SWARM BOSS — tổ ong/bầy đàn — bắn 6 đạn tỏa ngẫu nhiên.
+5. FORTRESS BOSS — pháo đài — bắn chùm 7 đạn.
+6. PHANTOM BOSS — bóng ma — bắn 4 đạn theo các hướng/quỹ đạo.
+7. GRAVITY BOSS — lõi trọng lực với các vòng xoắn — bắn 8 đạn có khả năng bám hướng.
+8. INFERNO BOSS — ngọn lửa — bắn chùm 9 đạn hình quạt.
+9. CHRONO BOSS — đồng hồ — bắn 5 đạn có khả năng bám hướng.
+10. ABYSS BOSS — ngôi sao/hố vực thẳm — bắn 12 đạn tỏa tròn, đạn lớn cần 2 phát để chặn.
 
-SPACE RADIANT v1.17.1
-- Build level-up 3 choices, combo system, random events.
-- Loot: Core / Mảnh máy bay / Token. Core dùng nâng cấp máy bay; Mảnh đổi Ruby; Token mua cosmetic.
-- Shop, achievements, cosmetic neon trail.
-- Boss pool expanded to 10 types; boss stages remain 10,20,...,100.
-- Code tool option 3 creates stage-unlock codes (unlock up to a chosen stage).
+TẤT CẢ BOSS đều có 3 phase:
+- Phase 1: bình thường.
+- Phase 2: nhanh hơn, sát thương/tốc độ bắn tăng.
+- Phase 3: nhanh hơn nữa và có thêm đợt đạn.
 
+CHẠY LOCAL
+- Mở Termux trong thư mục game.
+- python server.py (nếu thư mục có server.py)
+- Hoặc python -m http.server 9999 --bind 127.0.0.1
+- Mở http://127.0.0.1:9999
 
-Cập nhật v1.17.7:
-- Sửa lỗi màn boss: sau khi hoàn thành wave boss cuối không spawn thêm boss ngoài số wave đã quy định.
-- Màn 5,15,...,95: 6 wave, mỗi wave 1 boss.
-- Màn 10,20,...,90: 2 wave, mỗi wave 3 boss.
-- Màn 100: 1 wave, 6 boss.
-
-- Tăng damage quái: damage va chạm/đạn của quái thường tối thiểu 10 HP; các quái mạnh khoảng 18–22 HP.
-- Damage boss tăng lên khoảng 20–35 HP tùy boss/đòn đánh, để tránh tình trạng bị trừ chỉ 1–2 HP mỗi lần.
-
-Cập nhật v1.17.8:
-- Bổ sung hiệu ứng hình ảnh rõ ràng cho kỹ năng của các máy bay.
-- Skill Mark Target / Ghim quái nay có đường liên kết, vòng khóa mục tiêu và chữ GHIM trên quái bị đánh dấu.
-- Thêm hiệu ứng riêng cho khiên, hồi máu, đóng băng thời gian, drone, Solar, dash, Overdrive, Missile Salvo, Time Rift, Nova, Void Burst, Meteor, Titan Blast và Chain Lightning.
-- Các hiệu ứng chỉ mang tính hiển thị, giữ nguyên cơ chế gameplay hiện có.
+Firebase/code system vẫn giữ nguyên theo bản trước.
