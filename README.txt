@@ -1,6 +1,6 @@
-SPACE RADIANT v1.17.9
+SPACE RADIANT v1.17.10
 
-CẬP NHẬT v1.17.9
+CẬP NHẬT v1.17.10
 - Cửa hàng: vật phẩm chỉ mua 1 lần nay sau khi mua sẽ hiện "ĐÃ MUA" và nút bị khóa.
 - Nâng cấp máy bay: khi đạt Lv25 sẽ hiện "⭐ TỐI ĐA"; không thể mua vượt cấp.
 - Boss HUD: thu nhỏ thanh máu, tự chia nhiều boss thành lưới để không che khuất màn hình; đặc biệt gọn khi có 3 hoặc 6 boss.
@@ -59,3 +59,10 @@ CHẠY LOCAL
 - Mở http://127.0.0.1:9999
 
 Firebase/code system vẫn giữ nguyên theo bản trước.
+
+
+SpaceRadiant v1.17.10 updates:
+- Fixed wave transition so normal waves advance correctly and boss stages spawn bosses reliably.
+- Boss waves are completed only after all intended bosses are defeated.
+- Shop Core upgrades now add +10 levels per purchase, and can exceed the normal Lv25 upgrade display (e.g. 35/25).
+- HP and MP keep visual bars and now also show numeric counters beside them (00/00 format).
