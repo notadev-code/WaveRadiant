@@ -1,4 +1,4 @@
-SPACE RADIANT v1.17.11
+SPACE RADIANT v1.17.12
 
 CẬP NHẬT v1.17.11
 - Cửa hàng: vật phẩm chỉ mua 1 lần nay sau khi mua sẽ hiện "ĐÃ MUA" và nút bị khóa.
@@ -74,3 +74,10 @@ CẬP NHẬT v1.17.11
 - Giảm hồi Skill 1: 3.0s → 2.5s.
 - Giảm hồi Skill 2: 8.0s → 6.5s.
 - Sửa lỗi boss stage: resetGameState giờ reset state.stageComplete=false, tránh trạng thái hoàn thành của màn boss trước làm các màn boss sau không spawn boss cho tới khi reload.
+
+CẬP NHẬT v1.17.12
+- Cân bằng lại độ khó từ màn 50 trở lên: sức mạnh quái thường giảm khoảng 32% ở màn 50 và giảm dần nhẹ hơn ở các màn cao hơn, thay vì tăng quá mạnh theo công thức cũ.
+- Boss từ màn 50 trở lên cũng được giảm HP, sát thương và tốc độ so với bản trước; vẫn giữ cơ chế 3 phase và cách spawn boss hiện tại.
+- Bổ sung nhiều hiệu ứng Canvas: vòng năng lượng mở rộng, tia sáng, vòng xoay, particle hình kim cương, hiệu ứng dash/skill/boss phase và hiệu ứng nổ khi hạ boss/Elite.
+- Giới hạn số hiệu ứng động để tránh tạo quá nhiều đối tượng và hạn chế ảnh hưởng hiệu năng trên điện thoại/TV.
+- Giữ nguyên Firebase, tài khoản, save, mã code, shop, nâng cấp, boss-wave và các hệ thống gameplay hiện có.
