@@ -1,4 +1,4 @@
-SPACE RADIANT v1.17.12
+SPACE RADIANT v1.17.13
 
 CẬP NHẬT v1.17.11
 - Cửa hàng: vật phẩm chỉ mua 1 lần nay sau khi mua sẽ hiện "ĐÃ MUA" và nút bị khóa.
@@ -81,3 +81,11 @@ CẬP NHẬT v1.17.12
 - Bổ sung nhiều hiệu ứng Canvas: vòng năng lượng mở rộng, tia sáng, vòng xoay, particle hình kim cương, hiệu ứng dash/skill/boss phase và hiệu ứng nổ khi hạ boss/Elite.
 - Giới hạn số hiệu ứng động để tránh tạo quá nhiều đối tượng và hạn chế ảnh hưởng hiệu năng trên điện thoại/TV.
 - Giữ nguyên Firebase, tài khoản, save, mã code, shop, nâng cấp, boss-wave và các hệ thống gameplay hiện có.
+
+
+CẬP NHẬT v1.17.13
+- Sửa lỗi nghiêm trọng khiến không có quái spawn: biến powerScale trong spawnEnemy bị thiếu khai báo, làm hàm spawnEnemy lỗi khi vừa gọi.
+- Cân bằng lại màn 50+: quái thường giảm sức mạnh rõ rệt và giảm nhẹ thêm ở các màn cao hơn; boss cũng giảm HP, sát thương và tốc độ tương ứng.
+- Nâng cấp hiệu ứng skill: thêm lõi sáng, vòng xoay, tia năng lượng, ray, particle burst và hiệu ứng riêng cho các nhóm skill.
+- Nâng cấp animation bay: thêm engine glow, vệt động cơ, hover aura và chuyển động ánh sáng theo thời gian.
+- Giữ nguyên cơ chế sát thương/chức năng chính của từng skill, Firebase, tài khoản, save, shop và hệ thống stage.
