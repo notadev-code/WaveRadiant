@@ -1,9 +1,6 @@
-SpaceRadiant v1.17.17
+SpaceRadiant v1.17.18
 
-- Cửa hàng thêm Core MP: +1 Max MP mỗi lần mua, tối đa +10.
-- Menu nâng cấp máy bay thêm MP tối đa, hoạt động theo Lv hiện tại / Max riêng.
-- Menu LEVEL UP thêm Hồi 25% HP và Hồi 25% MP; bỏ lựa chọn Giáp/Hồi phục cũ.
-- Tất cả 12 máy bay có 3 skill: nút 1, nút 3 và nút 5.
-- Thiết kế lại tên skill và thêm skill 3 riêng cho từng máy bay.
-- Bổ sung hiệu ứng hình ảnh riêng cho các skill mới, thời lượng hiệu ứng tối đa 1 giây.
+- Nâng cấp MP đổi thành: +10 Max MP mỗi cấp, +0.2 MP hồi mỗi giây và giảm 0.2% MP cần cho mỗi skill mỗi cấp.
+- Chi phí MP của cả 3 skill (nút 1, 3, 5) tự giảm theo cấp MP.
+- Sửa hitbox các skill dạng tia/đường thẳng để khớp chiều dài và độ rộng hiệu ứng; đặc biệt Prism Ray, Piercing Shot và Solar Beam/Flare.
 - Giữ nguyên hệ thống Firebase và Code Admin.
