@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>SpaceRadiant v1.18</title>
+<title>SpaceRadiant v1.18.3</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#070912;color:#fff;font-family:Arial,sans-serif;touch-action:none}
@@ -51,7 +51,7 @@ small{color:#aebbd6}
   #hud{font-size:12px}
 }
 
-/* === AWAKENING v1.18 === */
+/* === AWAKENING v1.18.3 === */
 #awakeningPanel{display:none;position:fixed;inset:0;background:rgba(3,5,14,.88);z-index:60;align-items:center;justify-content:center;padding:12px}
 .awkPanel{width:min(720px,96vw);max-height:92vh;overflow:auto;background:linear-gradient(145deg,#10172b,#080b18);border:1px solid #7c89b8;border-radius:20px;box-shadow:0 0 35px #5b4dff55,0 0 70px #ff2e6a22;padding:18px}
 .awkTitle{text-align:center;font-size:27px;font-weight:1000;letter-spacing:2px;background:linear-gradient(90deg,#ff3355,#ffcc33,#66ffcc,#55aaff,#cc66ff,#ff3355);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:awkTitle 3s linear infinite;text-shadow:0 0 20px #ff3d8866}
@@ -68,6 +68,18 @@ small{color:#aebbd6}
 .awkCastRing{position:absolute;inset:4%;border:3px solid #fff;border-radius:50%;box-shadow:0 0 20px #fff,0 0 45px #ff2f66,0 0 75px #7b4dff;animation:awkRing 1.2s ease-in-out infinite}
 .awkCastRing.r2{inset:14%;border-style:dashed;animation-duration:1.8s;animation-direction:reverse}
 .awkCastName{position:absolute;bottom:-48px;width:100%;text-align:center;font-weight:1000;font-size:20px;letter-spacing:2px;text-shadow:0 0 15px #fff}
+#awkUnlockFx{position:fixed;inset:0;display:none;z-index:100;pointer-events:none;align-items:center;justify-content:center;background:radial-gradient(circle,rgba(255,220,80,.18),rgba(80,20,140,.42) 38%,rgba(0,0,0,.92) 78%);animation:awkUnlockFade 2.4s ease-out forwards}
+.awkUnlockCore{position:relative;width:min(76vw,430px);height:min(76vw,430px);display:flex;align-items:center;justify-content:center}
+.awkUnlockCore:before,.awkUnlockCore:after{content:"";position:absolute;border-radius:50%;border:3px solid #fff;box-shadow:0 0 18px #fff,0 0 45px #ff2f66,0 0 90px #8b5cf6;animation:awkUnlockRing 2.1s ease-out forwards}
+.awkUnlockCore:before{inset:8%}.awkUnlockCore:after{inset:22%;border-style:dashed;animation-delay:.12s}
+.awkUnlockRays{position:absolute;inset:-8%;background:repeating-conic-gradient(from 0deg,rgba(255,255,255,.75) 0deg 3deg,transparent 3deg 18deg);mask-image:radial-gradient(circle,#000 0 28%,transparent 70%);-webkit-mask-image:radial-gradient(circle,#000 0 28%,transparent 70%);animation:awkUnlockSpin 2.4s linear forwards}
+.awkUnlockIcon{position:relative;z-index:2;font-size:min(30vw,170px);filter:drop-shadow(0 0 18px #fff) drop-shadow(0 0 45px #ffcc33);animation:awkUnlockIcon 2.4s cubic-bezier(.15,.75,.25,1) forwards}
+.awkUnlockText{position:absolute;z-index:3;bottom:-48px;width:100%;text-align:center;font-size:clamp(20px,5vw,32px);font-weight:1000;letter-spacing:3px;color:#fff;text-shadow:0 0 12px #fff,0 0 28px #ff2f66,0 0 48px #7b4dff;animation:awkUnlockText 2.4s ease-out forwards}
+@keyframes awkUnlockFade{0%{opacity:0}12%{opacity:1}78%{opacity:1}100%{opacity:0}}
+@keyframes awkUnlockRing{0%{transform:scale(.15);opacity:0}18%{opacity:1}72%{opacity:.8}100%{transform:scale(1.55);opacity:0}}
+@keyframes awkUnlockSpin{to{transform:rotate(360deg) scale(1.18);opacity:0}}
+@keyframes awkUnlockIcon{0%{transform:scale(.15) rotate(-35deg);opacity:0}22%{transform:scale(1.18) rotate(8deg);opacity:1}48%{transform:scale(.95) rotate(-4deg)}78%{transform:scale(1.05) rotate(0deg)}100%{transform:scale(1.28) rotate(0deg);opacity:.05}}
+@keyframes awkUnlockText{0%,18%{opacity:0;transform:translateY(20px) scale(.7)}35%,78%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-8px) scale(1.12)}}
 @keyframes awkIcon{0%,100%{transform:scale(.82)}50%{transform:scale(1.15)}}
 @keyframes awkSpin{to{rotate:360deg}}
 @keyframes awkRing{50%{transform:scale(1.13);opacity:.55}}
@@ -118,7 +130,7 @@ small{color:#aebbd6}
 <button id="menuBtn">☰</button>
 
 <div id="authMenu" class="overlayMenu"><div class="menuPanel"><div class="title">SPACE RADIANT</div><div class="sub">TÀI KHOẢN</div><div id="authForm"><div id="authLocation" class="authLocation">📍 Khu đăng nhập</div><input id="authName" placeholder="Tên tài khoản" maxlength="20" autocomplete="username"><input id="authPass" type="password" placeholder="Mật khẩu" maxlength="30" autocomplete="current-password"><button id="loginBtn" type="button" class="menuButton">🔐 ĐĂNG NHẬP</button><button id="registerBtn" type="button" class="menuButton">📝 ĐĂNG KÝ</button><div id="authMsg"></div></div></div></div>
-<div id="mainMenu"><div class="menuPanel megaMenu"><div class="title">SPACE RADIANT v1.18</div><div class="sub">CHỌN CHẾ ĐỘ</div><div class="currencyLine">🪙 <b id="menuGold">0</b> &nbsp;&nbsp; ♦️ <b id="menuRuby">0</b></div><div style="text-align:center;font-size:11px;opacity:.8">◆ Core <b id="menuCore">0</b> &nbsp; ◇ Mảnh <b id="menuFrag">0</b> &nbsp; 🎟 <b id="menuToken">0</b></div><div class="modeGrid"><button id="endlessBtn" class="menuButton">♾️ ENDLESS<br><small>Chế độ cũ • không tường</small></button><button id="stageBtn" class="menuButton">🚀 STAGE<br><small>Chọn màn 1–100</small></button></div><div class="menuGrid2"><button id="upgradeMenuBtn" class="menuButton">⬆️ NÂNG CẤP</button><button id="awakeningBtn" class="menuButton">🔥 AWAKENING</button><button id="hangarBtn" class="menuButton">✈️ KHO MÁY BAY</button><button id="missionsBtn" class="menuButton">📋 NHIỆM VỤ</button><button id="shopBtn" class="menuButton">🛒 CỬA HÀNG</button><button id="achievementsBtn" class="menuButton">🏆 THÀNH TỰU</button><button id="attendanceBtn" class="menuButton">🎁 QUÀ HẰNG NGÀY</button><button id="settingsBtn" class="menuButton">⚙️ CÀI ĐẶT</button><button id="helpBtn" class="menuButton">❔ HƯỚNG DẪN</button></div><div id="helpText">🎮 Joystick trái để di chuyển.<br>🎯 Máy bay tự nhắm và bắn quái gần nhất.<br>⚡/💥/🌟 dùng skill 1/3/5 kể cả khi đang giữ hướng trên TV.<br>🔥 Awakening: máy bay đủ 35/35 có thể thức tỉnh.
+<div id="mainMenu"><div class="menuPanel megaMenu"><div class="title">SPACE RADIANT v1.18.4</div><div class="sub">CHỌN CHẾ ĐỘ</div><div class="currencyLine">🪙 <b id="menuGold">0</b> &nbsp;&nbsp; ♦️ <b id="menuRuby">0</b></div><div style="text-align:center;font-size:11px;opacity:.8">◆ Core <b id="menuCore">0</b> &nbsp; ◇ Mảnh <b id="menuFrag">0</b> &nbsp; 🎟 <b id="menuToken">0</b></div><div class="modeGrid"><button id="endlessBtn" class="menuButton">♾️ ENDLESS<br><small>Chế độ cũ • không tường</small></button><button id="stageBtn" class="menuButton">🚀 STAGE<br><small>Chọn màn 1–100</small></button></div><div class="menuGrid2"><button id="upgradeMenuBtn" class="menuButton">⬆️ NÂNG CẤP</button><button id="awakeningBtn" class="menuButton">🔥 AWAKENING</button><button id="hangarBtn" class="menuButton">✈️ KHO MÁY BAY</button><button id="missionsBtn" class="menuButton">📋 NHIỆM VỤ</button><button id="shopBtn" class="menuButton">🛒 CỬA HÀNG</button><button id="achievementsBtn" class="menuButton">🏆 THÀNH TỰU</button><button id="attendanceBtn" class="menuButton">🎁 QUÀ HẰNG NGÀY</button><button id="settingsBtn" class="menuButton">⚙️ CÀI ĐẶT</button><button id="helpBtn" class="menuButton">❔ HƯỚNG DẪN</button></div><div id="helpText">🎮 Joystick trái để di chuyển.<br>🎯 Máy bay tự nhắm và bắn quái gần nhất.<br>⚡/💥/🌟 dùng skill 1/3/5 kể cả khi đang giữ hướng trên TV.<br>🔥 Awakening: máy bay đủ 35/35 có thể thức tỉnh.
 🚀 Stage: 100 màn. Màn 10,20,...,100 là màn boss; các màn boss có 6 boss mạnh.
 Build 3 lựa chọn, event ngẫu nhiên, vật phẩm rơi và shop.
 🎟 Code màn có thể mở khóa đến một màn cụ thể.</div></div></div>
@@ -137,6 +149,7 @@ Build 3 lựa chọn, event ngẫu nhiên, vật phẩm rơi và shop.
   </div>
 </div>
 <div id="awkCastOverlay"><div class="awkCastCore"><div class="awkCastRing"></div><div class="awkCastRing r2"></div><div id="awkCastIcon" class="awkCastIcon">✦</div><div id="awkCastName" class="awkCastName">AWAKENING</div></div></div>
+<div id="awkUnlockFx"><div class="awkUnlockCore"><div class="awkUnlockRays"></div><div id="awkUnlockIcon" class="awkUnlockIcon">✦</div><div id="awkUnlockText" class="awkUnlockText">AWAKENED</div></div></div>
 <div id="collectionPanel" class="collectionPanel"><div class="menuPanel"><button class="closePanel" onclick="closeCollection()">✕</button><div id="collectionContent"></div></div></div>
 <div id="pauseMenu">
   <div class="menuPanel">
@@ -304,7 +317,7 @@ function resetGameState(mode=state.mode||'endless',chosenStage=1){
   enemies.length=0; bullets.length=0; enemyBullets.length=0; particles.length=0; texts.length=0; expDrops.length=0; chests.length=0; fxRings.length=0;
   player.x=world.w/2; player.y=world.h/2; player.healFxTimer=0; player.regenTimer=15; player.r=17; player.hp=100; player.maxhp=100; player.mp=100; player.maxmp=100; player.angle=-Math.PI/2;
   const pp=planes[equippedPlane]||planes.radiant,pu=planeUpgrades[equippedPlane]||{hp:0,atk:0,fire:0,mp:0}; player.speed=250; player.damage=pp.atk*(1+pu.atk*.08); player.fire=0; player.fireRate=Math.max(.07,pp.fire*(1-pu.fire*.06)); player.bullets=1; player.comboDamage=1;
-  player.bulletSpeed=560; player.mpRegen=4+(pu.mp||0)*.2; player.shotMp=.25; player.doubleDash=!!(accounts[currentUser]&&accounts[currentUser].doubleDash); player.dashUses=0; player.markTimer=0;player.markTarget=null;player.timeFreeze=0;player.timeRift=0;player.droneTimer=0;player.droneBarrage=0;player.solarCharge=0; player.skillFx=[]; player.frostTimer=0; player.frostFactor=.58; player.maxhp=100+(pp.hp+pu.hp-5)*12; player.hp=player.maxhp; const cos=cosmeticCatalog[equippedCosmetic]||cosmeticCatalog.default; player.maxhp+=cos.hp; player.maxmp=100+(pu.mp||0)*10+cos.mp; player.mp=player.maxmp; player.damage*=cos.damage; player.fireRate=Math.max(.05,player.fireRate*cos.fire); player.speed*=cos.speed; player.skillDmg=cos.skill; player.dash=0; player.blast=0; player.skill3=0; player.skill3Max=9; player.awkSkill=0; player.awkSkillMax=10; player.awakeningCast=null; player.dashUses=0; player.invuln=0; player.crit=.08; player.critMult=1.8; player.armor=0; player.regen=0; player.magnet=0; player.dashMax=2.5; player.blastMax=6.5; player.skillDmg=1; player.range=400; miniActive=false; 
+  player.bulletSpeed=560; player.mpRegen=4+(pu.mp||0)*.2; player.shotMp=.25; player.doubleDash=!!(accounts[currentUser]&&accounts[currentUser].doubleDash); player.dashUses=0; player.markTimer=0;player.markTarget=null;player.timeFreeze=0;player.timeRift=0;player.droneTimer=0;player.droneBarrage=0;player.solarCharge=0; player.skillFx=[]; player.frostTimer=0; player.frostFactor=.58; player.maxhp=100+(pp.hp+pu.hp-5)*12; player.hp=player.maxhp; const cos=cosmeticCatalog[equippedCosmetic]||cosmeticCatalog.default; player.maxhp+=cos.hp; player.maxmp=100+(pu.mp||0)*10+cos.mp; player.mp=player.maxmp; player.damage*=cos.damage; player.fireRate=Math.max(.05,player.fireRate*cos.fire); player.speed*=cos.speed; player.skillDmg=cos.skill; player.dash=0; player.blast=0; player.skill3=0; player.skill3Max=9; player.awkSkill=0; player.awkSkillMax=10; player.awakeningCast=null; player.awakeningFx=0; player.dashUses=0; player.invuln=0; player.crit=.08; player.critMult=1.8; player.armor=0; player.regen=0; player.magnet=0; player.dashMax=2.5; player.blastMax=6.5; player.skillDmg=1; player.range=400; miniActive=false; 
   paused=false; over=false; miniActive=false; miniObjects=[];
   document.getElementById('bossBox').style.display='none'; document.getElementById('bossBox').innerHTML=''; updateHUD(); supplies.length=0; shieldHits=0; rapidFire=0; supplyTimer=7+Math.random()*9; state.bossesSpawned=0; state.bossesTarget=0;
 }
@@ -823,7 +836,7 @@ function startAwakeningCast(id){
 function resolveAwakening(){
  const cast=player.awakeningCast;if(!cast||cast.resolved)return;
  cast.resolved=true;const id=cast.id,pp=planes[id]||planes.radiant;
- const dmg=(180+state.level*30)*(player.skillDmg||1);
+ const dmg=(360+state.level*60)*(player.skillDmg||1);
  const mult={radiant:2.2,comet:2.4,guardian:1.8,phantom:2.2,striker:2.5,titan:3.2,pulse:2.0,medic:1.6,hunter:2.15,chronos:1.9,drone:2.1,solar:3.4}[id]||2;
  for(const e of enemies){e.hp-=dmg*mult;e.hit=.35;}
  // Awakening bonuses trigger after the map-wide strike.
@@ -839,7 +852,7 @@ function resolveAwakening(){
  else if(id==='chronos'){player.timeFreeze=4;for(const e of enemies)e.special=Math.max(e.special,4);fxBanner('⏱️ CHRONOS ZERO HOUR');}
  else if(id==='drone'){player.droneTimer=12;player.droneBarrage=6;fxBanner('🤖 DRONE OVERMIND');}
  else if(id==='solar'){player.solarCharge=8;player.invuln=Math.max(player.invuln,2);fxBanner('☀️ SOLAR SUPERNOVA');}
- ringFX(player.x,player.y,Math.max(W,H)*.35,pp.accent,1,5);burst(player.x,player.y,90,1.0,pp.accent);shakeIt(28);sfx('awakeningHit');
+ player.awakeningFx=2.6;ringFX(player.x,player.y,Math.max(W,H)*.35,pp.accent,2.6,5);burst(player.x,player.y,110,2.0,pp.accent);shakeIt(28);sfx('awakeningHit');
  document.getElementById('awkCastOverlay').style.display='none';player.awakeningCast=null;
 }
 function skillAwakening(){
@@ -942,6 +955,7 @@ function update(dt){
 }
  if(paused||over)return;
  if(player.awkSkill>0){player.awkSkill=Math.max(0,player.awkSkill-dt);}
+ if(player.awakeningFx>0){player.awakeningFx=Math.max(0,player.awakeningFx-dt);}
  if(player.awakeningCast){
    player.awakeningCast.t=Math.max(0,player.awakeningCast.t-dt);
    if(player.awakeningCast.t<=0)resolveAwakening();
@@ -1565,7 +1579,7 @@ function draw(){
  ctx.save();ctx.beginPath();ctx.arc(player.x,player.y,player.range,0,Math.PI*2);ctx.strokeStyle='#62e7ff22';ctx.lineWidth=2;ctx.setLineDash([10,12]);ctx.stroke();ctx.restore();
  // cosmetic trail
  if(equippedCosmetic==='neon'){ctx.save();for(let i=1;i<=6;i++){ctx.globalAlpha=.10*(7-i);ctx.fillStyle='#72eaff';ctx.beginPath();ctx.arc(player.x-Math.cos(player.angle)*i*8,player.y-Math.sin(player.angle)*i*8,Math.max(2,7-i*.7),0,7);ctx.fill()}ctx.restore();}
- // Active skill visual effects — each skill has its own visual language; all effects last <= 1s.
+ // Active skill visual effects — each skill has its own visual language. Awakening has a longer 2.6s impact effect.
  for(const f of (player.skillFx||[])){
    const a=Math.max(0,f.t/f.m),p=1-a,now=performance.now()/1000,seed=f.seed||0;
    ctx.save();ctx.globalAlpha=Math.min(1,a*1.25);ctx.lineCap='round';
@@ -1670,6 +1684,21 @@ function draw(){
  for(const p of particles){const pa=Math.max(0,p.t/p.m);ctx.globalAlpha=pa;ctx.fillStyle=p.color||'#bff7ff';ctx.shadowBlur=8;ctx.shadowColor=ctx.fillStyle;ctx.save();ctx.translate(p.x,p.y);ctx.rotate((p.rot||0)+pa*4);ctx.beginPath();ctx.moveTo(0,-p.r);ctx.lineTo(p.r*.55,0);ctx.lineTo(0,p.r);ctx.lineTo(-p.r*.55,0);ctx.closePath();ctx.fill();ctx.restore();}ctx.shadowBlur=0;ctx.globalAlpha=1;
  for(const t of texts){ctx.globalAlpha=t.t;ctx.font='bold 13px Arial';ctx.textAlign='center';ctx.fillStyle='#fff';ctx.fillText(t.s,t.x,t.y)}ctx.globalAlpha=1;
  ctx.restore();
+ // Awakening impact: longer full-screen energy bloom with rotating rays and a fading core.
+ if(player.awakeningFx>0){
+   const q=Math.max(0,player.awakeningFx/2.6),p=1-q,now=performance.now()/1000;
+   const ppA=planes[equippedPlane]||planes.radiant;
+   ctx.save();
+   ctx.globalAlpha=.08+.20*q;
+   const g=ctx.createRadialGradient(W/2,H/2,0,W/2,H/2,Math.max(W,H)*.72);
+   g.addColorStop(0,'#fff');g.addColorStop(.18,ppA.accent);g.addColorStop(.55,'rgba(125,77,255,.18)');g.addColorStop(1,'transparent');
+   ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+   ctx.translate(W/2,H/2);ctx.rotate(now*.8);
+   ctx.globalAlpha=.20*q;ctx.strokeStyle=ppA.accent;ctx.shadowBlur=24;ctx.shadowColor=ppA.accent;
+   for(let k=0;k<18;k++){const a=k*Math.PI/9;const r1=Math.min(W,H)*(.10+p*.06),r2=Math.min(W,H)*(.34+p*.28);ctx.lineWidth=k%3===0?4:2;ctx.beginPath();ctx.moveTo(Math.cos(a)*r1,Math.sin(a)*r1);ctx.lineTo(Math.cos(a)*r2,Math.sin(a)*r2);ctx.stroke()}
+   ctx.rotate(-now*1.7);ctx.globalAlpha=.32*q;ctx.strokeStyle='#fff';ctx.lineWidth=3;ctx.beginPath();ctx.arc(0,0,Math.min(W,H)*(.16+p*.30),0,Math.PI*2);ctx.stroke();
+   ctx.restore();
+ }
  if(player.invuln>0){ctx.save();ctx.globalAlpha=.10;ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);ctx.restore()}
  ctx.restore();
  if(player.awakeningCast){
@@ -1768,9 +1797,18 @@ function performAwakening(){
  if(!awakeningEligible(id)){msg.textContent='❌ Máy bay phải full 35/35 ở cả 4 nâng cấp.';return;}
  if(gold<50000||ruby<500||cores<200||fragments<200||tokens<200){msg.textContent='❌ Không đủ tài nguyên: cần 50.000 Gold, 500 Ruby và 200 mỗi tài nguyên khác.';return;}
  gold-=50000; ruby-=500; cores-=200; fragments-=200; tokens-=200;
- awakenedPlanes[id]=true;saveMeta();
- msg.innerHTML='<span class="awkReady">🔥 '+planes[id].name+' ĐÃ THỨC TỈNH!</span>';
- updateAwakeningPreview();updateSkillUI();
+ const p=planes[id]||planes.radiant;
+ const fx=document.getElementById('awkUnlockFx'),ic=document.getElementById('awkUnlockIcon'),tx=document.getElementById('awkUnlockText');
+ ic.textContent=p.icon;tx.textContent='🔥 '+(p.awkName||'AWAKENED');
+ fx.style.display='flex';fx.style.animation='none';void fx.offsetWidth;fx.style.animation='awkUnlockFade 2.4s ease-out forwards';
+ ensureAudio();sfx('awakening');
+ btn.disabled=true;
+ setTimeout(()=>{
+   awakenedPlanes[id]=true;saveMeta();
+   msg.innerHTML='<span class="awkReady">🔥 '+p.name+' ĐÃ THỨC TỈNH!</span>';
+   updateAwakeningPreview();updateSkillUI();
+   fx.style.display='none';
+ },2300);
 }
 document.getElementById('awakeningClose').onclick=closeAwakening;
 document.getElementById('awkPlaneSelect').addEventListener('change',updateAwakeningPreview);
