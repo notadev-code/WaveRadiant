@@ -1,5 +1,4 @@
-SpaceRadiant v1.18.5
+SpaceRadiant v1.18.6
 
-- Sửa lỗi một số máy bay chỉ hiện hiệu ứng thức tỉnh nhưng không được ghi nhận Awakening.
-- Sửa lỗi nút THỨC TỈNH bị gọi biến không tồn tại sau khi chạy hiệu ứng.
-- Giữ nguyên hiệu ứng thức tỉnh và toàn bộ gameplay khác.
+- Giảm thời gian animation khi ấn skill Awakening trong trận xuống còn 1 giây.
+- Giữ nguyên damage, hiệu ứng sau khi Awakening kích hoạt và các gameplay khác.

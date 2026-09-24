@@ -828,7 +828,7 @@ function awakeningEligible(id){
 function awakeningIconFor(id){return (planes[id]||planes.radiant).icon}
 function startAwakeningCast(id){
  const pp=planes[id]||planes.radiant;
- player.awakeningCast={id,t:3,m:3,resolved:false};
+ player.awakeningCast={id,t:1,m:1,resolved:false};
  const ov=document.getElementById('awkCastOverlay'),ic=document.getElementById('awkCastIcon'),nm=document.getElementById('awkCastName');
  ic.textContent=pp.icon;nm.textContent=pp.awkName||'AWAKENING';ov.style.display='flex';
  ensureAudio();sfx('awakening');
