@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>SpaceRadiant v1.18.3</title>
+<title>SpaceRadiant v1.18.7</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#070912;color:#fff;font-family:Arial,sans-serif;touch-action:none}
@@ -26,12 +26,12 @@ canvas{display:block;width:100%;height:100%;background:radial-gradient(circle at
 #bossBox.bossGrid .bossHudTitle{grid-column:1/-1}
 @media(max-width:700px){#bossBox{width:min(360px,86vw)}#bossBox.bossGrid{grid-template-columns:repeat(2,minmax(0,1fr));max-height:92px}}
 #pauseHint{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);font-size:20px;display:none}
-#joyL,#joyR{position:fixed;bottom:25px;width:132px;height:132px;border-radius:50%;border:2px solid #ffffff30;background:#ffffff0d;box-shadow:inset 0 0 30px #ffffff08;touch-action:none}
-#joyL{left:20px}
-.stick{position:absolute;left:50%;top:50%;width:58px;height:58px;margin:-29px;border-radius:50%;background:#d9f7ff35;border:2px solid #bceeff80}
-#skill{position:fixed;bottom:25px;right:22px;display:flex;gap:8px;flex-direction:column}
+#joyL,#joyR{position:fixed;bottom:25px;width:96px;height:96px;border-radius:50%;border:2px solid #ffffff30;background:#ffffff0d;box-shadow:inset 0 0 30px #ffffff08;touch-action:none}
+#joyL{left:14px}
+.stick{position:absolute;left:50%;top:50%;width:42px;height:42px;margin:-21px;border-radius:50%;background:#d9f7ff35;border:2px solid #bceeff80}
+#skill{position:fixed;bottom:18px;right:14px;display:flex;gap:7px;flex-direction:column}
 button{border:1px solid #ffffff40;background:#10182a;color:#fff;border-radius:12px;padding:10px 13px;font-weight:800;box-shadow:0 4px 14px #0008}
-#skill button{min-width:96px;transition:filter .12s,opacity .12s,background .12s}
+#skill button{width:54px;height:54px;min-width:54px;padding:0;border-radius:50%;font-size:24px;line-height:1;display:flex;align-items:center;justify-content:center;transition:filter .12s,opacity .12s,background .12s;position:relative}#skill button .cd{position:absolute;right:-2px;bottom:-2px;font-size:8px;line-height:12px;min-width:18px;padding:0 3px;border-radius:8px;background:#050812;color:#fff;border:1px solid #ffffff55}
 #skill button.cooldown{filter:brightness(.48);opacity:.72}
 #skill button.ready{filter:brightness(1);opacity:1}
 #upgrade{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:#000b;z-index:5}
@@ -46,8 +46,8 @@ button{border:1px solid #ffffff40;background:#10182a;color:#fff;border-radius:12
 small{color:#aebbd6}
 
 @media (orientation:landscape) and (min-width:700px){
-  #joyL{width:112px;height:112px;left:18px;bottom:18px}
-  #skill{right:18px;bottom:18px;flex-direction:row}
+  #joyL{width:82px;height:82px;left:14px;bottom:14px}
+  #skill{right:14px;bottom:14px;flex-direction:row}
   #hud{font-size:12px}
 }
 
@@ -122,10 +122,10 @@ small{color:#aebbd6}
 <div id="joyL"><div id="leftStick" class="stick"></div></div>
 
 <div id="skill">
-  <button id="dash">⚡ Skill 1</button>
-  <button id="blast">💥 Skill 2</button>
-  <button id="skill3">🌟 Skill 3</button>
-  <button id="skillAwk">AWK</button>
+  <button id="dash" aria-label="Skill 1">⚡</button>
+  <button id="blast" aria-label="Skill 2">💥</button>
+  <button id="skill3" aria-label="Skill 3">🌟</button>
+  <button id="skillAwk" aria-label="Awakening">🔥</button>
 </div>
 <button id="menuBtn">☰</button>
 
@@ -226,18 +226,18 @@ const cosmeticCatalog={
 let achievements={kills:0,bosses:0,stages:0,planes:1,endless:0};
 let runMods={damage:1,fire:1,speed:1,loot:1};
 const planes={
- radiant:{name:'Radiant',icon:'✦',shape:'arrow',color:'#e9fbff',accent:'#62e7ff',stars:3,hp:5,atk:18,fire:.23,s1:'⚡ Photon Rush',s2:'💥 Radiant Burst',s3:'🌟 Prism Ray',price:0},
- comet:{name:'Comet',icon:'☄️',shape:'comet',color:'#fff0c2',accent:'#ff9d4d',stars:3,hp:4,atk:24,fire:.20,s1:'🔥 Comet Drive',s2:'💥 Meteor Nova',s3:'☄️ Comet Rain',price:30},
- guardian:{name:'Guardian',icon:'🛡️',shape:'shield',color:'#d8f7ff',accent:'#54cfff',stars:4,hp:8,atk:14,fire:.27,s1:'🛡️ Aegis Dash',s2:'🌊 Guardian Wave',s3:'🏰 Aegis Dome',price:55},
- phantom:{name:'Phantom',icon:'👻',shape:'wing',color:'#eee0ff',accent:'#c17cff',stars:4,hp:4,atk:20,fire:.16,s1:'👻 Phantom Blink',s2:'🌑 Void Collapse',s3:'🌀 Phase Rift',price:80},
- striker:{name:'Striker',icon:'⚔️',shape:'blade',color:'#ffe0e8',accent:'#ff526f',stars:5,hp:5,atk:30,fire:.19,s1:'⚡ Thunder Drive',s2:'☄️ Meteor Strike',s3:'⚔️ Storm Arc',price:120},
- titan:{name:'Titan',icon:'🚀',shape:'heavy',color:'#e1e8f2',accent:'#9aaeff',stars:5,hp:11,atk:22,fire:.31,s1:'💢 Titan Ram',s2:'🌀 Titan Quake',s3:'🪨 Colossus Ring',price:180},
- pulse:{name:'Pulse',icon:'🔵',shape:'orb',color:'#d9f7ff',accent:'#39d9ff',stars:4,hp:6,atk:19,fire:.22,s1:'🛡️ Pulse Guard',s2:'⚡ Chain Surge',s3:'🔷 Pulse Nova',price:150},
- medic:{name:'Medic',icon:'💚',shape:'cross',color:'#d8ffd9',accent:'#62ff8a',stars:4,hp:7,atk:15,fire:.25,s1:'💚 Emergency Heal',s2:'🌿 Healing Field',s3:'✨ Vital Burst',price:165},
- hunter:{name:'Hunter',icon:'🎯',shape:'needle',color:'#fff2d1',accent:'#ffd34d',stars:5,hp:5,atk:28,fire:.17,s1:'🎯 Hunter Mark',s2:'🚀 Missile Fan',s3:'🏹 Piercing Shot',price:210},
- chronos:{name:'Chronos',icon:'⏱️',shape:'clock',color:'#e5ddff',accent:'#a987ff',stars:5,hp:5,atk:23,fire:.21,s1:'⏱️ Time Lock',s2:'🌀 Time Rift',s3:'⌛ Chrono Pulse',price:240},
- drone:{name:'Drone',icon:'🤖',shape:'drone',color:'#e0ecff',accent:'#72a8ff',stars:5,hp:8,atk:20,fire:.24,s1:'🤖 Combat Drone',s2:'🔫 Drone Barrage',s3:'🛰️ Drone Swarm',price:270},
- solar:{name:'Solaris',icon:'☀️',shape:'sun',color:'#fff4c7',accent:'#ffcf4d',stars:5,hp:7,atk:32,fire:.20,s1:'☀️ Solar Charge',s2:'🌟 Solar Beam',s3:'🔥 Solar Flare',price:320}
+ radiant:{name:'Radiant',icon:'✦',shape:'arrow',color:'#e9fbff',accent:'#62e7ff',stars:3,hp:5,atk:18,fire:.23,s1:'⚡ Photon Rush',s2:'💥 Radiant Burst',s3:'🌟 Prism Ray',s1Icon:'⚡',s2Icon:'💥',s3Icon:'🌟',awkIcon:'✦',price:0},
+ comet:{name:'Comet',icon:'☄️',shape:'comet',color:'#fff0c2',accent:'#ff9d4d',stars:3,hp:4,atk:24,fire:.20,s1:'🔥 Comet Drive',s2:'💥 Meteor Nova',s3:'☄️ Comet Rain',s1Icon:'🔥',s2Icon:'💥',s3Icon:'☄️',awkIcon:'☄️',price:30},
+ guardian:{name:'Guardian',icon:'🛡️',shape:'shield',color:'#d8f7ff',accent:'#54cfff',stars:4,hp:8,atk:14,fire:.27,s1:'🛡️ Aegis Dash',s2:'🌊 Guardian Wave',s3:'🏰 Aegis Dome',s1Icon:'🛡️',s2Icon:'🌊',s3Icon:'🏰',awkIcon:'🛡️',price:55},
+ phantom:{name:'Phantom',icon:'👻',shape:'wing',color:'#eee0ff',accent:'#c17cff',stars:4,hp:4,atk:20,fire:.16,s1:'👻 Phantom Blink',s2:'🌑 Void Collapse',s3:'🌀 Phase Rift',s1Icon:'👻',s2Icon:'🌑',s3Icon:'🌀',awkIcon:'👻',price:80},
+ striker:{name:'Striker',icon:'⚔️',shape:'blade',color:'#ffe0e8',accent:'#ff526f',stars:5,hp:5,atk:30,fire:.19,s1:'⚡ Thunder Drive',s2:'☄️ Meteor Strike',s3:'⚔️ Storm Arc',s1Icon:'⚡',s2Icon:'☄️',s3Icon:'⚔️',awkIcon:'⚔️',price:120},
+ titan:{name:'Titan',icon:'🚀',shape:'heavy',color:'#e1e8f2',accent:'#9aaeff',stars:5,hp:11,atk:22,fire:.31,s1:'💢 Titan Ram',s2:'🌀 Titan Quake',s3:'🪨 Colossus Ring',s1Icon:'💢',s2Icon:'🌀',s3Icon:'🪨',awkIcon:'🚀',price:180},
+ pulse:{name:'Pulse',icon:'🔵',shape:'orb',color:'#d9f7ff',accent:'#39d9ff',stars:4,hp:6,atk:19,fire:.22,s1:'🛡️ Pulse Guard',s2:'⚡ Chain Surge',s3:'🔷 Pulse Nova',s1Icon:'🛡️',s2Icon:'⚡',s3Icon:'🔷',awkIcon:'🔵',price:150},
+ medic:{name:'Medic',icon:'💚',shape:'cross',color:'#d8ffd9',accent:'#62ff8a',stars:4,hp:7,atk:15,fire:.25,s1:'💚 Emergency Heal',s2:'🌿 Healing Field',s3:'✨ Vital Burst',s1Icon:'💚',s2Icon:'🌿',s3Icon:'✨',awkIcon:'💚',price:165},
+ hunter:{name:'Hunter',icon:'🎯',shape:'needle',color:'#fff2d1',accent:'#ffd34d',stars:5,hp:5,atk:28,fire:.17,s1:'🎯 Hunter Mark',s2:'🚀 Missile Fan',s3:'🏹 Piercing Shot',s1Icon:'🎯',s2Icon:'🚀',s3Icon:'🏹',awkIcon:'🎯',price:210},
+ chronos:{name:'Chronos',icon:'⏱️',shape:'clock',color:'#e5ddff',accent:'#a987ff',stars:5,hp:5,atk:23,fire:.21,s1:'⏱️ Time Lock',s2:'🌀 Time Rift',s3:'⌛ Chrono Pulse',s1Icon:'⏱️',s2Icon:'🌀',s3Icon:'⌛',awkIcon:'⏱️',price:240},
+ drone:{name:'Drone',icon:'🤖',shape:'drone',color:'#e0ecff',accent:'#72a8ff',stars:5,hp:8,atk:20,fire:.24,s1:'🤖 Combat Drone',s2:'🔫 Drone Barrage',s3:'🛰️ Drone Swarm',s1Icon:'🤖',s2Icon:'🔫',s3Icon:'🛰️',awkIcon:'🤖',price:270},
+ solar:{name:'Solaris',icon:'☀️',shape:'sun',color:'#fff4c7',accent:'#ffcf4d',stars:5,hp:7,atk:32,fire:.20,s1:'☀️ Solar Charge',s2:'🌟 Solar Beam',s3:'🔥 Solar Flare',s1Icon:'☀️',s2Icon:'🌟',s3Icon:'🔥',awkIcon:'☀️',price:320}
 };
 const awakeningNames={radiant:'✦ CELESTIAL RADIANCE',comet:'☄️ COMET APOCALYPSE',guardian:'🛡️ AEGIS ETERNITY',phantom:'👻 ECLIPSE PHANTOM',striker:'⚔️ STORM SOVEREIGN',titan:'🚀 TITAN DOMINION',pulse:'🔵 PULSE ASCENSION',medic:'💚 DIVINE RESTORATION',hunter:'🎯 OMNIMARK HUNT',chronos:'⏱️ ZERO HOUR',drone:'🤖 DRONE OVERMIND',solar:'☀️ SOLAR SUPERNOVA'};
 for(const id of Object.keys(planes))planes[id].awkName=awakeningNames[id];
@@ -828,7 +828,7 @@ function awakeningEligible(id){
 function awakeningIconFor(id){return (planes[id]||planes.radiant).icon}
 function startAwakeningCast(id){
  const pp=planes[id]||planes.radiant;
- player.awakeningCast={id,t:1,m:1,resolved:false};
+ player.awakeningCast={id,t:.5,m:.5,resolved:false};
  const ov=document.getElementById('awkCastOverlay'),ic=document.getElementById('awkCastIcon'),nm=document.getElementById('awkCastName');
  ic.textContent=pp.icon;nm.textContent=pp.awkName||'AWAKENING';ov.style.display='flex';
  ensureAudio();sfx('awakening');
@@ -836,8 +836,9 @@ function startAwakeningCast(id){
 function resolveAwakening(){
  const cast=player.awakeningCast;if(!cast||cast.resolved)return;
  cast.resolved=true;const id=cast.id,pp=planes[id]||planes.radiant;
- const dmg=(360+state.level*60)*(player.skillDmg||1);
- const mult={radiant:2.2,comet:2.4,guardian:1.8,phantom:2.2,striker:2.5,titan:3.2,pulse:2.0,medic:1.6,hunter:2.15,chronos:1.9,drone:2.1,solar:3.4}[id]||2;
+ const dmg=Math.max(50000,(360+state.level*60)*(player.skillDmg||1));
+ const mult={radiant:1.00,comet:1.08,guardian:1.02,phantom:1.05,striker:1.12,titan:1.20,pulse:1.03,medic:1.00,hunter:1.08,chronos:1.05,drone:1.06,solar:1.18}[id]||1;
+ // Awakening hitbox is the entire world: every active enemy is struck regardless of distance or walls.
  for(const e of enemies){e.hp-=dmg*mult;e.hit=.35;}
  // Awakening bonuses trigger after the map-wide strike.
  if(id==='radiant'){player.fireRate=Math.max(.035,player.fireRate*.80);fxBanner('✦ RADIANT OVERDRIVE');}
@@ -934,15 +935,14 @@ function updateSkillUI(){
   const dashCd=Math.max(0,player.dash), blastCd=Math.max(0,player.blast), skill3Cd=Math.max(0,player.skill3||0), awkCd=Math.max(0,player.awkSkill||0);
   for(const [b,v] of [[dashBtn,dashCd],[blastBtn,blastCd],[skill3Btn,skill3Cd]]){b.classList.toggle('cooldown',v>0);b.classList.toggle('ready',v<=0);}
   const pp=planes[equippedPlane]||planes.radiant;
-  dashBtn.textContent=dashCd>0 ? pp.s1+' '+dashCd.toFixed(1)+'s' : pp.s1;
-  blastBtn.textContent=blastCd>0 ? pp.s2+' '+blastCd.toFixed(1)+'s' : pp.s2;
-  skill3Btn.textContent=skill3Cd>0 ? pp.s3+' '+skill3Cd.toFixed(1)+'s' : pp.s3;
+  dashBtn.innerHTML=`${pp.s1Icon||'⚡'}<span class="cd">${dashCd>0?dashCd.toFixed(1):''}</span>`;
+  blastBtn.innerHTML=`${pp.s2Icon||'💥'}<span class="cd">${blastCd>0?blastCd.toFixed(1):''}</span>`;
+  skill3Btn.innerHTML=`${pp.s3Icon||'🌟'}<span class="cd">${skill3Cd>0?skill3Cd.toFixed(1):''}</span>`;
   const awake=!!awakenedPlanes[equippedPlane];
-  awkBtn.style.display=awake?'block':'none';
+  awkBtn.style.display=awake?'flex':'none';
   awkBtn.classList.toggle('cooldown',awkCd>0);
-  awkBtn.textContent=awake?(awkCd>0?'🔥 '+(planes[equippedPlane]?.awkName||'AWAKENING')+' '+awkCd.toFixed(1)+'s':'🔥 '+(planes[equippedPlane]?.awkName||'AWAKENING')):'AWK';
+  awkBtn.innerHTML=`${pp.awkIcon||pp.icon||'🔥'}<span class="cd">${awkCd>0?awkCd.toFixed(1):''}</span>`;
 }
-
 function update(dt){
  if(!gameStarted || paused || over) return;
  if(miniActive){
@@ -1701,13 +1701,58 @@ function draw(){
  }
  if(player.invuln>0){ctx.save();ctx.globalAlpha=.10;ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);ctx.restore()}
  ctx.restore();
- if(player.awakeningCast){
-   const ac=player.awakeningCast,pp=planes[ac.id]||planes.radiant,phase=1-ac.t/ac.m;
-   ctx.save();ctx.fillStyle='rgba(0,0,0,.78)';ctx.fillRect(0,0,W,H);
-   const cx=W/2,cy=H/2,rr=Math.min(W,H)*.23;ctx.translate(cx,cy);ctx.rotate(performance.now()/900);
-   for(let i=0;i<8;i++){ctx.save();ctx.rotate(i*Math.PI/4);ctx.strokeStyle=['#ff1744','#ffd600','#00ff88','#00b7ff','#8a2be2'][i%5];ctx.lineWidth=4;ctx.beginPath();ctx.arc(0,0,rr*(.72+.10*Math.sin(performance.now()/180+i)),i*.22,i*.22+Math.PI*.8);ctx.stroke();ctx.restore();}
-   ctx.rotate(-performance.now()/900);ctx.font='bold '+Math.min(120,W*.20)+'px Arial';ctx.textAlign='center';ctx.textBaseline='middle';ctx.shadowBlur=30;ctx.shadowColor=pp.accent;ctx.fillStyle='#fff';ctx.fillText(pp.icon,0,0);ctx.shadowBlur=0;ctx.font='900 '+Math.min(25,W*.045)+'px Arial';ctx.fillStyle='#fff';ctx.fillText((pp.awkName||'AWAKENING')+'  •  '+Math.ceil(ac.t)+'s',0,rr+42);ctx.restore();
+ if(player.awakeningCast){drawAwakeningCast(player.awakeningCast);}
+}
+function drawAwakeningCast(ac){
+ const pp=planes[ac.id]||planes.radiant, id=ac.id, q=Math.max(0,ac.t/ac.m), p=1-q, now=performance.now()/1000;
+ ctx.save();ctx.fillStyle='rgba(0,0,0,.86)';ctx.fillRect(0,0,W,H);
+ ctx.translate(W/2,H/2);ctx.lineCap='round';ctx.lineJoin='round';
+ const R=Math.min(W,H)*.30, A=pp.accent;
+ ctx.shadowColor=A;ctx.shadowBlur=22;
+ // Each aircraft gets a different Awakening visual language instead of the old generic spinning icon.
+ if(id==='radiant'){
+   ctx.strokeStyle=A;ctx.lineWidth=7;ctx.beginPath();ctx.arc(0,0,R*(.25+p*.72),0,Math.PI*2);ctx.stroke();
+   ctx.strokeStyle='#fff';ctx.lineWidth=3;for(let i=0;i<16;i++){let a=i*Math.PI/8+now*.8;ctx.beginPath();ctx.moveTo(Math.cos(a)*R*.18,Math.sin(a)*R*.18);ctx.lineTo(Math.cos(a)*R*(.35+p*.9),Math.sin(a)*R*(.35+p*.9));ctx.stroke();}
+   ctx.fillStyle='#fff';ctx.font='900 '+Math.min(120,W*.22)+'px Arial';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('✦',0,0);
+ }else if(id==='comet'){
+   for(let i=0;i<9;i++){let a=now*2+i*.7;ctx.strokeStyle=i%2?A:'#fff';ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(Math.cos(a)*R*(.05+p*.1),Math.sin(a)*R*(.05+p*.1));ctx.lineTo(Math.cos(a-.45)*R*(.35+p*.8),Math.sin(a-.45)*R*(.35+p*.8));ctx.stroke();}
+   ctx.fillStyle='#fff';ctx.font='900 '+Math.min(105,W*.19)+'px Arial';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('☄️',0,0);
+ }else if(id==='guardian'){
+   ctx.strokeStyle=A;ctx.lineWidth=8;ctx.beginPath();ctx.moveTo(0,-R*.75);ctx.lineTo(R*.62,-R*.30);ctx.lineTo(R*.48,R*.48);ctx.lineTo(0,R*.82);ctx.lineTo(-R*.48,R*.48);ctx.lineTo(-R*.62,-R*.30);ctx.closePath();ctx.stroke();
+   ctx.globalAlpha=.35+.3*p;ctx.fillStyle=A;ctx.fill();ctx.globalAlpha=1;ctx.strokeStyle='#fff';ctx.lineWidth=3;ctx.beginPath();ctx.arc(0,0,R*(.35+p*.55),0,Math.PI*2);ctx.stroke();
+ }else if(id==='phantom'){
+   ctx.globalAlpha=.7;for(let i=0;i<6;i++){ctx.strokeStyle=i%2?A:'#fff';ctx.lineWidth=3;ctx.beginPath();ctx.arc(0,0,R*(.18+i*.12),now*(i%2?-.8:.6)+i,now*(i%2?-.8:.6)+i+Math.PI*.9);ctx.stroke();}
+   ctx.globalAlpha=1;ctx.fillStyle='#fff';ctx.font='900 '+Math.min(100,W*.18)+'px Arial';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('👻',0,0);
+ }else if(id==='striker'){
+   ctx.rotate(now*1.2);ctx.strokeStyle=A;ctx.lineWidth=8;for(let i=0;i<6;i++){ctx.rotate(Math.PI/3);ctx.beginPath();ctx.moveTo(-R*.8,0);ctx.lineTo(R*.8,0);ctx.stroke();}
+   ctx.rotate(-now*1.2);ctx.strokeStyle='#fff';ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(-R*.75,-R*.55);ctx.lineTo(R*.75,R*.55);ctx.moveTo(-R*.75,R*.55);ctx.lineTo(R*.75,-R*.55);ctx.stroke();
+ }else if(id==='titan'){
+   ctx.strokeStyle=A;ctx.lineWidth=12;ctx.beginPath();ctx.arc(0,0,R*(.25+p*.55),0,Math.PI*2);ctx.stroke();
+   ctx.strokeStyle='#fff';ctx.lineWidth=5;for(let i=0;i<4;i++){ctx.rotate(Math.PI/2);ctx.strokeRect(-R*.12,-R*.78,R*.24,R*.35);}
+   ctx.fillStyle=A;ctx.fillRect(-R*.18,-R*.18,R*.36,R*.36);
+ }else if(id==='pulse'){
+   for(let i=0;i<5;i++){ctx.strokeStyle=i%2?A:'#8df3ff';ctx.lineWidth=4;ctx.beginPath();ctx.arc(0,0,R*(.12+i*.15+p*.35),0,Math.PI*2);ctx.stroke();}
+   ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(0,0,R*.18,0,Math.PI*2);ctx.fill();
+ }else if(id==='medic'){
+   ctx.strokeStyle=A;ctx.lineWidth=10;ctx.beginPath();ctx.moveTo(-R*.65,0);ctx.lineTo(R*.65,0);ctx.moveTo(0,-R*.65);ctx.lineTo(0,R*.65);ctx.stroke();
+   ctx.strokeStyle='#fff';ctx.lineWidth=3;ctx.beginPath();ctx.arc(0,0,R*(.28+p*.55),0,Math.PI*2);ctx.stroke();
+ }else if(id==='hunter'){
+   ctx.strokeStyle=A;ctx.lineWidth=4;ctx.beginPath();ctx.arc(0,0,R*(.35+p*.55),0,Math.PI*2);ctx.stroke();
+   ctx.strokeStyle='#fff';for(let i=0;i<12;i++){let a=i*Math.PI/6;ctx.beginPath();ctx.moveTo(Math.cos(a)*R*.1,Math.sin(a)*R*.1);ctx.lineTo(Math.cos(a)*R*(.25+p*.8),Math.sin(a)*R*(.25+p*.8));ctx.stroke();}
+   ctx.fillStyle=A;ctx.beginPath();ctx.arc(0,0,R*.13,0,Math.PI*2);ctx.fill();
+ }else if(id==='chronos'){
+   ctx.strokeStyle=A;ctx.lineWidth=6;ctx.beginPath();ctx.arc(0,0,R*(.55+p*.25),0,Math.PI*2);ctx.stroke();
+   ctx.strokeStyle='#fff';ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(0,-R*.38);ctx.moveTo(0,0);ctx.lineTo(R*.26,0);ctx.stroke();
+   ctx.rotate(now*.7);ctx.setLineDash([10,16]);ctx.lineWidth=3;ctx.beginPath();ctx.arc(0,0,R*.78,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);
+ }else if(id==='drone'){
+   for(let i=0;i<4;i++){let a=now*1.4+i*Math.PI/2,x=Math.cos(a)*R*.52,y=Math.sin(a)*R*.52;ctx.strokeStyle=A;ctx.lineWidth=5;ctx.beginPath();ctx.arc(x,y,R*.14,0,Math.PI*2);ctx.stroke();ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(0,0);ctx.stroke();}
+   ctx.fillStyle='#fff';ctx.fillRect(-R*.15,-R*.15,R*.3,R*.3);
+ }else if(id==='solar'){
+   ctx.strokeStyle='#ffd84d';ctx.lineWidth=7;for(let i=0;i<16;i++){let a=i*Math.PI/8+now*.3;ctx.beginPath();ctx.moveTo(Math.cos(a)*R*.35,Math.sin(a)*R*.35);ctx.lineTo(Math.cos(a)*R*(.55+p*.5),Math.sin(a)*R*(.55+p*.5));ctx.stroke();}
+   ctx.fillStyle='#fff4a8';ctx.beginPath();ctx.arc(0,0,R*(.28+p*.20),0,Math.PI*2);ctx.fill();
  }
+ ctx.shadowBlur=0;ctx.globalAlpha=.95;ctx.fillStyle='#fff';ctx.font='900 '+Math.min(22,W*.045)+'px Arial';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(pp.awkName||'AWAKENING',0,R+38);
+ ctx.font='900 '+Math.min(15,W*.032)+'px Arial';ctx.globalAlpha=.72;ctx.fillText('AWAKENING  •  '+ac.t.toFixed(1)+'s',0,R+62);ctx.restore();
 }
 function loop(t){
   // Khi đang ở menu nâng cấp, chọn màn, menu tạm dừng hoặc màn thắng,
